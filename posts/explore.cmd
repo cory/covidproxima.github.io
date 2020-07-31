@@ -36,5 +36,5 @@
 
 [11 result type:scatter; field:e12; field2:e13; modifier:e14;]
 [12 entry field:totals; value:activeCases; title:select;]
-[13 entry field:totals; value:black; title:select;]
+[13 entry field:totals; value:poverty; title:select;]
 [14 entry modifier:true; value:overall; title:select;]
