@@ -9,7 +9,7 @@ so you can click on the underlined text to see what's going on near you.
 
 [map 3]
 
-Put another way, [text 8] infectuous people suggests [text 9] change a group of 10 people
+Put another way, [text 8] infectuous people suggests [text 9] chance a group of 10 people
 hss at least 1 infectuous person in it.
 
 [map 10]
