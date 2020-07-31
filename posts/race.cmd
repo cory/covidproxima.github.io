@@ -3,8 +3,7 @@
 # How does race change the impact of covid-19?
 
 Covid is not a uniform expeirence for Americans. The CDC [reports](https://www.cdc.gov/coronavirus/2019-ncov/need-extra-precautions/racial-ethnic-minorities.html) higher hospitalization rates for Americans of color. It also shows up in the NY Times data.
-
-Per capita deaths based on how Black a county is
+The graphs below show outcomes based on the Black popupalation of US counties.
 
 [line 1]
 

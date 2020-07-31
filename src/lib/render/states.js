@@ -10,7 +10,7 @@ export default function states(path) {
     let text = [];
     let location;
     if (path[2]) {
-      location = path[2];
+      location = path[2].replace(/\-/g, ' ');
       text.push('# ' + Text.firstCaps(Places.fips2county(location)) +
         ', [' + Text.firstCaps(path[1].replace(/\-/g, ' ')) + '](#' + path[0] + '.' + path[1] + ')\n');
     } else {
@@ -39,7 +39,7 @@ export default function states(path) {
     return data.html;
   } else {
     let text = [];
-    text.push('[table 4 Someone at a 10 person party is infectious]\n');
+    text.push('[table 4 Likelihood of infectious group]\n');
     text.push('[table 0 Infectious per capita]\n');
     text.push('[table 1 Weekly deaths]\n');
     text.push('[table 5 Total deaths]\n');

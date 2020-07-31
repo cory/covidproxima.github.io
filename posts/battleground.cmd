@@ -3,7 +3,7 @@
 # What's happening in battleground states?
 
 [This](https://fivethirtyeight.com/features/the-latest-swing-state-polls-look-good-for-biden/) [FiveThirtyEight](https://fivethirtyeight.com/) article
-identifies 4 Republican-leaning and 4 Democrat-leaning swings states. What's happening to weekly deaths in each?
+identifies 4 Republican-leaning (Texas, Georgia, Pennsylvania, and North Carolina) and 4 Democratic-leaning (Florida, Arizona, Wisconsin, and Michigan) swings states. What's happening to weekly deaths in each?
 
 ## Weekly Deaths
 [line 1]

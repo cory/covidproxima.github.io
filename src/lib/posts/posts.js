@@ -12,7 +12,6 @@ const POSTS = {
     { file: 'race', title: 'race and covid impact', date: '2020-07-22' },
     { file: 'poverty', title: 'how does poverty change the impact of covid?', date: '2020-07-21' },
     { file: 'groups', title: 'how dangerous is it to be in a group?', date: '2020-07-21' },
-    { file: 'howmany', title: 'how many people are infected near me?', date: '2020-07-21' },
     { file: 'activecases', title: 'how many infectuous people are there?', date: '2020-07-20' },
   ],
   data: [

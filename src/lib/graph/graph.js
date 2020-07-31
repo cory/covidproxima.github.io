@@ -33,7 +33,7 @@ export function init(el, arr, alignWithUS, field) {
 }
 
 export function initScatter(el, arr) {
-  el.className = 'graphic';
+  el.className = 'scatter graphic';
   let rec = el.getBoundingClientRect();
   let h = parseInt(rec.height);
   let w = parseInt(rec.width);
@@ -205,7 +205,7 @@ export function addLabelsLine(el, zeroY, topY, topValue, keys, colors, set, rang
     label.appendChild(subtext);
     div.appendChild(label);
     if (i < endLabels.length - 1) {
-      ypos += el.height / 6;
+      ypos += el.height / 5;
     }
   }
   if (keys.length <= 2) {

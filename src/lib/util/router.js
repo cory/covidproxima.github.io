@@ -56,6 +56,7 @@ function footnoteChange() {
 export function hook() {
   window.addEventListener('hashchange', () => {
     if (footnoteChange()) {
+      window.scrollTo(0, 0);
       go();
     }
   });

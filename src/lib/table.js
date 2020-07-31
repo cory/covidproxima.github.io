@@ -117,7 +117,7 @@ export default function render(el, arr, shortText, upGood, count, places, field)
       if (arr[i].state === arr[i].county) {
         anchor.href = '#states.' + arr[i].state.replace(/ /g, '-');
       } else {
-        anchor.href = '#states.' + arr[i].state.replace(/ /g, '-') + '.' + arr[i].fips;
+        anchor.href = '#states.' + arr[i].state.replace(/ /g, '-') + '.' + arr[i].fips.replace(/ /g, '-');
       }
       span.appendChild(anchor);
       row.appendChild(span);

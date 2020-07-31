@@ -6,6 +6,9 @@ For many of us, this is the most important question. This is interactive,
 so you can click on the underlined text to see what's going on near you.
 
 [text 1] are currently infectuous in [entry 2] right now.[1]
+You can click on the "the United States" to look up different locations,
+either by scrolling and clicking on the state, or typing in a city name
+or zipcode.
 
 [map 3]
 
