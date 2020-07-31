@@ -3,7 +3,7 @@
 As of [text 1], in the United States:
 * [text 5] people have tested positive for COVID-19
 * [text 7] are currently infectuous
-* There is a [text 8] chance that a 20-person gathering has one ore more infectious people
+* There is a [text 8] chance that a 20-person gathering has one or more infectious people
 * it has killed [text 2] people
 * [text 6] people have died in the last 7 days
 
