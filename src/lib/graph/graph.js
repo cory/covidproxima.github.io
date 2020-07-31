@@ -9,7 +9,6 @@ const offset = 4;
 const twiceOffset = 2 * offset;
 
 export function init(el, arr, alignWithUS, field) {
-  el.parentElement.className = 'graphic';
   field = field ? field : 'x';
   let xWidth = alignWithUS ? PlaceData.usDays() : arr.length;
   let rec = el.parentElement.getBoundingClientRect();
