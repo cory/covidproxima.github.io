@@ -265,6 +265,8 @@ input:focus {
   font-size: 75%;
   width: 800px;
   margin-left: var(--left-offset);
+  border: 1px solid var(--light-text);
+  padding: 0.5em;
 }
 
 .theader {
