@@ -1,0 +1,25 @@
+// (c) Cory Ondrejka 2020
+'use strict'
+
+import * as Posts from '../posts/posts.js';
+import Cmdown from '../render/cmdown.js';
+import Load from './load.js';
+
+export default function go(path, rootEl, cb) {
+  let stories = Posts.path2stories(path);
+  Load(stories, (arr) => {
+    rootEl.innerHTML = '';
+    let footnote = 0;
+    for (let i = 0; i < arr.length; i++) {
+      let fg = document.createElement('div');
+      fg.className = 'block';
+      rootEl.appendChild(fg);
+      let data = Cmdown(arr[i].result, 'story', 'footnote', (path && path[0] ? path[0] : ''), footnote);
+      let div = document.createElement('div');
+      fg.appendChild(div);
+      div.outerHTML = data.html;
+      footnote = data.footnote;
+    }
+    cb();
+  });
+}
