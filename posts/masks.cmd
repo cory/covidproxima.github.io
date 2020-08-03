@@ -1,6 +1,6 @@
 // (c) Cory Ondrejka 2020
 
-# How do masks imapct group danger?
+# How do masks impact group danger?
 
 So, groups in areas with a lot of infectuous people are bad. Thanks to the [New York Times](https://www.nytimes.com/interactive/2020/07/17/upshot/coronavirus-face-mask-map.html),
 we can also estimate the even more concerning stat: what is the probability of someone in group of 50 people in [entry 1] being
