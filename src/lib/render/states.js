@@ -39,6 +39,9 @@ export default function states(path) {
     return data.html;
   } else {
     let text = [];
+    text.push('# State ranks\n');
+    text.push('\nStates ranked by likelihood of infectuous groups, infectious per capita, weekly deaths, total deaths,');
+    text.push('weekly positive tests, and case fatality rate.\n\n');
     text.push('[table 4 Likelihood of infectious group]\n');
     text.push('[table 0 Infectious per capita]\n');
     text.push('[table 1 Weekly deaths]\n');

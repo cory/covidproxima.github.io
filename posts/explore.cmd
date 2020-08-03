@@ -2,23 +2,44 @@
 
 # Explore all the data
 
-#### Chart
+This is the page I use to explore the data and see what pops out. It is not
+the easiest interface nor particularly intuitive. It will get better!
+
+## Chart
+
+Simple line chart with options to divide counties by a second signal.
+the first field is the location. The second is the signal to be graphed.
+The third is a second signal which is optionaly used by the field marked
+"none." Finally, the field marked "total" give you the option to change the first 
+signal to be per capita (and a few other options). This doesn't make sense
+for all fields and for now the UI won't protect you!
 
 [entry 2] in [entry 3] by [entry 4] ([entry 5]) ([entry 6])
 
 [line 1]
 
-#### Map
+## Map
+
+Put geographic data on the map! Again, option to cut by per capita. Again,
+it might not always be correct to do so.
 
 [entry 8] in [entry 9] ([entry 10])
 
 [map 7]
 
-#### Scatter
+## Scatter
+
+Even more experimental than the rest.
 
 [entry 12] vs [entry 13] ([entry 14])
 
+#### States Only
+
 [scatter 11]
+
+#### States and Counties
+
+[scatter 15]
 
 
 [1 result type:line; field:e3; field2:e4; places:e2; examine:e5; modifier:e6;]
@@ -34,7 +55,8 @@
 [10 entry modifier:true; value:overall; title:select;]
 
 
-[11 result type:scatter; field:e12; field2:e13; modifier:e14;]
+[11 result type:scatter; field:e12; field2:e13; modifier:e14; states:1;]
+[15 result type:scatter; field:e12; field2:e13; modifier:e14;]
 [12 entry field:totals; value:activeCases; title:select;]
 [13 entry field:totals; value:poverty; title:select;]
 [14 entry modifier:true; value:overall; title:select;]

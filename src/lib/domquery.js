@@ -229,7 +229,7 @@ function update(dp, force) {
           replace[r].value = { text: args.field.text, shortText: args.field.shortText, lq: lineQuery(args.places.fips, args.field, args.modifier, args.field2, args.examine.f) };
           break;
         case 'scatter':
-          replace[r].value = { text: [args.field.text, args.field2.text], shortText: [args.field.shortText, args.field2.shortText], arr: scatterQuery(args.field, args.field2, args.modifier) };
+          replace[r].value = { text: [args.field.text, args.field2.text], shortText: [args.field.shortText, args.field2.shortText], arr: scatterQuery(args.field, args.field2, args.modifier, result.states) };
           break;
       }
     }
@@ -707,8 +707,8 @@ function lineQuery(fips, field, modifier, field2, examine) {
   return { set: retval, ranges: ranges };
 }
 
-function scatterQuery(field1, field2, modifier) {
-  let places = Places.statesAndCounties();
+function scatterQuery(field1, field2, modifier, statesOnly) {
+  let places = statesOnly ? Places.states() : Places.statesAndCounties();
   let retval = [];
   for (let p = 0; p < places.length; p++) {
     let place = PlaceData[places[p].value];

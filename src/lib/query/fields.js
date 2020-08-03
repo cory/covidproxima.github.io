@@ -23,7 +23,7 @@ export let Types = {
     w_recoveries: { f: 'w_recoveries', text: 'people have recovered in the last week', upGood: true, shortText: 'recovered/week', average: false, units: '' },
     w_activeCases: { f: 'w_activeCases', text: 'people likely became infectious in the last week', upGood: false, shortText: 'infectious/week', average: false, units: '' },
     wow_deaths: { f: 'wow_deaths', text: 'people have died compared to last week', upGood: false, shortText: 'deaths w/w change', average: false, units: '' },
-    wow_cases: { f: 'wow_cases', text: 'tpeople ested positive compared to last week', upGood: false, shortText: 'tested positive w/w change', average: false, units: '' },
+    wow_cases: { f: 'wow_cases', text: 'people tested positive compared to last week', upGood: false, shortText: 'tested positive w/w change', average: false, units: '' },
     wow_probableCases: { f: 'wow_probableCases', text: 'people likely infected compared to last week', upGood: false, shortText: 'infected w/w change', average: false, units: '' },
     wow_recoveries: { f: 'wow_recoveries', text: 'people have recovered compared to last week', upGood: true, shortText: 'recovered w/w change', average: false, units: '' },
     wow_activeCases: { f: 'wow_activeCases', text: 'people likely became infectious compared to last week', upGood: false, shortText: 'infectious w/w change', average: false, units: '' },
@@ -55,7 +55,7 @@ export let Types = {
     w_recoveries: { f: 'w_recoveries', text: 'people have recovered in the last week', upGood: true, shortText: 'recovered/week', average: false, units: '' },
     w_activeCases: { f: 'w_activeCases', text: 'people likely became infectious in the last week', upGood: false, shortText: 'infectious/week', average: false, units: '' },
     wow_deaths: { f: 'wow_deaths', text: 'people have died compared to last week', upGood: false, shortText: 'deaths w/w change', average: false, units: '' },
-    wow_cases: { f: 'wow_cases', text: 'tpeople ested positive compared to last week', upGood: false, shortText: 'tested positive w/w change', average: false, units: '' },
+    wow_cases: { f: 'wow_cases', text: 'people tested positive compared to last week', upGood: false, shortText: 'tested positive w/w change', average: false, units: '' },
     wow_probableCases: { f: 'wow_probableCases', text: 'people likely infected compared to last week', upGood: false, shortText: 'infected w/w change', average: false, units: '' },
     wow_recoveries: { f: 'wow_recoveries', text: 'people have recovered compared to last week', upGood: true, shortText: 'recovered w/w change', average: false, units: '' },
     wow_activeCases: { f: 'wow_activeCases', text: 'people likely became infectious compared to last week', upGood: false, shortText: 'infectious w/w change', average: false, units: '' },
@@ -87,6 +87,7 @@ export let Types = {
     govrepublican: { f: 'govrepublican', text: 'Republican Governor', shortText: 'gop gov', average: false, units: '' },
     govmale: { f: 'govmale', text: 'Male Governor', shortText: 'male gov', average: false, units: '' },
     repvotes: { f: 'repvotes', text: 'Voted Republican in 2018 House election', shortText: 'voted republican', average: true, units: '%' },
+    maskfreq: { f: 'maskfreq', text: 'Frequently or always wears a mask', shortText: 'mask frequent', average: true, units: '%' },
   },
 };
 

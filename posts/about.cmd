@@ -7,6 +7,9 @@ It is a staic site served off of GitHub with no production dependancies. It uses
 to pull data from the [New York Times on Github](https://github.com/nytimes/covid-19-data).
 You can fork the [repository](https://github.com/cory/covidproxima) and run it all locally if you prefer.
 
+If you find an error, get stumped, or thnk either the code or data is wrong, feel free to create an [issue](https://github.com/cory/covidproxima.github.io/issues)
+on GitHub. This is a labor of love (and sanity), so it might take me a bit to respond.
+
 Development has been done in [VS Code](https://code.visualstudio.com/), [Chrome](https://www.google.com/chrome), [Safari](https://www.apple.com/safari/)
 on a [MacBook Pro](https://www.apple.com/macbook-pro-16/).
 

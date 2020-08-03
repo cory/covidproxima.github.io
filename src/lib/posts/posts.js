@@ -4,15 +4,15 @@
 const POSTS = {
   pinned: [
     { file: 'welcome', title: 'covid proxima', date: '2020-06-20' },
+    { file: 'groups', title: 'how dangerous is it to be in a group?', date: '2020-07-21' },
   ],
   posts: [
-    { file: 'battleground', title: 'battleground states', date: '2020-07-30' },
+    { file: 'battleground', title: 'battleground states', date: '2020-07-22' },
     { file: 'thenandnow', title: 'comparing death totals', date: '2020-07-28' },
     { file: 'deathtrends', title: 'where US deaths are happening', date: '2020-07-24' },
-    { file: 'race', title: 'race and covid impact', date: '2020-07-22' },
-    { file: 'poverty', title: 'how does poverty change the impact of covid?', date: '2020-07-21' },
-    { file: 'groups', title: 'how dangerous is it to be in a group?', date: '2020-07-21' },
-    { file: 'activecases', title: 'how many infectuous people are there?', date: '2020-07-20' },
+    { file: 'race', title: 'race and covid impact', date: '2020-08-02' },
+    { file: 'poverty', title: 'how does poverty change the impact of covid?', date: '2020-07-25' },
+    { file: 'activecases', title: 'how many infectuous people are there?', date: '2020-07-21' },
   ],
   data: [
     { file: 'howmany', title: 'how many people are infected near me?', date: '2020-07-21' },
@@ -61,5 +61,7 @@ export function path2stories(path) {
 }
 
 export function getHome() {
-  return POSTS.pinned.concat(POSTS.posts.slice(0, 10));
+  let posts = getPosts();
+  posts.sort((a, b) => { return b.date.localeCompare(a.date); });
+  return POSTS.pinned.concat(posts.slice(0, 10));
 }
