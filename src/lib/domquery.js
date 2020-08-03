@@ -1,18 +1,18 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import Line from './graph/line.js';
-import Scatter from './graph/scatter.js';
-import * as Examine from './query/examine.js';
-import * as Fields from './query/fields.js';
-import * as Modifiers from './query/modifiers.js';
-import * as Places from './query/places.js';
-import * as Special from './query/special.js';
-import * as SVG from './svg.js';
-import Table from './table.js';
-import * as Numbers from './util/numbers.js';
-import * as Text from './util/text.js';
-import Typeahead from './util/typeahead.js';
+import Line from './graph/line.js?cachebust=08497';
+import Scatter from './graph/scatter.js?cachebust=08497';
+import * as Examine from './query/examine.js?cachebust=08497';
+import * as Fields from './query/fields.js?cachebust=08497';
+import * as Modifiers from './query/modifiers.js?cachebust=08497';
+import * as Places from './query/places.js?cachebust=08497';
+import * as Special from './query/special.js?cachebust=08497';
+import * as SVG from './svg.js?cachebust=08497';
+import Table from './table.js?cachebust=08497';
+import * as Numbers from './util/numbers.js?cachebust=08497';
+import * as Text from './util/text.js?cachebust=08497';
+import Typeahead from './util/typeahead.js?cachebust=08497';
 
 let PlaceData;
 let Data;

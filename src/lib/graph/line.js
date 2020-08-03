@@ -1,8 +1,8 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Colors from '../util/colors.js';
-import * as Graph from './graph.js';
+import * as Colors from '../util/colors.js?cachebust=08497';
+import * as Graph from './graph.js?cachebust=08497';
 
 
 export default function draw(el, set, ranges) {

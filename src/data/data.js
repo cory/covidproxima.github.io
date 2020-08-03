@@ -1,10 +1,10 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import GovernorData from './governor.js';
-import PlaceData from './placedata.js';
-import ProcessNYTData from './procnytdata.js';
-import ShelterData from './shelter.js';
+import GovernorData from './governor.js?cachebust=08497';
+import PlaceData from './placedata.js?cachebust=08497';
+import ProcessNYTData from './procnytdata.js?cachebust=08497';
+import ShelterData from './shelter.js?cachebust=08497';
 
 function newPlace(daily, demo) {
   let place = {
