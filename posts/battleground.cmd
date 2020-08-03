@@ -16,7 +16,7 @@ so far avoiding the July surge and maintaining their early-state curves, while T
 
 ## Infectious
 
-Looking at the likely infectuous data, *all* states are on the rise. Fortunately, election day is still far in the future,
+Looking at the likely infectious data, *all* states are on the rise. Fortunately, election day is still far in the future,
 but it is scary to see all the state rates growing.
 
 [line 3]

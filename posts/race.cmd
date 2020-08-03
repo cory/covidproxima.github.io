@@ -11,13 +11,13 @@ is 2-6 times higher than counties with the fewest Black residents.
 
 [line 1]
 
-Percentage of people in a county who are likely infectuous, again cut by percent of population who are Black.
-Again, counties with more Black residents are over twice as likely to be infectuous compared to
+Percentage of people in a county who are likely infectious, again cut by percent of population who are Black.
+Again, counties with more Black residents are over twice as likely to be infectious compared to
 counties with fewer Black residents.
 
 [line 8]
 
-As we'd expect, this translates into groups with twice the likelihood of an infectuous participant.
+As we'd expect, this translates into groups with twice the likelihood of an infectious participant.
 
 [line 12]
 

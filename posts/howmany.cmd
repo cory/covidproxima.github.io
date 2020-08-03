@@ -5,20 +5,20 @@
 For many of us, this is the most important question. This is interactive,
 so you can click on the underlined text to see what's going on near you.
 
-[text 1] are currently infectuous in [entry 2] right now.[1]
+[text 1] are currently infectious in [entry 2] right now.[1]
 You can click on the "the United States" to look up different locations,
 either by scrolling and clicking on the state, or typing in a city name
 or zipcode.
 
 [map 3]
 
-Put another way, [text 8] infectuous people suggests [text 9] chance a group of 10 people
-hss at least 1 infectuous person in it.
+Put another way, [text 8] infectious people suggests [text 9] chance a group of 10 people
+hss at least 1 infectious person in it.
 
 [map 10]
 
 
-[table 4 Infectuous per capita]
+[table 4 infectious per capita]
 
 [line 5]
 

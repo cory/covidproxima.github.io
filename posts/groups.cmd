@@ -1,17 +1,17 @@
 // (c) Cory Ondrejka 2020
 
-# How likely are groups to have an infectuous person in them?
+# How likely are groups to have an infectious person in them?
 
 If you start from a guess about how many [infecutous people](#posts.activecases) there currently are,
-you can compute how likely groups are to contain an infectuous person.
+you can compute how likely groups are to contain an infectious person.
 
-Overall, the probability of a group of 10 people in the US having at least one infectuous person is [text 1]. It varies quite a bit across [entry 2].
+Overall, the probability of a group of 10 people in the US having at least one infectious person is [text 1]. It varies quite a bit across [entry 2].
 Note that you can click on the "the United States" and then either scroll to select another state or type in a state name, zipcode, county name,
 or city to search inside the US.
 
 [map 3]
 
-Larger groups are *much* more likely to have an infectuous person present. The map below is for groups of 50.
+Larger groups are *much* more likely to have an infectious person present. The map below is for groups of 50.
 
 [map 4]
 

@@ -2,9 +2,9 @@
 
 # How does poverty change the impact of covid?
 
-Using either pre-covid unemployent levels or census poverty data as the signal, America's poorest counties are significantly more likely to encounter currently infectuous people. The amazing USDA Economic Research Service [Atlas of Rural and Small Town America](https://www.ers.usda.gov/data-products/atlas-of-rural-and-small-town-america/) has both 2018 poverty rates and 2019 unemployment rates per county.
+Using either pre-covid unemployent levels or census poverty data as the signal, America's poorest counties are significantly more likely to encounter currently infectious people. The amazing USDA Economic Research Service [Atlas of Rural and Small Town America](https://www.ers.usda.gov/data-products/atlas-of-rural-and-small-town-america/) has both 2018 poverty rates and 2019 unemployment rates per county.
 
-In the highest poverty counties in America, groups are more than twice as likely to contain an infectuous person.
+In the highest poverty counties in America, groups are more than twice as likely to contain an infectious person.
 
 [line 1]
 
