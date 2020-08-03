@@ -27,6 +27,15 @@ it might not always be correct to do so.
 
 [map 7]
 
+## Table
+
+Get a list of counties ranked by the chosen statistic.
+
+[entry 16] in [entry 17] ([entry 18])
+
+[map 19]
+
+
 ## Scatter
 
 Even more experimental than the rest.
@@ -54,9 +63,14 @@ Even more experimental than the rest.
 [9 entry places:statesUp; value:united states; title:type place or zipcode;]
 [10 entry modifier:true; value:overall; title:select;]
 
-
 [11 result type:scatter; field:e12; field2:e13; modifier:e14; states:1;]
 [15 result type:scatter; field:e12; field2:e13; modifier:e14;]
 [12 entry field:totals; value:activeCases; title:select;]
 [13 entry field:totals; value:poverty; title:select;]
 [14 entry modifier:true; value:overall; title:select;]
+
+[19 result type:table; field:e16; places:e17; modifier:e18; delta:true; count:10]
+[16 entry field:totals; value:p50m; title:select;]
+[17 entry places:statesUp; value:united states; title:type place or zipcode;]
+[18 entry modifier:true; value:overall; title:select;]
+

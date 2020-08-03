@@ -106,7 +106,7 @@ const COVID_DURATION = 28;
 const COVID_INFECTION_ONSET = 6;
 const COVID_CASE_MULTIPLE = 5;
 
-const FIELDS = { deaths: true, cases: true, recoveries: true, activeCases: true, probableCases: true, cfr: true, cir: true, crr: true, cvr: true, p20: true, p50: true, p10: true };
+const FIELDS = { deaths: true, cases: true, recoveries: true, activeCases: true, probableCases: true, cfr: true, cir: true, crr: true, cvr: true, p20: true, p50: true, p10: true, p10m: true, p20m: true, p50m: true };
 const SUM_FIELDS = { deaths: true, cases: true, recoveries: true, activeCases: true, probableCases: true };
 
 function calculatedFields(entry, place) {
@@ -117,6 +117,9 @@ function calculatedFields(entry, place) {
   entry.p10 = 1 - Math.pow(1 - entry.cir, 10);
   entry.p20 = 1 - Math.pow(1 - entry.cir, 20);
   entry.p50 = 1 - Math.pow(1 - entry.cir, 50);
+  entry.p10m = 1 - Math.pow(1 - entry.cir * (1 - place.maskfreq), 10);
+  entry.p20m = 1 - Math.pow(1 - entry.cir * (1 - place.maskfreq), 20);
+  entry.p50m = 1 - Math.pow(1 - entry.cir * (1 - place.maskfreq), 50);
 }
 
 function isSheltered(state, date, ShelterData) {

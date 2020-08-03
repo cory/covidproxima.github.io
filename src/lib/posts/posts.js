@@ -10,9 +10,10 @@ const POSTS = {
     { file: 'battleground', title: 'battleground states', date: '2020-07-22' },
     { file: 'thenandnow', title: 'comparing death totals', date: '2020-07-28' },
     { file: 'deathtrends', title: 'where US deaths are happening', date: '2020-07-24' },
-    { file: 'race', title: 'race and covid impact', date: '2020-08-02' },
+    { file: 'race', title: 'race and covid impact', date: '2020-08-01' },
     { file: 'poverty', title: 'how does poverty change the impact of covid?', date: '2020-07-25' },
     { file: 'activecases', title: 'how many infectuous people are there?', date: '2020-07-21' },
+    { file: 'masks', title: 'together and maskless?', date: '2020-08-02' },
   ],
   data: [
     { file: 'howmany', title: 'how many people are infected near me?', date: '2020-07-21' },
