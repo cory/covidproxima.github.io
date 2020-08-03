@@ -22,3 +22,11 @@ on a [MacBook Pro](https://www.apple.com/macbook-pro-16/).
 * Shelter in place timelines: [here](https://www.nytimes.com/interactive/2020/us/coronavirus-stay-at-home-order.html) and [here](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html)
 * [zipcodes](https://www.census.gov/geographies/reference-files/time-series/geo/relationship-files.html)
 * [US voting data](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/UYSHST)
+
+# Errata
+
+#### Alaska 2018 Voting Data
+Finding freely licensed, per-county (well, per-burough) 2018 election data for Alaska has proven more challenging than I care to solve.
+The Harvard dataset uses FIPS identifiers that don't map back to buroughs, so I just made all the Alaskan buroughs vote at the same
+rate as the state average for 2018 House race, which was 53.08% for Don Young.
+
