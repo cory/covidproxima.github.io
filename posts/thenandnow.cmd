@@ -1,6 +1,6 @@
 // (c) Cory Ondrejka 2020
 
-# How do states from the early criss compare to now?
+# How do states from the early crisis compare to now?
 
 New York, New Jersey, Massachusetts, Illinois, Pennsylvania, and Michigan were hit hard early in the crisis,
 while Texas[1], Florida, Arizona, South Carolina, Georgia,

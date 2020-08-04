@@ -5,7 +5,7 @@
 My best guess is that [text 1] people are infectious right now. Put another way, that's [text 5]. What are my assumptions?
 
 Based on [CDC Planning Scenarious](https://www.cdc.gov/coronavirus/2019-ncov/hcp/planning-scenarios.html) and public statements:
-* *30-50%* of infected people are assymptomatic 
+* *30-50%* of infected people are asymptomatic
 * Serology tests aren't reliable yet, but a significant multiple of detected cases are the actual probably case count, so currently using *5 times* the case count for probable cases
 * Median time between exposure and symptoms is *6 days*
 * Median time from symptom onset to death is *22 days*

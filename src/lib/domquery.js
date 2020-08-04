@@ -1,18 +1,18 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import Line from './graph/line.js?cachebust=08497';
-import Scatter from './graph/scatter.js?cachebust=08497';
-import * as Examine from './query/examine.js?cachebust=08497';
-import * as Fields from './query/fields.js?cachebust=08497';
-import * as Modifiers from './query/modifiers.js?cachebust=08497';
-import * as Places from './query/places.js?cachebust=08497';
-import * as Special from './query/special.js?cachebust=08497';
-import * as SVG from './svg.js?cachebust=08497';
-import Table from './table.js?cachebust=08497';
-import * as Numbers from './util/numbers.js?cachebust=08497';
-import * as Text from './util/text.js?cachebust=08497';
-import Typeahead from './util/typeahead.js?cachebust=08497';
+import Line from './graph/line.js?cachebust=10579';
+import Scatter from './graph/scatter.js?cachebust=10579';
+import * as Examine from './query/examine.js?cachebust=10579';
+import * as Fields from './query/fields.js?cachebust=10579';
+import * as Modifiers from './query/modifiers.js?cachebust=10579';
+import * as Places from './query/places.js?cachebust=10579';
+import * as Special from './query/special.js?cachebust=10579';
+import * as SVG from './svg.js?cachebust=10579';
+import Table from './table.js?cachebust=10579';
+import * as Numbers from './util/numbers.js?cachebust=10579';
+import * as Text from './util/text.js?cachebust=10579';
+import Typeahead from './util/typeahead.js?cachebust=10579';
 
 let PlaceData;
 let Data;

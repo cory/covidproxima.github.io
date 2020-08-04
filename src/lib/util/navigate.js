@@ -1,9 +1,9 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Posts from '../posts/posts.js?cachebust=08497';
-import Cmdown from '../render/cmdown.js?cachebust=08497';
-import Load from './load.js?cachebust=08497';
+import * as Posts from '../posts/posts.js?cachebust=10579';
+import Cmdown from '../render/cmdown.js?cachebust=10579';
+import Load from './load.js?cachebust=10579';
 
 export default function go(path, rootEl, cb) {
   let stories = Posts.path2stories(path);

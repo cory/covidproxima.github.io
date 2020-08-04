@@ -2,7 +2,7 @@
 
 # How likely are groups to have an infectious person in them?
 
-If you start from a guess about how many [infecutous people](#posts.activecases) there currently are,
+If you start from a guess about how many [infetious people](#posts.activecases) there currently are,
 you can compute how likely groups are to contain an infectious person.
 
 Overall, the probability of a group of 10 people in the US having at least one infectious person is [text 1]. It varies quite a bit across [entry 2].
