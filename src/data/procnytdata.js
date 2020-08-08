@@ -18,16 +18,11 @@ export default function ProcessNYTData(placeData, d) {
     }
     if (fips) {
       if (placeData[fips]) {
-        let place = placeData[fips].county + ', ' + state;
         if (!usData[fips]) {
-          usData[fips] = [];
+          let place = placeData[fips].county + ', ' + state;
+          usData[fips] = { daily: [], place: place };
         }
-        usData[fips].push({
-          date: date,
-          place: place,
-          cases: cases,
-          deaths: deaths,
-        });
+        usData[fips].daily.push([date, cases, deaths]);
       }
     }
   }

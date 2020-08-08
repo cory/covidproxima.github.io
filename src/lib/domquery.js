@@ -1,19 +1,21 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import Line from './graph/line.js?cachebust=19730';
-import Scatter from './graph/scatter.js?cachebust=19730';
-import Person from './person.js?cachebust=19730';
-import * as Examine from './query/examine.js?cachebust=19730';
-import * as Fields from './query/fields.js?cachebust=19730';
-import * as Modifiers from './query/modifiers.js?cachebust=19730';
-import * as Places from './query/places.js?cachebust=19730';
-import * as Special from './query/special.js?cachebust=19730';
-import * as SVG from './svg.js?cachebust=19730';
-import Table from './table.js?cachebust=19730';
-import * as Numbers from './util/numbers.js?cachebust=19730';
-import * as Text from './util/text.js?cachebust=19730';
-import Typeahead from './util/typeahead.js?cachebust=19730';
+import { field2idx } from '../data/data.js?cachebust=85970';
+import Line from './graph/line.js?cachebust=85970';
+import Scatter from './graph/scatter.js?cachebust=85970';
+import Person from './person.js?cachebust=85970';
+import * as Examine from './query/examine.js?cachebust=85970';
+import * as Fields from './query/fields.js?cachebust=85970';
+import * as Modifiers from './query/modifiers.js?cachebust=85970';
+import * as Places from './query/places.js?cachebust=85970';
+import * as Special from './query/special.js?cachebust=85970';
+import * as SVG from './svg.js?cachebust=85970';
+import Table from './table.js?cachebust=85970';
+import * as Numbers from './util/numbers.js?cachebust=85970';
+import * as Text from './util/text.js?cachebust=85970';
+import Typeahead from './util/typeahead.js?cachebust=85970';
+
 
 let PlaceData;
 let Data;
@@ -419,13 +421,14 @@ function lineQuery(fips, field, modifier, field2, field3, examine) {
       toDo.push(fips);
     }
   }
+  let date_idx = field2idx('date');
   if (!examine) {
-    let fieldToDo = [{ f: field.f, t: field.shortText }];
+    let fieldToDo = [{ f: field.f, t: field.shortText, per: field.per }];
     if (field2.f) {
-      fieldToDo.push({ f: field2.f, t: field2.shortText });
+      fieldToDo.push({ f: field2.f, t: field2.shortText, per: field3.per });
     }
     if (field3.f) {
-      fieldToDo.push({ f: field3.f, t: field3.shortText });
+      fieldToDo.push({ f: field3.f, t: field3.shortText, per: field3.per });
     }
     for (let fld = 0; fld < fieldToDo.length; fld++) {
       for (let f = 0; f < toDo.length; f++) {
@@ -441,7 +444,7 @@ function lineQuery(fips, field, modifier, field2, field3, examine) {
             ret[i] = {};
             ret[i].x = arr[i][fieldToDo[fld].f];
           }
-          ret[i].date = arr[i].date;
+          ret[i].date = arr[i][date_idx];
         }
         retval.push({ fips: toDo[f], arr: ret, shortText: Text.firstCaps(fieldToDo[fld].t) });
       }
@@ -460,7 +463,7 @@ function lineQuery(fips, field, modifier, field2, field3, examine) {
           ret[i] = {};
           ret[i].x = arr[i][field.f];
         }
-        ret[i].date = arr[i].date;
+        ret[i].date = arr[i][date_idx];
       }
       retval.push({ fips: toDo[f], arr: ret, shortText: Text.firstCaps(field.shortText) });
     }
@@ -485,7 +488,7 @@ function lineQuery(fips, field, modifier, field2, field3, examine) {
         ret[i] = {};
         ret[i].x = 0;
         ret[i].count = 0;
-        ret[i].date = arr[i].date;
+        ret[i].date = arr[i][date_idx];
       }
       retval.push({ fips: f === 0 ? 'increasing' : 'decreasing', arr: ret, shortText: Text.firstCaps(field.shortText) });
     }

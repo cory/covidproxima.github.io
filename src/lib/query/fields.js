@@ -1,6 +1,9 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
+import { field2idx } from '../../data/data.js?cachebust=85970';
+
+
 let BaseTypes = {
   covidtime: { f: 'covidtime', text: 'days', average: false, units: '' },
   siptime: { f: 'siptime', text: 'days', average: false, units: '' },
@@ -167,7 +170,7 @@ export function helper(field) {
   let ret = {
     type: field.field,
     text: Types[field.field][field.value].text,
-    f: field.value,
+    f: field.field !== 'special' ? field2idx(field.value) : field.value,
     average: Types[field.field][field.value].average,
     upGood: Types[field.field][field.value].upGood,
     shortText: Types[field.field][field.value].shortText,
