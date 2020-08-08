@@ -22,6 +22,7 @@ on a [MacBook Pro](https://www.apple.com/macbook-pro-16/).
 * Shelter in place timelines: [here](https://www.nytimes.com/interactive/2020/us/coronavirus-stay-at-home-order.html) and [here](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html)
 * [zipcodes](https://www.census.gov/geographies/reference-files/time-series/geo/relationship-files.html)
 * [US voting data](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/UYSHST)
+* [US State mask requirements](https://www.aarp.org/health/healthy-living/info-2020/states-mask-mandates-coronavirus.html)
 
 # Errata
 

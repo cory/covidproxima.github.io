@@ -1,7 +1,7 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import Fetcher from './fetcher.js?cachebust=10579';
+import Fetcher from './fetcher.js?cachebust=13870';
 
 let PATH = '../../../posts/';
 
@@ -23,7 +23,7 @@ export default function doit(stories, cb) {
   }
   let fetching = [];
   for (let i = 0; i < stories.length; i++) {
-    fetching.push({ done: false, result: '', title: stories[i].title, file: stories[i].file });
+    fetching.push({ done: false, result: '', title: stories[i].title, date: stories[i].date, file: stories[i].file });
     Fetcher(PATH + stories[i].file + '.cmd', undefined, (text) => areWeDone(fetching, i, text, cb));
   }
 }

@@ -3,7 +3,7 @@
 
 let usData = {};
 
-export default function ProcessNYTData(placeData, d, ShelterData) {
+export default function ProcessNYTData(placeData, d) {
   // skip header row
   for (let r = 1; r < d.length; r++) {
     let row = d[r].split(',');

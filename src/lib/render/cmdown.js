@@ -1,6 +1,10 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
+import * as Dates from '../util/dates.js?cachebust=13870';
+
+
+
 /*
 
 World's simplest markdown
@@ -53,6 +57,7 @@ function inlineMarkers(str, title, footnote) {
   str = str.replace(/\[(.+?)\]\((\#.+?)\)/g, '<a href="$2">$1</a>');
   str = str.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
   str = str.replace(/\[(text)\s?(\d+)\]/g, '<span class="result r$2"></span>');
+  str = str.replace(/\[(people)\s?(\d+)\]/g, '<span class="result r$2"></span>');
   str = str.replace(/\[(map)\s?(\d+)\]/g, '<span class="r$2"></span>');
   str = str.replace(/\[(line)\s?(\d+)\]/g, '<canvas class="r$2"></canvas>');
   str = str.replace(/\[(scatter)\s?(\d+)\]/g, '<div class="scatter r$2"></div>');
@@ -66,9 +71,8 @@ function inlineMarkers(str, title, footnote) {
   return str;
 }
 
-function firstChar(arr, wrap, footnote, title, fn) {
+function firstChar(arr, wrap, footnote, link_title, fn) {
   fn = fn ? fn : 0;
-  let link_title = title ? title.replace(/\s/g, '-') : '';
   if (link_title) {
     link_title += '.';
   }
@@ -262,10 +266,14 @@ function firstChar(arr, wrap, footnote, title, fn) {
   return { arr: retArr, footnote: fnArr.length + fn };
 }
 
-export default function render(src, wrap, footnote, path, fn) {
+export default function render(src, wrap, footnote, path, fn, fname, date) {
   src = src ? src : '';
   src = escape(src);
   let arr = breakIntoLines(src);
+  path = path ? path.replace(/\s/g, '-') : '';
+  let title = 'posts.' + fname;
+  let link = date ? '<a class="datelink" href="#' + title + '">' + Dates.prettyPrint(date) + '</a>\n' : '';
   let retval = firstChar(arr, wrap, footnote, path, fn);
+  retval.arr.splice(wrap ? 1 : 0, 0, link);
   return { html: merge(retval.arr), footnote: retval.footnote };
 }

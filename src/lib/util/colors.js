@@ -41,7 +41,7 @@ function setSVGColors() {
 export let LineColors = {}
 
 function setLineColors() {
-  for (let i in { background: true, shelter: true, zero: true, level: true, guide: true, bad: true, base: true, box: true }) {
+  for (let i in { background: true, shelter: true, masked: true, zero: true, level: true, guide: true, bad: true, base: true, box: true }) {
     LineColors[i] = Colors['--graph-' + i];
   }
   for (let i = 0; i < 6; i++) {

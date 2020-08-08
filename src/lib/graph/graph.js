@@ -1,9 +1,9 @@
 // (c) Cory Ondrejka 2020
 'use strict'
-import * as PlaceData from '../../data/data.js?cachebust=10579';
-import * as Dates from '../util/dates.js?cachebust=10579';
-import * as Numbers from '../util/numbers.js?cachebust=10579';
-import * as Text from '../util/text.js?cachebust=10579';
+import * as PlaceData from '../../data/data.js?cachebust=13870';
+import * as Dates from '../util/dates.js?cachebust=13870';
+import * as Numbers from '../util/numbers.js?cachebust=13870';
+import * as Text from '../util/text.js?cachebust=13870';
 
 const offset = 4;
 const twiceOffset = 2 * offset;
@@ -56,7 +56,7 @@ export function initScatter(el, arr) {
   return { tx: tx, ty: ty };
 }
 
-export function initMulti(el, set, alignWithUS, field) {
+export function initMulti(el, set, alignWithUS, stack, nolog, field) {
   el.parentElement.className = 'graphic';
   field = field ? field : 'x';
   let computed = getComputedStyle(el.parentElement);
@@ -70,6 +70,17 @@ export function initMulti(el, set, alignWithUS, field) {
   let tx = [];
   let ty = [];
   let derivs = [];
+  if (stack) {
+    for (let s = 1; s < set.length; s++) {
+      let arr = set[s].arr;
+      let arr_prev = set[s - 1].arr;
+      for (let i = arr.length - 1; i >= 0; i--) {
+        if (arr_prev[i][field]) {
+          arr[i][field] += arr_prev[i][field];
+        }
+      }
+    }
+  }
   for (let s = 0; s < set.length; s++) {
     let der = [];
     let dir = 0;
@@ -94,7 +105,7 @@ export function initMulti(el, set, alignWithUS, field) {
     derivs.push(der);
   }
   let log = false;
-  if (max >= 0 && min >= 0 && Math.abs(max / Math.max(1, Math.abs(min))) > 100000) {
+  if (!nolog && max >= 0 && min >= 0 && Math.abs(max / Math.max(1, Math.abs(min))) > 100000) {
     log = true;
   }
   for (let s = 0; s < set.length; s++) {
@@ -146,7 +157,7 @@ export function init2d(el, arr, fieldx, fieldy) {
   return { ctx: el.getContext("2d"), min: minx, max: maxx, tx: tx, ty: ty };
 }
 
-export function addLabelsLine(el, zeroY, topY, topValue, keys, colors, set, ranges, tx, idx) {
+export function addLabelsLine(el, zeroY, topY, topValue, keys, colors, set, ranges, tx, idx, stack) {
   let existing = el.parentElement.getElementsByClassName('glabel');
   for (let i = 0; i < existing.length; i++) {
     el.parentElement.removeChild(existing[i]);
@@ -182,10 +193,14 @@ export function addLabelsLine(el, zeroY, topY, topValue, keys, colors, set, rang
 
   let endLabels = [];
   for (let s = 0; s < set.length; s++) {
+    let val = keys[s][0][2];
+    if (stack && s > 0) {
+      val -= keys[s - 1][0][2];
+    }
     endLabels.push({
       y: keys[s][0][3],
       s: s,
-      val: Numbers.prettyPrint(keys[s][0][2], true),
+      val: Numbers.prettyPrint(val, true),
       text: set[s].shortText + ' (' + ranges[s].text + ')'
     });
   }
@@ -244,8 +259,8 @@ export function addLabelsLine(el, zeroY, topY, topValue, keys, colors, set, rang
 
 export function drawBackground(ctx, w, h, colors, showShelter, fips, length, tx) {
   let start = 0;
-  let isSheltered = false;
   if (showShelter) {
+    let isSheltered = false;
     let shelter = PlaceData.getLockdownRange(fips);
     for (let i = 0; i < shelter.length; i++) {
       ctx.fillStyle = isSheltered ? colors.shelter : colors.background;
@@ -254,6 +269,16 @@ export function drawBackground(ctx, w, h, colors, showShelter, fips, length, tx)
       start = shelter[i] + length;
     }
     ctx.fillStyle = isSheltered ? colors.shelter : colors.background;
+    ctx.fillRect(tx(start), 0, w - tx(start), h);
+    let isMasked = false;
+    let mask = PlaceData.getMaskRange(fips);
+    for (let i = 0; i < mask.length; i++) {
+      ctx.fillStyle = isMasked ? colors.masked : colors.background;
+      ctx.fillRect(tx(start), 0, tx(length + mask[i]) - tx(start), h);
+      isMasked = !isMasked;
+      start = mask[i] + length;
+    }
+    ctx.fillStyle = isMasked ? colors.masked : colors.background;
     ctx.fillRect(tx(start), 0, w - tx(start), h);
   } else {
     ctx.fillStyle = colors.background;

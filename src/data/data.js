@@ -1,10 +1,11 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import GovernorData from './governor.js?cachebust=10579';
-import PlaceData from './placedata.js?cachebust=10579';
-import ProcessNYTData from './procnytdata.js?cachebust=10579';
-import ShelterData from './shelter.js?cachebust=10579';
+import GovernorData from './governor.js?cachebust=13870';
+import MaskData from './maskdata.js?cachebust=13870';
+import PlaceData from './placedata.js?cachebust=13870';
+import ProcessNYTData from './procnytdata.js?cachebust=13870';
+import ShelterData from './shelter.js?cachebust=13870';
 
 function newPlace(daily, demo) {
   let place = {
@@ -98,6 +99,24 @@ export function getLockdownRange(fips) {
   return retval;
 }
 
+export function getMaskRange(fips) {
+  if (!Places[fips]) {
+    return [];
+  }
+  let place = Places[Places[fips].state];
+  let retval = [];
+  let mask = false;
+  if (place) {
+    for (let i = 0; i < place.daily.length; i++) {
+      if (place.daily[i].masked !== undefined && place.daily[i].masked !== mask) {
+        retval.push(i - place.daily.length);
+        mask = place.daily[i].masked;
+      }
+    }
+  }
+  return retval;
+}
+
 export function usDays() {
   return Places['united states'].daily.length;
 }
@@ -106,11 +125,12 @@ const COVID_DURATION = 28;
 const COVID_INFECTION_ONSET = 6;
 const COVID_CASE_MULTIPLE = 5;
 
-const FIELDS = { deaths: true, cases: true, recoveries: true, activeCases: true, probableCases: true, cfr: true, cir: true, crr: true, cvr: true, p20: true, p50: true, p10: true, p10m: true, p20m: true, p50m: true };
+const FIELDS = { deaths: true, cases: true, recoveries: true, activeCases: true, probableCases: true, pfr: true, cfr: true, cir: true, crr: true, cvr: true, p20: true, p50: true, p10: true, p10m: true, p20m: true, p50m: true };
 const SUM_FIELDS = { deaths: true, cases: true, recoveries: true, activeCases: true, probableCases: true };
 
 function calculatedFields(entry, place) {
   entry.cfr = entry.cases ? entry.deaths / entry.cases : 0;
+  entry.pfr = entry.deaths / place.population;
   entry.cir = entry.activeCases / place.population;
   entry.crr = entry.recoveries / place.population;
   entry.cvr = 1 - entry.cir - entry.crr;
@@ -137,12 +157,27 @@ function isSheltered(state, date, ShelterData) {
   return shelter;
 }
 
+function isMasked(state, date, MaskData) {
+  if (!MaskData[state]) {
+    return false;
+  }
+  let masked = false;
+  for (let i = 0; i < MaskData[state].length; i++) {
+    let d = MaskData[state][i].date;
+    if (date < d) {
+      return masked;
+    }
+    masked = MaskData[state][i].mask;
+  }
+  return masked;
+}
+
 export function fips2county(fips) {
   return Places[fips] ? Places[fips].county : '';
 }
 
 export function BuildData(data) {
-  let usData = ProcessNYTData(PlaceData.fips, data.split(/\r?\n/), ShelterData);
+  let usData = ProcessNYTData(PlaceData.fips, data.split(/\r?\n/));
   let stateTotals = {};
   let usTotals = {};
 
@@ -183,7 +218,8 @@ export function BuildData(data) {
         if (!stateTotals[state][date]) {
           stateTotals[state][date] = {
             date: date,
-            sheltered: isSheltered(state, date, ShelterData)
+            sheltered: isSheltered(state, date, ShelterData),
+            masked: isMasked(state, date, MaskData),
           };
           for (let val in FIELDS) {
             stateTotals[state][date][val] = 0;

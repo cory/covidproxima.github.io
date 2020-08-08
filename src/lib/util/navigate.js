@@ -1,9 +1,9 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Posts from '../posts/posts.js?cachebust=10579';
-import Cmdown from '../render/cmdown.js?cachebust=10579';
-import Load from './load.js?cachebust=10579';
+import * as Posts from '../posts/posts.js?cachebust=13870';
+import Cmdown from '../render/cmdown.js?cachebust=13870';
+import Load from './load.js?cachebust=13870';
 
 export default function go(path, rootEl, cb) {
   let stories = Posts.path2stories(path);
@@ -14,7 +14,7 @@ export default function go(path, rootEl, cb) {
       let fg = document.createElement('div');
       fg.className = 'block';
       rootEl.appendChild(fg);
-      let data = Cmdown(arr[i].result, 'story', 'footnote', (path && path[0] ? path[0] : ''), footnote);
+      let data = Cmdown(arr[i].result, 'story', 'footnote', (path && path[0] ? path[0] : ''), footnote, arr[i].file, arr[i].date);
       let div = document.createElement('div');
       fg.appendChild(div);
       div.outerHTML = data.html;

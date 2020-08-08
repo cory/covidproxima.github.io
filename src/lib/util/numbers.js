@@ -33,6 +33,6 @@ export function prettyPrint(number, tight, useWords) {
   if (number >= 1 || number <= 0) {
     return useWords ? words(number) : parseInt(number).toLocaleString();
   } else {
-    return prettyPrintFraction(number, tight);
+    return tight ? prettyPrintFraction(number, tight) : prettyPrintFraction(number, tight) + ' (' + prettyPrintFraction(number, true) + ')';
   }
 }

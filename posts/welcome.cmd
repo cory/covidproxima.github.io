@@ -1,6 +1,8 @@
 // (c) Cory Ondrejka 2020
 
-As of [text 1], in the United States:
+COVID PROXIMA is an exploration of COVID-19's impact on the United States.
+You can check whether [groups](#posts.groups) are likely to include infectious people or
+[how many](#posts.howmany) people near you are infectious. As of [text 1], in the United States:
 * [text 5] people have tested positive for COVID-19
 * [text 7] are currently infectious
 * There is a [text 8] chance that a 20-person gathering has one or more infectious people

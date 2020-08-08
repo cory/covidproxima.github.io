@@ -1,14 +1,14 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Colors from '../util/colors.js?cachebust=10579';
-import * as Graph from './graph.js?cachebust=10579';
+import * as Colors from '../util/colors.js?cachebust=13870';
+import * as Graph from './graph.js?cachebust=13870';
 
 
-export default function draw(el, set, ranges) {
+export default function draw(el, set, ranges, stack, nolog) {
   let colors = Colors.LineColors;
-  let graph = Graph.initMulti(el, set, true);
-  Graph.drawBackgroundMulti(graph.ctx, el.width, el.height, colors, true, set, graph.tx);
+  let graph = Graph.initMulti(el, set, true, stack, nolog);
+  Graph.drawBackgroundMulti(graph.ctx, el.width, el.height, colors, set.length === 1, set, graph.tx);
   Graph.drawZero(graph.ctx, el.width, colors, graph.ty[0]);
   Graph.drawAxes(graph.ctx, el.width, el.height, colors);
   let lineSpacing;
@@ -49,11 +49,7 @@ export default function draw(el, set, ranges) {
   let topY = Graph.drawLevels(graph.ctx, el.width, el.height, len, colors, graph.tx[idx], graph.ty[idx], lines);
   let keys = Graph.drawKeyDerivs(graph.ctx, set, el.height, colors, graph.tx, graph.ty, graph.derivs);
   for (let i = 0; i < set.length; i++) {
-    if (set.length === 1) {
-      Graph.drawSmoothedLine(graph.ctx, set[i].arr, { line: colors['line1'], box: colors['box'] }, graph.tx[i], graph.ty[i], 1, 2);
-    } else {
-      Graph.drawLine(graph.ctx, set[i].arr, { line: colors['line' + i] }, graph.tx[i], graph.ty[i], 1, 2);
-    }
+    Graph.drawLine(graph.ctx, set[i].arr, { line: colors['line' + i] }, graph.tx[i], graph.ty[i], 1, 2);
   }
-  Graph.addLabelsLine(el, zeroY, topY, topValue, keys, colors, set, ranges, graph.tx, idx);
+  Graph.addLabelsLine(el, zeroY, topY, topValue, keys, colors, set, ranges, graph.tx, idx, stack);
 }

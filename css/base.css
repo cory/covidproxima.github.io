@@ -49,7 +49,8 @@ html {
   --graph-line4:#ff51ab;
   --graph-line5:#bebe00;
   --graph-background:#080206;
-  --graph-shelter:#042201;
+  --graph-shelter:#043201;
+  --graph-masked:#010442;
   --graph-zero:#aa8159;
   --graph-level:#442200;
   --graph-guide:#ffc199;
@@ -76,24 +77,21 @@ body {
 
 h1 {
   font-weight: 700;
-  font-size: 150%;
+  font-size: 200%;
   color: var(--white-text);
-  padding-top: 0.5em;
   line-height: 1.5em;
 }
 
 h2 {
   font-weight: 400;
-  font-size: 125%;
-  padding-top: 0.5em;
+  font-size: 155%;
   color: var(--white-text);
   line-height: 1.5em;
 }
 
 h3 {
   font-weight: 400;
-  font-size: 100%;
-  padding-top: 0.5em;
+  font-size: 125%;
   color: var(--white-text);
   line-height: 1.5em;
 }
@@ -101,7 +99,6 @@ h3 {
 h4 {
   font-weight: 200;
   font-size: 100%;
-  padding-top: 0.5em;
   color: var(--white-text);
   line-height: 1.5em;
 }
@@ -116,7 +113,6 @@ h4 {
 .covidsubtitle {
   font-weight: 400;
   font-family: "Times New Roman", serif;
-  font-size: 125%;
   padding-top: 0.9%;
   color: var(--white-text);
 }
@@ -153,6 +149,11 @@ ul {
 .entry {
   color: var(--dark-text);
   border-bottom: var(--dark-text) 1px dashed;
+  cursor: pointer;
+}
+
+.entry::after {
+  content: " \25BC "
 }
 
 .fakeentry {
@@ -164,7 +165,7 @@ ul {
   opacity: 0;
   transition: opacity 0.5s ease-in;
   width: 98%;
-  margin-bottom: 5%;
+  margin-bottom: 1%;
   padding: 1% 0% 1% 1%;
   justify-content: left;
   position: relative;
@@ -176,7 +177,7 @@ p {
   line-height: 1.5em;
 }
 
-p + p, p + h1, p + h2, p + h3, p + h4, ol + p, ul + p {
+canvas + p, a + p, p + p, p + h1, p + h2, p + h3, p + h4, ol + p, ul + p {
   margin-top: 1.5em;
 }
 
@@ -242,11 +243,22 @@ input:focus {
   justify-content: flex-start;
 }
 
+.hlegend {
+  line-height: 2em;
+  padding-top: 2em;
+  font-size: 70%;
+}
+
 .legendrow {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1em;
   background-color: black;
+}
+
+.side {
+  font-size: 30%;
+  padding-top: 3em;
 }
 
 .cbox {
@@ -457,7 +469,7 @@ input:focus {
   text-align: left;
   flex-direction: column;
   position: absolute;
-  top: 110%;
+  top: 120%;
   left: 1%;
 }
 
@@ -490,6 +502,7 @@ input:focus {
 .story {
   width: 625px;
   margin: auto;
+  margin-top: 1.5em;
 }
 .footnote {
   width: 500px;
@@ -497,4 +510,8 @@ input:focus {
 }
 .col {
   width: 100%;
+}
+
+.person {
+  position: relative;
 }

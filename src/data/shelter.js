@@ -4,11 +4,15 @@
 let ShelterData = {
   alabama: [
     { date: '2020-04-05', shelter: true },
-    { date: '2020-05-01', shelter: false }
+    { date: '2020-05-01', shelter: false },
+    { date: '2020-07-29', shelter: true }
   ],
   alaska: [
     { date: '2020-03-28', shelter: true },
     { date: '2020-04-24', shelter: false }
+  ],
+  arkansas: [
+    { date: '2020-07-20', shelter: true }
   ],
   arizona: [
     { date: '2020-03-31', shelter: true },
@@ -26,7 +30,8 @@ let ShelterData = {
   ],
   connecticut: [
     { date: '2020-03-23', shelter: true },
-    { date: '2020-05-20', shelter: false }
+    { date: '2020-05-20', shelter: false },
+    { date: '2020-07-07', shelter: true },
   ],
   deleware: [
     { date: '2020-03-24', shelter: true },
@@ -71,11 +76,13 @@ let ShelterData = {
   ],
   kentucky: [
     { date: '2020-03-26', shelter: true },
-    { date: '2020-05-20', shelter: false }
+    { date: '2020-05-20', shelter: false },
+    { date: '2020-07-28', shelter: true },
   ],
   louisiana: [
     { date: '2020-03-23', shelter: true },
-    { date: '2020-05-15', shelter: false }
+    { date: '2020-05-15', shelter: false },
+    { date: '2020-07-28', shelter: true },
   ],
   maine: [
     { date: '2020-04-02', shelter: true },
@@ -83,7 +90,8 @@ let ShelterData = {
   ],
   maryland: [
     { date: '2020-03-30', shelter: true },
-    { date: '2020-05-15', shelter: false }
+    { date: '2020-05-15', shelter: false },
+    { date: '2020-07-29', shelter: true },
   ],
   massachusetts: [
     { date: '2020-03-24', shelter: true },
@@ -91,7 +99,8 @@ let ShelterData = {
   ],
   michigan: [
     { date: '2020-03-24', shelter: true },
-    { date: '2020-05-28', shelter: false }
+    { date: '2020-05-28', shelter: false },
+    { date: '2020-07-29', shelter: true },
   ],
   minnesota: [
     { date: '2020-03-27', shelter: true },
@@ -99,7 +108,8 @@ let ShelterData = {
   ],
   mississippi: [
     { date: '2020-04-03', shelter: true },
-    { date: '2020-04-27', shelter: false }
+    { date: '2020-04-27', shelter: false },
+    { date: '2020-07-23', shelter: true },
   ],
   missouri: [
     { date: '2020-04-06', shelter: true },
@@ -115,7 +125,8 @@ let ShelterData = {
   ],
   nevada: [
     { date: '2020-04-01', shelter: true },
-    { date: '2020-05-09', shelter: false }
+    { date: '2020-05-09', shelter: false },
+    { date: '2020-07-28', shelter: true },
   ],
   'new hampshire': [
     { date: '2020-03-27', shelter: true },
@@ -127,7 +138,8 @@ let ShelterData = {
   ],
   'new mexico': [
     { date: '2020-03-24', shelter: true },
-    { date: '2020-05-31', shelter: false }
+    { date: '2020-05-31', shelter: false },
+    { date: '2020-07-24', shelter: true },
   ],
   'new york': [
     { date: '2020-03-22', shelter: true },

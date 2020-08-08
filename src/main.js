@@ -1,16 +1,16 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Data from './data/data.js?cachebust=10579';
-import Animate from './lib/animate.js?cachebust=10579';
-import * as DomQuery from './lib/domquery.js?cachebust=10579';
-import Archive from './lib/render/archive.js?cachebust=10579';
-import States from './lib/render/states.js?cachebust=10579';
-import * as SVG from './lib/svg.js?cachebust=10579';
-import * as Colors from './lib/util/colors.js?cachebust=10579';
-import Fetcher from './lib/util/fetcher.js?cachebust=10579';
-import Navigate from './lib/util/navigate.js?cachebust=10579';
-import * as Router from './lib/util/router.js?cachebust=10579';
+import * as Data from './data/data.js?cachebust=13870';
+import Animate from './lib/animate.js?cachebust=13870';
+import * as DomQuery from './lib/domquery.js?cachebust=13870';
+import Archive from './lib/render/archive.js?cachebust=13870';
+import States from './lib/render/states.js?cachebust=13870';
+import * as SVG from './lib/svg.js?cachebust=13870';
+import * as Colors from './lib/util/colors.js?cachebust=13870';
+import Fetcher from './lib/util/fetcher.js?cachebust=13870';
+import Navigate from './lib/util/navigate.js?cachebust=13870';
+import * as Router from './lib/util/router.js?cachebust=13870';
 
 let gData;
 
@@ -33,6 +33,13 @@ function updateProgress(txt) {
   progress.textContent = 'Reading ' + txt + ' bytes from the New York Times on GitHub';
 }
 
+function updateNavLinks() {
+  let nav = document.getElementById('navbar');
+  let child = document.createElement('div');
+  child.innerHTML = Archive('side');
+  nav.appendChild(child);
+}
+
 Fetcher('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv',
   updateProgress,
   (data) => {
@@ -45,6 +52,7 @@ Fetcher('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-count
         SVG.queryToColorsAndViewPort(BackgroundSVG, { f: 'cir', text: '' }, null, gData);
         loadingComplete();
       });
+      updateNavLinks();
       let home = (path) => {
         Navigate(path, div, () => {
           DomQuery.init(Data, gData);
@@ -66,7 +74,7 @@ Fetcher('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-count
         }, 0);
       };
       let archive = () => {
-        div.innerHTML = Archive();
+        div.innerHTML = Archive('story');
       };
       let states = (path) => {
         div.innerHTML = States(path);
