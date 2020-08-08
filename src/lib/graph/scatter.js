@@ -1,7 +1,7 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Graph from './graph.js?cachebust=55020';
+import * as Graph from './graph.js?cachebust=44302';
 
 export default function draw(el, arr) {
   let colors = {

@@ -1,10 +1,10 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import Animate from './animate.js?cachebust=55020';
-import Sparkline from './graph/sparkline.js?cachebust=55020';
-import * as Numbers from './util/numbers.js?cachebust=55020';
-import * as Text from './util/text.js?cachebust=55020';
+import Animate from './animate.js?cachebust=44302';
+import Sparkline from './graph/sparkline.js?cachebust=44302';
+import * as Numbers from './util/numbers.js?cachebust=44302';
+import * as Text from './util/text.js?cachebust=44302';
 
 const upTriangle = '▴';
 const downTriangle = '▾';
