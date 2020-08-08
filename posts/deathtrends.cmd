@@ -13,15 +13,14 @@ spike back in April and May. Those early counties are generally declining today,
 counties that didn't contribute to deaths earlier are now growing rapidly.
 
 Another way to cut it is to look at how many counties were showing increasing or decreasing
-weekly deaths. What is surprising is that throughout the pandemic in the US, more US counties
-have seen increasing weekly death totals than declining.
+weekly deaths. What is surprising is for the majority of pandemic -- including the early
+reopnings -- more US counties has increasing weekly death rates than decreasing.
 
 [line 2]
 
 Why hasn't that been obvious? Because the contribution of the increasing versus decreasing counties
 had been so dominated by the early counties -- New York and the Northeast -- that it obscured the breadth
-of growth across the rest of the US. In addition, until the current surge started, while weekly death rates
-in the rest of the US were increasing, the rate of increase was slowing.
+of growth across the rest of the US.
 
 
 [1 result type:line; field:time; value:w_deaths; places:united states; examine:field;]

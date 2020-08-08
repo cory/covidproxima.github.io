@@ -1,11 +1,11 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import GovernorData from './governor.js?cachebust=87226';
-import MaskData from './maskdata.js?cachebust=87226';
-import PlaceData from './placedata.js?cachebust=87226';
-import ProcessNYTData from './procnytdata.js?cachebust=87226';
-import ShelterData from './shelter.js?cachebust=87226';
+import GovernorData from './governor.js?cachebust=55020';
+import MaskData from './maskdata.js?cachebust=55020';
+import PlaceData from './placedata.js?cachebust=55020';
+import ProcessNYTData from './procnytdata.js?cachebust=55020';
+import ShelterData from './shelter.js?cachebust=55020';
 
 let DATA_IDX = {
   date: 0,
@@ -305,56 +305,61 @@ export function BuildData(data) {
         if (!stateTotals[state]) {
           stateTotals[state] = {};
         }
+
         if (!stateTotals[state][date]) {
           stateTotals[state][date] = [];
-          stateTotals[state][date][DATA_IDX.date] = date;
-          stateTotals[state][date][DATA_IDX.sheltered] = isSheltered(state, date, ShelterData);
-          stateTotals[state][date][DATA_IDX.masked] = isMasked(state, date, MaskData);
+          let sdt = stateTotals[state][date];
+          sdt[DATA_IDX.date] = date;
+          sdt[DATA_IDX.sheltered] = isSheltered(state, date, ShelterData);
+          sdt[DATA_IDX.masked] = isMasked(state, date, MaskData);
           for (let val in FIELDS) {
             let idx = field2idx(val);
             let d_idx = field2idx('d_' + val);
             let w_idx = field2idx('w_' + val);
             let wow_idx = field2idx('wow_' + val);
-            stateTotals[state][date][idx] = 0;
-            stateTotals[state][date][d_idx] = 0;
-            stateTotals[state][date][w_idx] = 0;
-            stateTotals[state][date][wow_idx] = 0;
+            sdt[idx] = 0;
+            sdt[d_idx] = 0;
+            sdt[w_idx] = 0;
+            sdt[wow_idx] = 0;
           }
         }
+        let sdt = stateTotals[state][date];
         for (let val in SUM_FIELDS) {
           let idx = field2idx(val);
           let d_idx = field2idx('d_' + val);
           let w_idx = field2idx('w_' + val);
           let wow_idx = field2idx('wow_' + val);
-          stateTotals[state][date][idx] += di[idx];
-          stateTotals[state][date][d_idx] += di[d_idx];
-          stateTotals[state][date][w_idx] += di[w_idx];
-          stateTotals[state][date][wow_idx] += di[wow_idx];
+          sdt[idx] += di[idx];
+          sdt[d_idx] += di[d_idx];
+          sdt[w_idx] += di[w_idx];
+          sdt[wow_idx] += di[wow_idx];
         }
 
         if (!usTotals[date]) {
           usTotals[date] = [];
-          usTotals[date][DATA_IDX.date] = date;
+          let ustd = usTotals[date];
+          ustd[DATA_IDX.date] = date;
           for (let val in FIELDS) {
             let idx = field2idx(val);
             let d_idx = field2idx('d_' + val);
             let w_idx = field2idx('w_' + val);
             let wow_idx = field2idx('wow_' + val);
-            usTotals[date][idx] = 0;
-            usTotals[date][d_idx] = 0;
-            usTotals[date][w_idx] = 0;
-            usTotals[date][wow_idx] = 0;
+            ustd[idx] = 0;
+            ustd[d_idx] = 0;
+            ustd[w_idx] = 0;
+            ustd[wow_idx] = 0;
           }
         }
+        let ustd = usTotals[date];
         for (let val in SUM_FIELDS) {
           let idx = field2idx(val);
           let d_idx = field2idx('d_' + val);
           let w_idx = field2idx('w_' + val);
           let wow_idx = field2idx('wow_' + val);
-          usTotals[date][idx] += di[idx];
-          usTotals[date][d_idx] += di[d_idx];
-          usTotals[date][w_idx] += di[w_idx];
-          usTotals[date][wow_idx] += di[wow_idx];
+          ustd[idx] += di[idx];
+          ustd[d_idx] += di[d_idx];
+          ustd[w_idx] += di[w_idx];
+          ustd[wow_idx] += di[wow_idx];
         }
         if (GovernorData[state]) {
           place.govrepublican = PlaceData.fips[state].govrepublican = GovernorData[state].republican;
