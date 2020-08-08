@@ -1,11 +1,11 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import GovernorData from './governor.js?cachebust=98128';
-import MaskData from './maskdata.js?cachebust=98128';
-import PlaceData from './placedata.js?cachebust=98128';
-import ProcessNYTData from './procnytdata.js?cachebust=98128';
-import ShelterData from './shelter.js?cachebust=98128';
+import GovernorData from './governor.js?cachebust=87226';
+import MaskData from './maskdata.js?cachebust=87226';
+import PlaceData from './placedata.js?cachebust=87226';
+import ProcessNYTData from './procnytdata.js?cachebust=87226';
+import ShelterData from './shelter.js?cachebust=87226';
 
 let DATA_IDX = {
   date: 0,
@@ -42,8 +42,6 @@ let DATA_IDX = {
   d_p10m: 0,
   d_p20m: 0,
   d_p50m: 0,
-  d_sheltered: 0,
-  d_masked: 0,
   w_deaths: 0,
   w_recoveries: 0,
   w_activeCases: 0,
@@ -59,8 +57,6 @@ let DATA_IDX = {
   w_p10m: 0,
   w_p20m: 0,
   w_p50m: 0,
-  w_sheltered: 0,
-  w_masked: 0,
   wow_deaths: 0,
   wow_recoveries: 0,
   wow_activeCases: 0,
@@ -76,23 +72,25 @@ let DATA_IDX = {
   wow_p10m: 0,
   wow_p20m: 0,
   wow_p50m: 0,
-  wow_sheltered: 0,
-  wow_masked: 0,
 };
 
-let idx = 0;
+let FIELD_COUNT = 0;
 for (let i in DATA_IDX) {
-  DATA_IDX[i] = idx++;
+  DATA_IDX[i] = FIELD_COUNT++;
 }
 
 export function field2idx(field) {
-  return DATA_IDX[field];
+  if (DATA_IDX[field] !== undefined) {
+    return DATA_IDX[field];
+  } else {
+    return field;
+  }
 }
 
 function newPlace(daily, demo) {
   let dateIdx = field2idx('date');
   let place = {
-    daily: daily ? daily : [],
+    daily: daily ? daily : Float32Array(FIELD_COUNT),
     firstDate: daily ? daily[0][dateIdx] : '',
     lastDate: daily ? daily[daily.length - 1][dateIdx] : '',
     totals: {},
@@ -263,7 +261,6 @@ export function fips2county(fips) {
 
 export function BuildData(data) {
   let usData = ProcessNYTData(PlaceData.fips, data.split(/\r?\n/));
-  console.log(memorySizeOf(usData));
   let stateTotals = {};
   let usTotals = {};
 

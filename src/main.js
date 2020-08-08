@@ -1,16 +1,16 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Data from './data/data.js?cachebust=98128';
-import Animate from './lib/animate.js?cachebust=98128';
-import * as DomQuery from './lib/domquery.js?cachebust=98128';
-import Archive from './lib/render/archive.js?cachebust=98128';
-import States from './lib/render/states.js?cachebust=98128';
-import * as SVG from './lib/svg.js?cachebust=98128';
-import * as Colors from './lib/util/colors.js?cachebust=98128';
-import Fetcher from './lib/util/fetcher.js?cachebust=98128';
-import Navigate from './lib/util/navigate.js?cachebust=98128';
-import * as Router from './lib/util/router.js?cachebust=98128';
+import * as Data from './data/data.js?cachebust=87226';
+import Animate from './lib/animate.js?cachebust=87226';
+import * as DomQuery from './lib/domquery.js?cachebust=87226';
+import Archive from './lib/render/archive.js?cachebust=87226';
+import States from './lib/render/states.js?cachebust=87226';
+import * as SVG from './lib/svg.js?cachebust=87226';
+import * as Colors from './lib/util/colors.js?cachebust=87226';
+import Fetcher from './lib/util/fetcher.js?cachebust=87226';
+import Navigate from './lib/util/navigate.js?cachebust=87226';
+import * as Router from './lib/util/router.js?cachebust=87226';
 
 let gData;
 
@@ -49,7 +49,7 @@ Fetcher('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-count
       progress.textContent = 'Building query database';
       let div = document.getElementById('contentroot');
       BackgroundSVG = SVG.addViaID('background-map', 51117, null, null, () => {
-        SVG.queryToColorsAndViewPort(BackgroundSVG, { f: 'cir', text: '' }, null, gData);
+        SVG.queryToColorsAndViewPort(BackgroundSVG, { f: 8, text: '' }, null, gData);
         loadingComplete();
       });
       updateNavLinks();

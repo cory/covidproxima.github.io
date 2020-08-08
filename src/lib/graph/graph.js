@@ -1,9 +1,9 @@
 // (c) Cory Ondrejka 2020
 'use strict'
-import * as PlaceData from '../../data/data.js?cachebust=98128';
-import * as Dates from '../util/dates.js?cachebust=98128';
-import * as Numbers from '../util/numbers.js?cachebust=98128';
-import * as Text from '../util/text.js?cachebust=98128';
+import * as PlaceData from '../../data/data.js?cachebust=87226';
+import * as Dates from '../util/dates.js?cachebust=87226';
+import * as Numbers from '../util/numbers.js?cachebust=87226';
+import * as Text from '../util/text.js?cachebust=87226';
 
 const offset = 4;
 const twiceOffset = 2 * offset;
