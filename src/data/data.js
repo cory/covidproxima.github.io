@@ -1,11 +1,11 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import GovernorData from './governor.js?cachebust=85970';
-import MaskData from './maskdata.js?cachebust=85970';
-import PlaceData from './placedata.js?cachebust=85970';
-import ProcessNYTData from './procnytdata.js?cachebust=85970';
-import ShelterData from './shelter.js?cachebust=85970';
+import GovernorData from './governor.js?cachebust=98128';
+import MaskData from './maskdata.js?cachebust=98128';
+import PlaceData from './placedata.js?cachebust=98128';
+import ProcessNYTData from './procnytdata.js?cachebust=98128';
+import ShelterData from './shelter.js?cachebust=98128';
 
 let DATA_IDX = {
   date: 0,
@@ -260,49 +260,6 @@ function isMasked(state, date, MaskData) {
 export function fips2county(fips) {
   return Places[fips] ? Places[fips].county : '';
 }
-
-
-function memorySizeOf(obj) {
-  var bytes = 0;
-
-  function sizeOf(obj) {
-    if (obj !== null && obj !== undefined) {
-      switch (typeof obj) {
-        case 'number':
-          bytes += 8;
-          break;
-        case 'string':
-          bytes += obj.length * 2;
-          break;
-        case 'boolean':
-          bytes += 4;
-          break;
-        case 'object':
-          var objClass = Object.prototype.toString.call(obj).slice(8, -1);
-          if (objClass === 'Object') {
-            for (var key in obj) {
-              sizeOf(obj[key]) + sizeOf(key);
-            }
-          } else {
-            for (var key in obj) {
-              sizeOf(obj[key]);
-            }
-          }
-          break;
-      }
-    }
-    return bytes;
-  };
-
-  function formatByteSize(bytes) {
-    if (bytes < 1024) return bytes + " bytes";
-    else if (bytes < 1048576) return (bytes / 1024).toFixed(3) + " KiB";
-    else if (bytes < 1073741824) return (bytes / 1048576).toFixed(3) + " MiB";
-    else return (bytes / 1073741824).toFixed(3) + " GiB";
-  };
-
-  return formatByteSize(sizeOf(obj));
-};
 
 export function BuildData(data) {
   let usData = ProcessNYTData(PlaceData.fips, data.split(/\r?\n/));

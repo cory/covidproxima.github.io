@@ -1,16 +1,16 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Data from './data/data.js?cachebust=85970';
-import Animate from './lib/animate.js?cachebust=85970';
-import * as DomQuery from './lib/domquery.js?cachebust=85970';
-import Archive from './lib/render/archive.js?cachebust=85970';
-import States from './lib/render/states.js?cachebust=85970';
-import * as SVG from './lib/svg.js?cachebust=85970';
-import * as Colors from './lib/util/colors.js?cachebust=85970';
-import Fetcher from './lib/util/fetcher.js?cachebust=85970';
-import Navigate from './lib/util/navigate.js?cachebust=85970';
-import * as Router from './lib/util/router.js?cachebust=85970';
+import * as Data from './data/data.js?cachebust=98128';
+import Animate from './lib/animate.js?cachebust=98128';
+import * as DomQuery from './lib/domquery.js?cachebust=98128';
+import Archive from './lib/render/archive.js?cachebust=98128';
+import States from './lib/render/states.js?cachebust=98128';
+import * as SVG from './lib/svg.js?cachebust=98128';
+import * as Colors from './lib/util/colors.js?cachebust=98128';
+import Fetcher from './lib/util/fetcher.js?cachebust=98128';
+import Navigate from './lib/util/navigate.js?cachebust=98128';
+import * as Router from './lib/util/router.js?cachebust=98128';
 
 let gData;
 
