@@ -1,10 +1,10 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as PlaceData from '../../data/data.js?cachebust=35422';
-import * as Dates from '../util/dates.js?cachebust=35422';
-import * as Numbers from '../util/numbers.js?cachebust=35422';
-import * as Text from '../util/text.js?cachebust=35422';
+import * as PlaceData from '../../data/data.js?cachebust=24680';
+import * as Dates from '../util/dates.js?cachebust=24680';
+import * as Numbers from '../util/numbers.js?cachebust=24680';
+import * as Text from '../util/text.js?cachebust=24680';
 
 const baseOffset = 16;
 const twiceBaseOffset = 2 * baseOffset;
@@ -262,7 +262,8 @@ export function drawLines(parent, set, colors, txa, tya, tyloga, w, h, min, max,
         svg.push('<text x="' + (parent.mouseX - 1) + '" y="' + (50 + 40 * i) + '" font-size="50%" text-anchor="end" dominant-baseline="middle" fill="' + values[i][3] + '">' + values[i][2] + '</text>');
       }
     }
-    svg.push('<text id="log" x="' + zx + '" y="12" dominant-baseline="middle" fill="white" opacity="0.5">' + (parent.log ? 'log' : 'linear') + '</text>');
+    zy = parent.log ? tyloga[0](0) : tya[0](0);
+    svg.push('<text id="log" x="' + (zx - 1) + '" y="' + zy + '" dominant-baseline="middle" text-anchor="end" fill="white" opacity="0.5">' + (parent.log ? 'log' : 'linear') + '</text>');
   }
   svg.push('</svg>');
   el.innerHTML = svg.join('\n');

@@ -1,20 +1,20 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import { field2idx } from '../data/data.js?cachebust=35422';
-import Line from './graph/line.js?cachebust=35422';
-import Scatter from './graph/scatter.js?cachebust=35422';
-import Person from './person.js?cachebust=35422';
-import * as Examine from './query/examine.js?cachebust=35422';
-import * as Fields from './query/fields.js?cachebust=35422';
-import * as Modifiers from './query/modifiers.js?cachebust=35422';
-import * as Places from './query/places.js?cachebust=35422';
-import * as Special from './query/special.js?cachebust=35422';
-import * as SVG from './svg.js?cachebust=35422';
-import Table from './table.js?cachebust=35422';
-import * as Numbers from './util/numbers.js?cachebust=35422';
-import * as Text from './util/text.js?cachebust=35422';
-import Typeahead from './util/typeahead.js?cachebust=35422';
+import { field2idx } from '../data/data.js?cachebust=24680';
+import Line from './graph/line.js?cachebust=24680';
+import Scatter from './graph/scatter.js?cachebust=24680';
+import Person from './person.js?cachebust=24680';
+import * as Examine from './query/examine.js?cachebust=24680';
+import * as Fields from './query/fields.js?cachebust=24680';
+import * as Modifiers from './query/modifiers.js?cachebust=24680';
+import * as Places from './query/places.js?cachebust=24680';
+import * as Special from './query/special.js?cachebust=24680';
+import * as SVG from './svg.js?cachebust=24680';
+import Table from './table.js?cachebust=24680';
+import * as Numbers from './util/numbers.js?cachebust=24680';
+import * as Text from './util/text.js?cachebust=24680';
+import Typeahead from './util/typeahead.js?cachebust=24680';
 
 
 let PlaceData;
