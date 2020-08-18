@@ -1,10 +1,10 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as PlaceData from '../../data/data.js?cachebust=80336';
-import * as Dates from '../util/dates.js?cachebust=80336';
-import * as Numbers from '../util/numbers.js?cachebust=80336';
-import * as Text from '../util/text.js?cachebust=80336';
+import * as PlaceData from '../../data/data.js?cachebust=35422';
+import * as Dates from '../util/dates.js?cachebust=35422';
+import * as Numbers from '../util/numbers.js?cachebust=35422';
+import * as Text from '../util/text.js?cachebust=35422';
 
 const baseOffset = 16;
 const twiceBaseOffset = 2 * baseOffset;
@@ -253,7 +253,7 @@ export function drawLines(parent, set, colors, txa, tya, tyloga, w, h, min, max,
         let arrIdx = set[i].arr.length - delta;
         if (arrIdx >= 0) {
           let val = set[i].arr[set[i].arr.length - delta][field];
-          values.push([val, Numbers.prettyPrint(val, true), Text.firstCaps(ranges[i].text), colors['line' + i]]);
+          values.push([val, Numbers.prettyPrint(val, true), Text.firstCaps(set[i].shortText) + ' (' + Text.firstCaps(ranges[i].text) + ')', colors['line' + i]]);
         }
       }
       values.sort((a, b) => { return b[0] - a[0] });
@@ -274,6 +274,12 @@ export function drawLines(parent, set, colors, txa, tya, tyloga, w, h, min, max,
   if (parent.legend) {
     let el = parent.querySelector('svg');
     el.addEventListener('mousemove', (e) => {
+      if (parent.mouseX !== e.offsetX) {
+        parent.mouseX = e.offsetX;
+        redraw();
+      }
+    });
+    el.addEventListener('click', (e) => {
       if (parent.mouseX !== e.offsetX) {
         parent.mouseX = e.offsetX;
         redraw();

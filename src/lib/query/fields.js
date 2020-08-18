@@ -1,7 +1,7 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import { field2idx } from '../../data/data.js?cachebust=80336';
+import { field2idx } from '../../data/data.js?cachebust=35422';
 
 
 let BaseTypes = {
