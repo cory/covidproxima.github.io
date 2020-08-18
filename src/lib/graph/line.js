@@ -1,11 +1,18 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Colors from '../util/colors.js?cachebust=44302';
-import * as Graph from './graph.js?cachebust=44302';
+import * as Colors from '../util/colors.js?cachebust=80336';
+//import * as Graph from './graph.js?cachebust=80336';
+import * as Graph from './svggraph.js?cachebust=80336';
 
 
-export default function draw(el, set, ranges, stack, nolog) {
+export default function drawSVG(el, set, ranges, stack, nolog) {
+  let colors = Colors.LineColors;
+  let graph = Graph.initMulti(el, set, true, stack, 'x', true);
+  Graph.drawLines(el, set, colors, graph.tx, graph.ty, graph.ty_log, graph.w, graph.h, graph.min, graph.max, graph.idx, 'x', ranges);
+}
+
+function draw(el, set, ranges, stack, nolog) {
   let colors = Colors.LineColors;
   let graph = Graph.initMulti(el, set, true, stack, nolog);
   Graph.drawBackgroundMulti(graph.ctx, el.width, el.height, colors, set.length === 1, set, graph.tx);

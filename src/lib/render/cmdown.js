@@ -1,7 +1,7 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Dates from '../util/dates.js?cachebust=44302';
+import * as Dates from '../util/dates.js?cachebust=80336';
 
 
 
@@ -57,11 +57,11 @@ function inlineMarkers(str, title, footnote) {
   str = str.replace(/\[(.+?)\]\((\#.+?)\)/g, '<a href="$2">$1</a>');
   str = str.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
   str = str.replace(/\[(text)\s?(\d+)\]/g, '<span class="result r$2"></span>');
-  str = str.replace(/\[(people)\s?(\d+)\]/g, '<span class="result r$2"></span>');
+  str = str.replace(/\[(people)\s?(\d+)\]/g, '<div class="r$2"></div>');
   str = str.replace(/\[(map)\s?(\d+)\]/g, '<span class="r$2"></span>');
-  str = str.replace(/\[(line)\s?(\d+)\]/g, '<canvas class="r$2"></canvas>');
-  str = str.replace(/\[(scatter)\s?(\d+)\]/g, '<div class="scatter r$2"></div>');
-  str = str.replace(/\[(table)\s?(\d+)\s?(.*)\]/g, '<div class="r$2"><h4>$3</h4></div>');
+  str = str.replace(/\[(line)\s?(\d+)\]/g, '<div class="graphic r$2"></div>');
+  str = str.replace(/\[(scatter)\s?(\d+)\]/g, '<div class="graphic r$2"></div>');
+  str = str.replace(/\[(table)\s?(\d+)\s?(.*)\]/g, '<div class="graphic r$2"><h4>$3</h4></div>');
   str = str.replace(/\[(entry)\s?(\d+)\]/g, '<span class="entry e$2"></span>');
   str = str.replace(/(\s?)\[(\d+)\]/g, (full, a, b) => {
     let fn = Number(b) + footnote;

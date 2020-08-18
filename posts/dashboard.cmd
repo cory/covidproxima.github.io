@@ -2,6 +2,8 @@
 
 # COVID-19 Dashboard
 
+A collection of useful graphs and maps
+
 ## New cases and deaths this week
 [line 1]
 

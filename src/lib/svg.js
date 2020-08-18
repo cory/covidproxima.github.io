@@ -1,9 +1,10 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Places from './query/places.js?cachebust=44302';
-import * as Colors from './util/colors.js?cachebust=44302';
-import * as Numbers from './util/numbers.js?cachebust=44302';
+import * as Places from './query/places.js?cachebust=80336';
+import * as Colors from './util/colors.js?cachebust=80336';
+import * as Numbers from './util/numbers.js?cachebust=80336';
+import * as Text from './util/text.js?cachebust=80336';
 
 let SVGs = {};
 let Count = 0;
@@ -198,7 +199,7 @@ function legend(el, ranges, colors, shortText) {
   row.className = 'legendrow';
   let tbox = document.createElement('div');
   tbox.className = 'tbox';
-  tbox.textContent = shortText;
+  tbox.textContent = Text.firstCaps(shortText);
   row.appendChild(tbox);
   leg.appendChild(row);
   for (let i = ranges.length - 1; i >= 0; i--) {

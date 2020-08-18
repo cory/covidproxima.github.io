@@ -1,8 +1,8 @@
 // (c) Cory Ondrejka 2020
 'use strict'
-import * as Posts from '../posts/posts.js?cachebust=44302';
-import * as Dates from '../util/dates.js?cachebust=44302';
-import * as Text from '../util/text.js?cachebust=44302';
+import * as Posts from '../posts/posts.js?cachebust=80336';
+import * as Dates from '../util/dates.js?cachebust=80336';
+import * as Text from '../util/text.js?cachebust=80336';
 
 export default function archive(cname) {
   let posts = Posts.getPosts();
@@ -10,7 +10,7 @@ export default function archive(cname) {
   let retval = ['<div class="' + cname + '">'];
   for (let i = 0; i < posts.length; i++) {
     retval.push(
-      '<a href="#posts.' + posts[i].file + '"><b>' + Dates.prettyPrint(posts[i].date) + '</b><br /><h4>' + Text.firstCaps(posts[i].title) + '</h4></a><br a/>'
+      '<a class="datelink" href="#posts.' + posts[i].file + '">' + Dates.prettyPrint(posts[i].date) + '</a><h4>' + Text.firstCaps(posts[i].title) + '</h4><br />'
     );
   }
   retval.push('</div>');

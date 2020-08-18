@@ -4,7 +4,11 @@
 function prettyPrintFraction(number, tight) {
   let mult = 1;
   if (tight) {
-    return Math.round(number * 10000) / 100 + '%';
+    if (Math.round(number * 10000) / 100 !== 0) {
+      return Math.round(number * 10000) / 100 + '%';
+    } else {
+      return Math.round(number * 100000) / 1000 + '%';
+    }
   } else {
     while (mult <= 100000) {
       if (number <= 0.01) {

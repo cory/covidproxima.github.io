@@ -33,7 +33,7 @@ Get a list of counties ranked by the chosen statistic.
 
 [entry 16] in [entry 17] ([entry 18])
 
-[map 19]
+[table 19]
 
 
 ## Scatter

@@ -1,7 +1,7 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Graph from './graph.js?cachebust=44302';
+import * as Graph from './svggraph.js?cachebust=80336';
 
 export default function draw(el, arr) {
   let colors = {
@@ -15,5 +15,5 @@ export default function draw(el, arr) {
     label: '#aa8159',
   };
   let graph = Graph.initScatter(el, arr);
-  Graph.drawScatter(el, arr, { good: colors.good, bad: colors.bad }, graph.tx, graph.ty);
+  Graph.drawScatter(el, arr, colors, graph.tx, graph.ty, graph.w, graph.h);
 }

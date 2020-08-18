@@ -1,9 +1,9 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Colors from './util/colors.js?cachebust=44302';
-import * as Numbers from './util/numbers.js?cachebust=44302';
-import * as Text from './util/text.js?cachebust=44302';
+import * as Colors from './util/colors.js?cachebust=80336';
+import * as Numbers from './util/numbers.js?cachebust=80336';
+import * as Text from './util/text.js?cachebust=80336';
 
 function createDiv(l, t, w, h, br, bc) {
   let el = document.createElement('div');
@@ -71,8 +71,7 @@ function person(rootEl, count, colors) {
   container.style.position = 'relative';
   container.style.display = 'flex';
   container.style.flexWrap = 'wrap';
-  container.style.width = '140%';
-  container.style.marginLeft = '-20%';
+  container.style.width = '100%';
   if (!colors) {
     colors = [
       { color: '#f00', val: Math.random() },
@@ -100,12 +99,13 @@ function person(rootEl, count, colors) {
 
 function addLegend(el, fields, colors) {
   let leg = document.createElement('div');
-  leg.className = 'hlegend';
+  leg.className = 'legend';
   if (!fields) {
     fields = [undefined];
   }
   for (let i = fields.length - 1; i >= 0; i--) {
     let row = document.createElement('div');
+    row.className = 'legendrow';
     row.textContent = Text.firstCaps(fields[i].t + ': ' + Numbers.prettyPrint(fields[i].val));
     row.style.color = colors['line' + i];
     leg.appendChild(row);
@@ -122,6 +122,7 @@ export default function people(rootEl, values, count) {
     colors.push({ color: colorsList['line' + i], val: total });
     total -= values[i].val;
   }
+  rootEl.className = 'graphic';
   colors.push({ color: '#fff', val: total });
   person(rootEl, count ? count : 100, colors);
   addLegend(rootEl, values, colorsList);

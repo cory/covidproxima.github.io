@@ -1,9 +1,9 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Dates from '../util/dates.js?cachebust=44302';
-import * as Numbers from '../util/numbers.js?cachebust=44302';
-import * as Text from '../util/text.js?cachebust=44302';
+import * as Dates from '../util/dates.js?cachebust=80336';
+import * as Numbers from '../util/numbers.js?cachebust=80336';
+import * as Text from '../util/text.js?cachebust=80336';
 
 let specialQueries = {
   today: getDate,

@@ -1,9 +1,9 @@
 // (c) Cory Ondrejka 2020
 'use strict'
-import * as PlaceData from '../../data/data.js?cachebust=44302';
-import * as Dates from '../util/dates.js?cachebust=44302';
-import * as Numbers from '../util/numbers.js?cachebust=44302';
-import * as Text from '../util/text.js?cachebust=44302';
+import * as PlaceData from '../../data/data.js?cachebust=80336';
+import * as Dates from '../util/dates.js?cachebust=80336';
+import * as Numbers from '../util/numbers.js?cachebust=80336';
+import * as Text from '../util/text.js?cachebust=80336';
 
 const offset = 4;
 const twiceOffset = 2 * offset;
@@ -57,7 +57,7 @@ export function initScatter(el, arr) {
 }
 
 export function initMulti(el, set, alignWithUS, stack, nolog, field) {
-  el.parentElement.className = 'graphic';
+  el.parentElement.className = 'graphic_temp';
   field = field ? field : 'x';
   let computed = getComputedStyle(el.parentElement);
   el.className = '';
@@ -162,6 +162,10 @@ export function addLabelsLine(el, zeroY, topY, topValue, keys, colors, set, rang
   for (let i = 0; i < existing.length; i++) {
     el.parentElement.removeChild(existing[i]);
   }
+  existing = el.parentElement.getElementsByClassName('legend');
+  for (let i = 0; i < existing.length; i++) {
+    el.parentElement.removeChild(existing[i]);
+  }
   el.parentElement.style.position = 'relative';
   let div = document.createElement('div');
   div.className = 'glabel';
@@ -207,18 +211,19 @@ export function addLabelsLine(el, zeroY, topY, topValue, keys, colors, set, rang
 
   endLabels.sort((a, b) => { return a.y - b.y; });
   let ypos = 0;
+  let legend = document.createElement('div');
+  legend.className = 'legend';
+  el.parentElement.appendChild(legend);
   for (let i = 0; i < endLabels.length; i++) {
     label = document.createElement('div');
-    label.style.top = ypos + 'px';
     label.className = 'labelKeyYBig';
     label.style.color = colors['line' + endLabels[i].s];
-    label.style.marginLeft = el.width + 'px';
     label.textContent = endLabels[i].val;
     let subtext = document.createElement('div');
     subtext.className = 'labelKeyYSmall';
     subtext.textContent = endLabels[i].text;
     label.appendChild(subtext);
-    div.appendChild(label);
+    legend.appendChild(label);
     if (i < endLabels.length - 1) {
       ypos += el.height / 5;
     }

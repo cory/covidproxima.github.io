@@ -24,7 +24,8 @@ html {
   --bad-text:#ff4f40;
   --gray:#282226;
   --gray-text:#5f2109;
-  --background:#080206;
+  --background:#040103;
+  --graphic_background:#10080a;
   --graph-color0:#ff4f40;
   --graph-color1:#ff8040;
   --graph-color2:#ffa84e;
@@ -51,12 +52,13 @@ html {
   --graph-background:#080206;
   --graph-shelter:#043201;
   --graph-masked:#010442;
-  --graph-zero:#aa8159;
-  --graph-level:#442200;
+  --graph-zero:#aaa2a0;
+  --graph-level:#666260;
   --graph-guide:#ffc199;
   --graph-base:#f3f3f3;
   --graph-box:#a39393;
-  --left-offset: -150px;
+  --left-offset: 2%;
+  --vert-space: 1.5em;
 }
 
 body {
@@ -73,6 +75,15 @@ body {
   transition: opacity 1s ease-in;
   width: 100%;
   margin: auto;
+}
+
+h1, h2, h3, h4, p, ol, ul, .datelink {
+  width: 625px;
+  margin: auto;
+}
+
+.datelink {
+  display: block;
 }
 
 h1 {
@@ -124,11 +135,11 @@ h4 {
 }
 
 ol {
-  margin-left: 2em;
+  padding-left: 2em;
 }
 
 ol li {
-  margin-top: 2em;
+  margin-top: var(--vert-space);
 }
 
 sup {
@@ -178,7 +189,7 @@ p {
 }
 
 canvas + p, a + p, p + p, p + h1, p + h2, p + h3, p + h4, ol + p, ul + p {
-  margin-top: 1.5em;
+  margin-top: var(--vert-space);
 }
 
 li {
@@ -187,9 +198,24 @@ li {
   line-height: 1.25em;
 }
 
-.graphic {
-  width: 800px;
-  margin-left: var(--left-offset);
+.graphic, .svggraphic {
+  position: relative;
+  width: 96%;
+  padding: var(--left-offset);
+  background-color: var(--graphic_background);
+}
+
+.graphic_temp {
+  width: auto;
+  display: block;
+  padding: var(--left-offset);
+  padding-left: 100px;
+  background-color: var(--graphic_background);
+}
+
+.svggraphic {
+  height: 600px;
+  margin-top: var(--vert-space);
 }
 
 input:focus {
@@ -207,7 +233,7 @@ input:focus {
 
 .pu {
   position: absolute;
-  margin-top: -.25em;
+  margin-top: var(--vert-space);
   padding: 0.25em;
   border: none;
   height: 2em;
@@ -236,11 +262,11 @@ input:focus {
 }
 
 .legend {
-  position: absolute;
-  top: 0px;
-  padding-left: 105%;
+  position: relative;
   font-size: 80%;
-  justify-content: flex-start;
+  display: flex;
+  padding-top: 1em;
+  justify-content: center;
 }
 
 .hlegend {
@@ -251,6 +277,8 @@ input:focus {
 
 .legendrow {
   display: flex;
+  padding-left: 1em;
+  padding-right: 1em;
   justify-content: space-between;
   margin-bottom: 1em;
   background-color: black;
@@ -275,15 +303,13 @@ input:focus {
   color: var(--dark-text);
   margin-bottom: 1%;
   font-size: 75%;
-  width: 800px;
-  margin-left: var(--left-offset);
   border: 1px solid var(--light-text);
   padding: 0.5em;
 }
 
 .theader {
   font-size: 80%;
-  margin-top: -1em;
+  margin-top: var(--vert-space);
   padding-bottom: 0.1em;
   display: flex;
   border-bottom: 1px solid var(--light-text);
@@ -291,7 +317,7 @@ input:focus {
 
 .tscroll {
   overflow-y: auto;
-  margin-top: 0.25em;
+  margin-top: var(--vert-space);
 }
 
 .trow {
@@ -357,7 +383,7 @@ input:focus {
   position: absolute;
   right: 100%;
   padding: 0.5em;
-  margin-top: -1em;
+  margin-top: var(--vert-space);
   color: var(--light-text);
 }
 
@@ -373,7 +399,6 @@ input:focus {
 .labelKeyYBig {
   font-size: 80%;
   font-weight: 400;
-  position: absolute;
   line-height: 1.1em;
   text-align: left;
   white-space: nowrap;
@@ -392,7 +417,7 @@ input:focus {
   top: 100%;
   font-size: 50%;
   padding: 0 0.5em 0 0.5em;
-  margin-top: 1.0em;
+  margin-top: var(--vert-space);
   line-height: 1em;
   color: var(--white-text);
   border-right: 1px solid var(--white-text);
@@ -432,10 +457,7 @@ input:focus {
   visibility: visible;
 }
 
-.scatter {
-  position: relative;
-  width: 880px;
-  height: 625px;
+.grapharea {
   border-left: 1px solid var(--white-text);
   border-bottom: 1px solid var(--white-text);
 }
@@ -450,7 +472,7 @@ input:focus {
   width: 100%; 
   padding-top: 63%;
   vertical-align: middle; 
-  margin-top: 1em;
+  margin-top: var(--vert-space);
   margin-bottom: 1em;
 }
 
@@ -500,13 +522,10 @@ input:focus {
   padding-bottom: 4em;
 }
 .story {
-  width: 625px;
-  margin: auto;
-  margin-top: 1.5em;
+  margin-top: var(--vert-space);
 }
 .footnote {
-  width: 500px;
-  margin: auto;
+  margin-top: var(--vert-space);
 }
 .col {
   width: 100%;
@@ -514,4 +533,23 @@ input:focus {
 
 .person {
   position: relative;
+}
+
+.opacityZero {
+  opacity: 0.0;
+}
+
+.opacityFifty {
+  opacity: 0.5;
+}
+
+.graphText, .circle {
+  transition: opacity 0.25s ease-in;
+}
+
+.overlay {
+  position: absolute;
+  height: 100%;
+  top: 0px;
+  border-left: 1px solid white;
 }
