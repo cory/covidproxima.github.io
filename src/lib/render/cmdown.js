@@ -1,7 +1,7 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Dates from '../util/dates.js?cachebust=24680';
+import * as Dates from '../util/dates.js?cachebust=17067';
 
 
 
@@ -54,8 +54,8 @@ const BACK_FROM_FN_TEXT = 'bfn';
 
 function inlineMarkers(str, title, footnote) {
   str = str.replace(/(\*)(\S+?|\S.+?\S)(\*)/g, '<strong>$2</strong>');
-  str = str.replace(/\[(.+?)\]\((\#.+?)\)/g, '<a href="$2">$1</a>');
-  str = str.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  str = str.replace(/\[([^[]+?)\]\((\#.+?)\)/g, '<a href="$2">$1</a>');
+  str = str.replace(/\[([^[]+?)\]\((.+?)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
   str = str.replace(/\[(text)\s?(\d+)\]/g, '<span class="result r$2"></span>');
   str = str.replace(/\[(people)\s?(\d+)\]/g, '<div class="r$2"></div>');
   str = str.replace(/\[(map)\s?(\d+)\]/g, '<span class="r$2"></span>');

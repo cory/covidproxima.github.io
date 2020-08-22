@@ -4,13 +4,14 @@
 
 My best guess is that [text 1] people are infectious right now. Put another way, that's [text 5]. What are my assumptions?
 
-Based on [CDC Planning Scenarious](https://www.cdc.gov/coronavirus/2019-ncov/hcp/planning-scenarios.html) and public statements:
+Based on [CDC Planning Scenarios](https://www.cdc.gov/coronavirus/2019-ncov/hcp/planning-scenarios.html) and public statements:
 * *30-50%* of infected people are asymptomatic
+* [New York City](https://www.nytimes.com/2020/08/19/nyregion/new-york-city-antibody-test.html?referringSource=articleShare) testing showed anitbody rates higher than that CDC estimate (*added on 22 August 2020*)
 * Serology tests aren't reliable yet, but a significant multiple of detected cases are the actual probably case count, so currently using *5 times* the case count for probable cases
 * Median time between exposure and symptoms is *6 days*
 * Median time from symptom onset to death is *22 days*
-
-Start with *probably cases*, which is positive test results times 5. In the US, that number is currently [text 2].
+a
+Start with *probable cases*, which is positive test results times 8 (*changed from 5 on 22 August 2020 because of NYC data*). In the US, that number is currently [text 2].
 Then, compute *recoveries*, probably cases from 22 days ago minus current deaths ([text 6]), currently [text 3].
 Currently *infectious people* is then probable cases from 6 days ago minus current recoveries.
 

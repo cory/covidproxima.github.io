@@ -1,9 +1,9 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Colors from '../util/colors.js?cachebust=24680';
-//import * as Graph from './graph.js?cachebust=24680';
-import * as Graph from './svggraph.js?cachebust=24680';
+import * as Colors from '../util/colors.js?cachebust=17067';
+//import * as Graph from './graph.js?cachebust=17067';
+import * as Graph from './svggraph.js?cachebust=17067';
 
 
 export default function drawSVG(el, set, ranges, stack, nolog) {

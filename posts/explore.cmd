@@ -35,6 +35,17 @@ Get a list of counties ranked by the chosen statistic.
 
 [table 19]
 
+Get a list of states ranked by the chosen statistic.
+
+[entry 24] in [entry 25] ([entry 26])
+
+[table 23]
+
+## People chart
+
+Show the recovered, currently infected, and dead out of total population for [entry 19].
+
+[people 20]
 
 ## Scatter
 
@@ -73,4 +84,14 @@ Even more experimental than the rest.
 [16 entry field:totals; value:p50m; title:select;]
 [17 entry places:statesUp; value:united states; title:type place or zipcode;]
 [18 entry modifier:true; value:overall; title:select;]
+
+[20 result type:people; field:time; value:deaths; field2:e21; field3:e22; places:e19; modifier:pc; count:1000;]
+[19 entry places:statesUp; value:united states; title:type place or zipcode;]
+[21 entry field:time; value:activeCases;]
+[22 entry field:time; value:recoveries;]
+
+[23 result type:table; field:e24; places:e25; modifier:e26; delta:true; count:10; states:true;]
+[24 entry field:totals; value:p50m; title:select;]
+[25 entry places:statesUp; value:united states; title:type place or zipcode;]
+[26 entry modifier:true; value:overall; title:select;]
 

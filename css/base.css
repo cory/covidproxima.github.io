@@ -188,7 +188,7 @@ p {
   line-height: 1.5em;
 }
 
-canvas + p, a + p, p + p, p + h1, p + h2, p + h3, p + h4, ol + p, ul + p {
+canvas + p, a + p, p + p, p + h1, p + h2, p + h3, p + h4, ol + p, ul + p, ul + h1, ol + h1 {
   margin-top: var(--vert-space);
 }
 

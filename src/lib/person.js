@@ -1,9 +1,9 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Colors from './util/colors.js?cachebust=24680';
-import * as Numbers from './util/numbers.js?cachebust=24680';
-import * as Text from './util/text.js?cachebust=24680';
+import * as Colors from './util/colors.js?cachebust=17067';
+import * as Numbers from './util/numbers.js?cachebust=17067';
+import * as Text from './util/text.js?cachebust=17067';
 
 function createDiv(l, t, w, h, br, bc) {
   let el = document.createElement('div');
@@ -115,6 +115,7 @@ function addLegend(el, fields, colors) {
 
 
 export default function people(rootEl, values, count) {
+  rootEl.innerHTML = '';
   let colorsList = Colors.LineColors;
   let colors = [];
   let total = 1;

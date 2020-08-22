@@ -23,6 +23,7 @@ on a [MacBook Pro](https://www.apple.com/macbook-pro-16/).
 * [zipcodes](https://www.census.gov/geographies/reference-files/time-series/geo/relationship-files.html)
 * [US voting data](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/UYSHST)
 * [US State mask requirements](https://www.aarp.org/health/healthy-living/info-2020/states-mask-mandates-coronavirus.html)
+* [New York City antibody rates](https://www.nytimes.com/2020/08/19/nyregion/new-york-city-antibody-test.html?referringSource=articleShare)
 
 # Errata
 
