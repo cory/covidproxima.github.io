@@ -1,10 +1,10 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as PlaceData from '../../data/data.js?cachebust=54836';
-import * as Dates from '../util/dates.js?cachebust=54836';
-import * as Numbers from '../util/numbers.js?cachebust=54836';
-import * as Text from '../util/text.js?cachebust=54836';
+import * as PlaceData from '../../data/data.js?cachebust=98130';
+import * as Dates from '../util/dates.js?cachebust=98130';
+import * as Numbers from '../util/numbers.js?cachebust=98130';
+import * as Text from '../util/text.js?cachebust=98130';
 
 const baseOffset = 16;
 const twiceBaseOffset = 2 * baseOffset;
@@ -238,9 +238,11 @@ export function drawLines(parent, set, colors, txa, tya, tyloga, w, h, min, max,
     }
   }
   if (parent.legend) {
-    if (!parent.mouseX || parent.mouseX < legend_w) {
+    if (!parent.mouseX) {
       parent.mouseX = w - legend_r;
     }
+
+    parent.mouseX = Math.max(legend_w, Math.min(w - legend_r, parent.mouseX));
     svg.push('<polyline fill="none" stroke="' + colors.zero + '" stroke-width="2" points="');
     svg.push(parent.mouseX + ', ' + top);
     svg.push(parent.mouseX + ', ' + bottom + '"/>');
@@ -265,8 +267,10 @@ export function drawLines(parent, set, colors, txa, tya, tyloga, w, h, min, max,
       svg.push('<text x="' + (parent.mouseX) + '" y="' + (50 + 40 * i) + '" font-size="50%" text-anchor="start" dominant-baseline="middle" fill="' + values[i][3] + '">' + values[i][2] + '</text>');
     }
     zy = parent.log ? tyloga[0](0) : tya[0](0);
-    svg.push('<text id="log" x="' + (zx - 1) + '" y="' + (zy - 20) + '" dominant-baseline="middle" font-size="75%" text-anchor="end" fill="white" opacity="' + (parent.log ? 1.0 : 0.5) + '">log</text>');
-    svg.push('<text id="log" x="' + (zx - 1) + '" y="' + zy + '" dominant-baseline="middle" font-size="75%" text-anchor="end" fill="white" opacity="' + (parent.log ? 0.5 : 1.0) + '">linear</text>');
+    svg.push('<g id="log">');
+    svg.push('<text x="' + (zx - 1) + '" y="' + (zy - 20) + '" dominant-baseline="middle" font-size="75%" text-anchor="end" fill="white" opacity="' + (parent.log ? 1.0 : 0.5) + '">log</text>');
+    svg.push('<text x="' + (zx - 1) + '" y="' + zy + '" dominant-baseline="middle" font-size="75%" text-anchor="end" fill="white" opacity="' + (parent.log ? 0.5 : 1.0) + '">linear</text>');
+    svg.push('</g>');
   }
   svg.push('</svg>');
   el.innerHTML = svg.join('\n');
@@ -278,13 +282,13 @@ export function drawLines(parent, set, colors, txa, tya, tyloga, w, h, min, max,
   if (parent.legend) {
     let el = parent.querySelector('svg');
     el.addEventListener('mousemove', (e) => {
-      if (parent.mouseX !== e.offsetX) {
+      if (e.offsetX >= legend_w && parent.mouseX !== e.offsetX) {
         parent.mouseX = e.offsetX;
         redraw();
       }
     });
     el.addEventListener('click', (e) => {
-      if (parent.mouseX !== e.offsetX) {
+      if (e.offsetX >= legend_w && parent.mouseX !== e.offsetX) {
         parent.mouseX = e.offsetX;
         redraw();
       }
