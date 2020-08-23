@@ -10,12 +10,14 @@ Based on [CDC Planning Scenarios](https://www.cdc.gov/coronavirus/2019-ncov/hcp/
 * Serology tests aren't reliable yet, but a significant multiple of detected cases are the actual probably case count, so currently using *5 times* the case count for probable cases
 * Median time between exposure and symptoms is *6 days*
 * Median time from symptom onset to death is *22 days*
-a
+
 Start with *probable cases*, which is positive test results times 8 (*changed from 5 on 22 August 2020 because of NYC data*). In the US, that number is currently [text 2].
 Then, compute *recoveries*, probably cases from 22 days ago minus current deaths ([text 6]), currently [text 3].
 Currently *infectious people* is then probable cases from 6 days ago minus current recoveries.
 
 [line 4]
+
+Another option to back check this is to look at this recent paper [estimating unobserved covid cases](https://www.pnas.org/content/early/2020/08/20/2005476117). It estimates approximately 100,000 covid infections by early March, about 2-3 weeks earlier than my graphs move, but fairly consistent with my delayed assumptions described above. I am most certainly not an epidemiologist, so the goal is to stay roughly within an order of magnitude.
 
 [1 result type:text; field:time; value:activeCases; places:united states; modifier:overall;]
 [2 result type:text; field:time; value:probableCases; places:united states; modifier:overall;]

@@ -1,14 +1,15 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as PlaceData from '../../data/data.js?cachebust=17067';
-import * as Dates from '../util/dates.js?cachebust=17067';
-import * as Numbers from '../util/numbers.js?cachebust=17067';
-import * as Text from '../util/text.js?cachebust=17067';
+import * as PlaceData from '../../data/data.js?cachebust=54836';
+import * as Dates from '../util/dates.js?cachebust=54836';
+import * as Numbers from '../util/numbers.js?cachebust=54836';
+import * as Text from '../util/text.js?cachebust=54836';
 
 const baseOffset = 16;
 const twiceBaseOffset = 2 * baseOffset;
-const legend_w = 100;
+const legend_w = 75;
+const legend_r = 150;
 
 function setupGraphArea() {
   let html = ['<div style="display:flex;width:100%;height:100%" />'];
@@ -83,7 +84,7 @@ export function initMulti(root, set, alignWithUS, stack, field, legend) {
     derivs.push(der);
   }
   let offset = legend ? legend_w : baseOffset;
-  let twiceOffset = legend ? offset + baseOffset : 2 * offset;
+  let twiceOffset = legend ? legend_w + legend_r : 2 * baseOffset;;
 
   for (let s = 0; s < set.length; s++) {
     let arr = set[s].arr;
@@ -237,33 +238,35 @@ export function drawLines(parent, set, colors, txa, tya, tyloga, w, h, min, max,
     }
   }
   if (parent.legend) {
-    if (parent.mouseX >= legend_w) {
-      svg.push('<polyline fill="none" stroke="' + colors.zero + '" stroke-width="2" points="');
-      svg.push(parent.mouseX + ', ' + top);
-      svg.push(parent.mouseX + ', ' + bottom + '"/>');
-      svg.push('<rect x="' + (parent.mouseX - 200) + '" width="199" y="' + top + '" height="' + (bottom - top) + '" opacity="70%" />');
-      let arrIdx = Math.round((parent.mouseX - legend_w) / (w - legend_w - baseOffset) * set[idx].arr.length);
-      arrIdx = Math.min(arrIdx, set[idx].arr.length - 1);
-      arrIdx = Math.max(arrIdx, 0);
-      let delta = set[idx].arr.length - arrIdx;
-      let date = Dates.prettyPrint(set[idx].arr[arrIdx].date, true);
-      svg.push('<text x="' + (parent.mouseX - 1) + '" y="12" font-size="50%" text-anchor="end" dominant-baseline="middle" fill="' + colors.level + '">' + date + '</text>');
-      let values = [];
-      for (let i = 0; i < set.length; i++) {
-        let arrIdx = set[i].arr.length - delta;
-        if (arrIdx >= 0) {
-          let val = set[i].arr[set[i].arr.length - delta][field];
-          values.push([val, Numbers.prettyPrint(val, true), Text.firstCaps(set[i].shortText) + ' (' + Text.firstCaps(ranges[i].text) + ')', colors['line' + i]]);
-        }
-      }
-      values.sort((a, b) => { return b[0] - a[0] });
-      for (let i = 0; i < values.length; i++) {
-        svg.push('<text x="' + (parent.mouseX - 1) + '" y="' + (30 + 40 * i) + '" text-anchor="end" dominant-baseline="middle" fill="' + values[i][3] + '">' + values[i][1] + '</text>');
-        svg.push('<text x="' + (parent.mouseX - 1) + '" y="' + (50 + 40 * i) + '" font-size="50%" text-anchor="end" dominant-baseline="middle" fill="' + values[i][3] + '">' + values[i][2] + '</text>');
+    if (!parent.mouseX || parent.mouseX < legend_w) {
+      parent.mouseX = w - legend_r;
+    }
+    svg.push('<polyline fill="none" stroke="' + colors.zero + '" stroke-width="2" points="');
+    svg.push(parent.mouseX + ', ' + top);
+    svg.push(parent.mouseX + ', ' + bottom + '"/>');
+    svg.push('<rect x="' + (parent.mouseX) + '" width="199" y="' + top + '" height="' + (bottom - top) + '" opacity="70%" />');
+    let arrIdx = Math.round((parent.mouseX - legend_w) / (w - legend_w - baseOffset) * set[idx].arr.length);
+    arrIdx = Math.min(arrIdx, set[idx].arr.length - 1);
+    arrIdx = Math.max(arrIdx, 0);
+    let delta = set[idx].arr.length - arrIdx;
+    let date = Dates.prettyPrint(set[idx].arr[arrIdx].date, true);
+    svg.push('<text x="' + (parent.mouseX - 1) + '" y="12" font-size="50%" text-anchor="start" dominant-baseline="middle" fill="' + colors.level + '">' + date + '</text>');
+    let values = [];
+    for (let i = 0; i < set.length; i++) {
+      let arrIdx = set[i].arr.length - delta;
+      if (arrIdx >= 0) {
+        let val = set[i].arr[set[i].arr.length - delta][field];
+        values.push([val, Numbers.prettyPrint(val, true), Text.firstCaps(set[i].shortText) + ' (' + Text.firstCaps(ranges[i].text) + ')', colors['line' + i]]);
       }
     }
+    values.sort((a, b) => { return b[0] - a[0] });
+    for (let i = 0; i < values.length; i++) {
+      svg.push('<text x="' + (parent.mouseX) + '" y="' + (30 + 40 * i) + '" text-anchor="start" dominant-baseline="middle" fill="' + values[i][3] + '">' + values[i][1] + '</text>');
+      svg.push('<text x="' + (parent.mouseX) + '" y="' + (50 + 40 * i) + '" font-size="50%" text-anchor="start" dominant-baseline="middle" fill="' + values[i][3] + '">' + values[i][2] + '</text>');
+    }
     zy = parent.log ? tyloga[0](0) : tya[0](0);
-    svg.push('<text id="log" x="' + (zx - 1) + '" y="' + zy + '" dominant-baseline="middle" text-anchor="end" fill="white" opacity="0.5">' + (parent.log ? 'log' : 'linear') + '</text>');
+    svg.push('<text id="log" x="' + (zx - 1) + '" y="' + (zy - 20) + '" dominant-baseline="middle" font-size="75%" text-anchor="end" fill="white" opacity="' + (parent.log ? 1.0 : 0.5) + '">log</text>');
+    svg.push('<text id="log" x="' + (zx - 1) + '" y="' + zy + '" dominant-baseline="middle" font-size="75%" text-anchor="end" fill="white" opacity="' + (parent.log ? 0.5 : 1.0) + '">linear</text>');
   }
   svg.push('</svg>');
   el.innerHTML = svg.join('\n');

@@ -287,6 +287,11 @@ input:focus {
 .side {
   font-size: 30%;
   padding-top: 3em;
+  width: 100px;
+}
+
+.side > h4 {
+  width: auto;
 }
 
 .cbox {
