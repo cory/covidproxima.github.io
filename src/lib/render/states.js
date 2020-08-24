@@ -1,9 +1,9 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Places from '../../data/data.js?cachebust=98130';
-import Cmdown from '../render/cmdown.js?cachebust=98130';
-import * as Text from '../util/text.js?cachebust=98130';
+import * as Places from '../../data/data.js?cachebust=46662';
+import Cmdown from '../render/cmdown.js?cachebust=46662';
+import * as Text from '../util/text.js?cachebust=46662';
 
 export default function states(path) {
   if (path[1] || path[2]) {
@@ -20,6 +20,8 @@ export default function states(path) {
     text.push('* [text 7] people died in the last week\n');
     text.push('* [text 8] new positive tests\n');
     text.push('* [text 9] current case fatality rate\n');
+    text.push('#### Recovered, currently infectious, and deaths\n');
+    text.push('[people 10]\n');
     text.push('[text 1] [entry 2] ([entry 3])\n');
     text.push('[map 4]\n');
     if (!path[2]) {
@@ -35,6 +37,9 @@ export default function states(path) {
     text.push('[7 result type:text; field:time; value:w_deaths; places:' + location + ';]')
     text.push('[8 result type:text; field:time; value:w_cases; places:' + location + ';]')
     text.push('[9 result type:text; field:time; value:cfr; places:' + location + ';]')
+    text.push('[10 result type:people; field:time; value:deaths; field2:e11; field3:e12; places:' + location + '; modifier:pc; count:1000;]')
+    text.push('[11 entry field:time; value:activeCases;]')
+    text.push('[12 entry field:time; value:recoveries;]')
     let data = Cmdown(text.join('\n'), 'story', 'footnote', 'States');
     return data.html;
   } else {
