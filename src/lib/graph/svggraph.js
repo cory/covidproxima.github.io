@@ -1,10 +1,10 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as PlaceData from '../../data/data.js?cachebust=46662';
-import * as Dates from '../util/dates.js?cachebust=46662';
-import * as Numbers from '../util/numbers.js?cachebust=46662';
-import * as Text from '../util/text.js?cachebust=46662';
+import * as PlaceData from '../../data/data.js?cachebust=02822';
+import * as Dates from '../util/dates.js?cachebust=02822';
+import * as Numbers from '../util/numbers.js?cachebust=02822';
+import * as Text from '../util/text.js?cachebust=02822';
 
 const baseOffset = 16;
 const twiceBaseOffset = 2 * baseOffset;
@@ -239,7 +239,7 @@ export function drawLines(parent, set, colors, txa, tya, tyloga, w, h, min, max,
   }
   if (parent.legend) {
     if (!parent.mouseX) {
-      parent.mouseX = w - legend_r;
+      parent.mouseX = w;
     }
 
     parent.mouseX = Math.max(legend_w, Math.min(w - legend_r, parent.mouseX));
@@ -247,7 +247,7 @@ export function drawLines(parent, set, colors, txa, tya, tyloga, w, h, min, max,
     svg.push(parent.mouseX + ', ' + top);
     svg.push(parent.mouseX + ', ' + bottom + '"/>');
     svg.push('<rect x="' + (parent.mouseX) + '" width="199" y="' + top + '" height="' + (bottom - top) + '" opacity="70%" />');
-    let arrIdx = Math.round((parent.mouseX - legend_w) / (w - legend_w - baseOffset) * set[idx].arr.length);
+    let arrIdx = Math.round((parent.mouseX - legend_w) / (w - legend_w - legend_r) * set[idx].arr.length);
     arrIdx = Math.min(arrIdx, set[idx].arr.length - 1);
     arrIdx = Math.max(arrIdx, 0);
     let delta = set[idx].arr.length - arrIdx;
