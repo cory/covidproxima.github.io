@@ -1,9 +1,9 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Colors from './util/colors.js?cachebust=02822';
-import * as Numbers from './util/numbers.js?cachebust=02822';
-import * as Text from './util/text.js?cachebust=02822';
+import * as Colors from './util/colors.js?cachebust=25154';
+import * as Numbers from './util/numbers.js?cachebust=25154';
+import * as Text from './util/text.js?cachebust=25154';
 
 function createDiv(l, t, w, h, br, bc) {
   let el = document.createElement('div');

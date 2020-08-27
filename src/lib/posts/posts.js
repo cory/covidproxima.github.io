@@ -19,6 +19,7 @@ const POSTS = {
     { file: 'cfrvspfr', title: 'case vs population fatality rates', date: '2020-08-05' },
     { file: 'sir', title: 'how far along are we?', date: '2020-08-07' },
     { file: 'antibody', title: 'nyc antibody testing', date: '2020-08-22' },
+    { file: 'fall', title: 'the fall surge begins', date: '2020-08-25' },
   ],
   data: [
     { file: 'dashboard', title: 'dashboard', date: '2020-07-03' },
