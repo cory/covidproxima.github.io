@@ -20,6 +20,7 @@ const POSTS = {
     { file: 'sir', title: 'how far along are we?', date: '2020-08-07' },
     { file: 'antibody', title: 'nyc antibody testing', date: '2020-08-22' },
     { file: 'fall', title: 'the fall surge begins', date: '2020-08-25' },
+    { file: 'rollercoaster', title: 'more fall cases', date: '2020-09-02' },
   ],
   data: [
     { file: 'dashboard', title: 'dashboard', date: '2020-07-03' },
