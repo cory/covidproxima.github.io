@@ -1,11 +1,11 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import GovernorData from './governor.js?cachebust=63217';
-import MaskData from './maskdata.js?cachebust=63217';
-import PlaceData from './placedata.js?cachebust=63217';
-import ProcessNYTData from './procnytdata.js?cachebust=63217';
-import ShelterData from './shelter.js?cachebust=63217';
+import GovernorData from './governor.js?cachebust=84598';
+import MaskData from './maskdata.js?cachebust=84598';
+import PlaceData from './placedata.js?cachebust=84598';
+import ProcessNYTData from './procnytdata.js?cachebust=84598';
+import ShelterData from './shelter.js?cachebust=84598';
 
 let DATA_IDX = {
   date: 0,
