@@ -20,6 +20,10 @@ Nor do those deaths appear to be ending.
 So, this is a big gamble with the lives of Florida's citizens. How much economic stimulus will opening up generate
 and will the excess deaths be worth it?
 
+For the curious, in that restaurant with 50 people? There's a [text 4] chance one of them is currently
+infectuous. Please be careful.
+
 [1 result type:text; field:totals; value:deaths; places:florida;]
 [2 result type:table; field:totals; value:w_deaths; places:united states; states:true;]
 [3 result type:line; field:totals; value:w_deaths; places:florida; hideparent:true;]
+[4 result type:text; field:totals; value:p50; places:florida;]
