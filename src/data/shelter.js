@@ -44,7 +44,8 @@ let ShelterData = {
   florida: [
     { date: '2020-04-03', shelter: true },
     { date: '2020-05-04', shelter: false },
-    { date: '2020-06-26', shelter: true }
+    { date: '2020-06-26', shelter: true },
+    { date: '2020-09-26', shelter: false }
   ],
   georgia: [
     { date: '2020-04-03', shelter: true },

@@ -22,6 +22,7 @@ const POSTS = {
     { file: 'fall', title: 'the fall surge begins', date: '2020-08-25' },
     { file: 'rollercoaster', title: 'more fall cases', date: '2020-09-02' },
     { file: 'ruralfall', title: 'rural cases', date: '2020-09-23' },
+    { file: 'deadlyflorida', title: 'the florida gamble', date: '2020-09-26' },
   ],
   data: [
     { file: 'dashboard', title: 'dashboard', date: '2020-07-03' },

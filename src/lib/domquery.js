@@ -1,20 +1,20 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import { field2idx } from '../data/data.js?cachebust=64291';
-import Line from './graph/line.js?cachebust=64291';
-import Scatter from './graph/scatter.js?cachebust=64291';
-import Person from './person.js?cachebust=64291';
-import * as Examine from './query/examine.js?cachebust=64291';
-import * as Fields from './query/fields.js?cachebust=64291';
-import * as Modifiers from './query/modifiers.js?cachebust=64291';
-import * as Places from './query/places.js?cachebust=64291';
-import * as Special from './query/special.js?cachebust=64291';
-import * as SVG from './svg.js?cachebust=64291';
-import Table from './table.js?cachebust=64291';
-import * as Numbers from './util/numbers.js?cachebust=64291';
-import * as Text from './util/text.js?cachebust=64291';
-import Typeahead from './util/typeahead.js?cachebust=64291';
+import { field2idx } from '../data/data.js?cachebust=00558';
+import Line from './graph/line.js?cachebust=00558';
+import Scatter from './graph/scatter.js?cachebust=00558';
+import Person from './person.js?cachebust=00558';
+import * as Examine from './query/examine.js?cachebust=00558';
+import * as Fields from './query/fields.js?cachebust=00558';
+import * as Modifiers from './query/modifiers.js?cachebust=00558';
+import * as Places from './query/places.js?cachebust=00558';
+import * as Special from './query/special.js?cachebust=00558';
+import * as SVG from './svg.js?cachebust=00558';
+import Table from './table.js?cachebust=00558';
+import * as Numbers from './util/numbers.js?cachebust=00558';
+import * as Text from './util/text.js?cachebust=00558';
+import Typeahead from './util/typeahead.js?cachebust=00558';
 
 
 let PlaceData;
@@ -234,7 +234,7 @@ function update(dp, force) {
           replace[r].value = { field: args.field.f, text: args.field.text, shortText: args.field.shortText, upGood: args.field.upGood, arr: placeDownQuery(args.places.fips, args.field, args.modifier, result.delta, result.states), count: result.count, delta: result.delta };
           break;
         case 'line':
-          replace[r].value = { text: args.field.text, shortText: args.field.shortText, stack: result.stack, nolog: result.nolog, lq: lineQuery(args.places.fips, args.field, args.modifier, args.field2, args.field3, args.examine.f) };
+          replace[r].value = { text: args.field.text, shortText: args.field.shortText, stack: result.stack, nolog: result.nolog, lq: lineQuery(args.places.fips, args.field, args.modifier, args.field2, args.field3, args.examine.f, result.hideparent) };
           break;
         case 'scatter':
           replace[r].value = { text: [args.field.text, args.field2.text], shortText: [args.field.shortText, args.field2.shortText], arr: scatterQuery(args.field, args.field2, args.modifier, result.states) };
@@ -402,7 +402,7 @@ function wrapNum(val, field) {
   }
 }
 
-function lineQuery(fips, field, modifier, field2, field3, examine) {
+function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
   let retval = [];
   let ranges = [];
   let toDo = [];
@@ -414,10 +414,14 @@ function lineQuery(fips, field, modifier, field2, field3, examine) {
     if (place.state === 'united states') {
       toDo.push('united states');
     } else if (place.state === place.county) {
-      toDo.push('united states');
+      if (!hideParent) {
+        toDo.push('united states');
+      }
       toDo.push(fips);
     } else {
-      toDo.push(place.state);
+      if (!hideParent) {
+        toDo.push(place.state);
+      }
       toDo.push(fips);
     }
   }
