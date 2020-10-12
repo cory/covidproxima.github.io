@@ -1,6 +1,6 @@
 // (c) Cory Ondrejka 2020
 'use strict'
-import * as Numbers from './numbers.js?cachebust=16058';
+import * as Numbers from './numbers.js?cachebust=80556';
 
 export default function fetcher(uri, progresscb, cb) {
   fetch(uri, { cache: "no-store" }).then((response) => {
