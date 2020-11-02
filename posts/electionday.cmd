@@ -38,8 +38,8 @@ with most the rapidly expanding infections in states that voted more republican 
 
 Please vote. Be careful.
 
-[1 result type:line; field:time; value:activeCases; places:florida,georgia,pennsylvania,north carolina; modifier:overall;]
-[2 result type:line; field:time; value:w_deaths; places:florida,georgia,pennsylvania,north carolina; modifier:overall;]
+[1 result type:line; field:time; value:activeCases; places:florida,georgia,pennsylvania,north carolina,arizona; modifier:overall;]
+[2 result type:line; field:time; value:w_deaths; places:florida,georgia,pennsylvania,north carolina,arizona; modifier:overall;]
 [3 result type:line; field:time; value:activeCases; places:texas,ohio,nevada,michigan; modifier:overall;]
 [4 result type:line; field:time; value:w_deaths; places:texas,ohio,nevada,michigan; modifier:overall;]
 [15 result type:scatter; field:e12; field2:e13; modifier:e14; states:1;]
