@@ -1,10 +1,10 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as PlaceData from '../../data/data.js?cachebust=69097';
-import * as Dates from '../util/dates.js?cachebust=69097';
-import * as Numbers from '../util/numbers.js?cachebust=69097';
-import * as Text from '../util/text.js?cachebust=69097';
+import * as PlaceData from '../../data/data.js?cachebust=55249';
+import * as Dates from '../util/dates.js?cachebust=55249';
+import * as Numbers from '../util/numbers.js?cachebust=55249';
+import * as Text from '../util/text.js?cachebust=55249';
 
 const baseOffset = 16;
 const twiceBaseOffset = 2 * baseOffset;
@@ -197,19 +197,21 @@ export function drawLines(parent, set, colors, txa, tya, tyloga, w, h, min, max,
     if (!step) {
       step = max;
     }
-    for (let i = step; i <= max; i += step) {
-      zy = parent.log ? tyloga[0](i) : tya[0](i);
-      svg.push('<polyline fill="none" stroke="' + colors.level + '" stroke-width="1" stroke-dasharray="2 2" points="');
-      svg.push(zx + ', ' + zy);
-      svg.push((w - 2) + ', ' + zy + '"/>');
-      svg.push('<text x="' + zx + '" y="' + zy + '" font-size="50%" dominant-baseline="middle" text-anchor="end" fill="' + colors.level + '">' + Numbers.prettyPrint(i, true) + '</text>');
-    }
-    for (let i = -step; i >= min; i -= step) {
-      zy = parent.log ? tyloga[0](i) : tya[0](i);
-      svg.push('<polyline fill="none" stroke="' + colors.level + '" stroke-width="1" stroke-dasharray="2 2" points="');
-      svg.push(zx + ', ' + zy);
-      svg.push((w - 2) + ', ' + zy + '"/>');
-      svg.push('<text x="' + zx + '" y="' + zy + '" font-size="50%" dominant-baseline="middle" text-anchor="end" fill="' + colors.level + '">' + Numbers.prettyPrint(i, true) + '</text>');
+    if (max > min) {
+      for (let i = step; i <= max; i += step) {
+        zy = parent.log ? tyloga[0](i) : tya[0](i);
+        svg.push('<polyline fill="none" stroke="' + colors.level + '" stroke-width="1" stroke-dasharray="2 2" points="');
+        svg.push(zx + ', ' + zy);
+        svg.push((w - 2) + ', ' + zy + '"/>');
+        svg.push('<text x="' + zx + '" y="' + zy + '" font-size="50%" dominant-baseline="middle" text-anchor="end" fill="' + colors.level + '">' + Numbers.prettyPrint(i, true) + '</text>');
+      }
+      for (let i = -step; i >= min; i -= step) {
+        zy = parent.log ? tyloga[0](i) : tya[0](i);
+        svg.push('<polyline fill="none" stroke="' + colors.level + '" stroke-width="1" stroke-dasharray="2 2" points="');
+        svg.push(zx + ', ' + zy);
+        svg.push((w - 2) + ', ' + zy + '"/>');
+        svg.push('<text x="' + zx + '" y="' + zy + '" font-size="50%" dominant-baseline="middle" text-anchor="end" fill="' + colors.level + '">' + Numbers.prettyPrint(i, true) + '</text>');
+      }
     }
   }
 

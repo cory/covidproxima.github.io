@@ -1,7 +1,7 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import { field2idx } from '../../data/data.js?cachebust=69097';
+import { field2idx } from '../../data/data.js?cachebust=55249';
 
 
 let BaseTypes = {
@@ -15,6 +15,7 @@ let BaseTypes = {
   recoveries: { f: 'recoveries', text: 'people have recovered', upGood: true, shortText: 'recovered', average: false, units: '', per: true },
   activeCases: { f: 'activeCases', text: 'people likely infectious', upGood: false, shortText: 'infectious', average: false, units: '', per: true },
   cfr: { f: 'cfr', text: 'case fatality rate', upGood: false, shortText: 'case fatality rate', average: true, units: '' },
+  ccfr: { f: 'ccfr', text: 'current case fatality rate', upGood: false, shortText: 'current case fatality rate', average: true, units: '' },
   pfr: { f: 'pfr', text: 'population fatality rate', upGood: false, shortText: 'population fatality rate', average: true, units: '' },
   p10: { f: 'p10', text: 'chance someone at a 10 person event is infectious', upGood: false, shortText: 'p10 infectious', average: true, units: '%' },
   p20: { f: 'p20', text: 'chance someone at a 20 person event is infectious', upGood: false, shortText: 'p20 infectious', average: true, units: '%' },
@@ -76,6 +77,7 @@ export let Types = {
     recoveries: BaseTypes.recoveries,
     activeCases: BaseTypes.activeCases,
     cfr: BaseTypes.cfr,
+    ccfr: BaseTypes.ccfr,
     pfr: BaseTypes.pfr,
     p10: BaseTypes.p10,
     p20: BaseTypes.p20,
@@ -112,6 +114,7 @@ export let Types = {
     recoveries: BaseTypes.recoveries,
     activeCases: BaseTypes.activeCases,
     cfr: BaseTypes.cfr,
+    ccfr: BaseTypes.ccfr,
     pfr: BaseTypes.pfr,
     p10: BaseTypes.p10,
     p20: BaseTypes.p20,
@@ -167,10 +170,18 @@ export let Types = {
 };
 
 export function helper(field) {
+  let modValue;
+  let shortValue = field.value;
+  let chopped = field.value.split('_');
+  if (chopped.length === 2) {
+    shortValue = chopped[1];
+    modValue = chopped[0];
+  }
   let ret = {
     type: field.field,
     text: Types[field.field][field.value].text,
-    f: field.field !== 'special' ? field2idx(field.value) : field.value,
+    f: field.field !== 'special' ? field2idx(shortValue) : shortValue,
+    modValue: modValue,
     average: Types[field.field][field.value].average,
     upGood: Types[field.field][field.value].upGood,
     shortText: Types[field.field][field.value].shortText,

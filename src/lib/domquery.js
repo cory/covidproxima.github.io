@@ -1,20 +1,20 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import { field2idx } from '../data/data.js?cachebust=69097';
-import Line from './graph/line.js?cachebust=69097';
-import Scatter from './graph/scatter.js?cachebust=69097';
-import Person from './person.js?cachebust=69097';
-import * as Examine from './query/examine.js?cachebust=69097';
-import * as Fields from './query/fields.js?cachebust=69097';
-import * as Modifiers from './query/modifiers.js?cachebust=69097';
-import * as Places from './query/places.js?cachebust=69097';
-import * as Special from './query/special.js?cachebust=69097';
-import * as SVG from './svg.js?cachebust=69097';
-import Table from './table.js?cachebust=69097';
-import * as Numbers from './util/numbers.js?cachebust=69097';
-import * as Text from './util/text.js?cachebust=69097';
-import Typeahead from './util/typeahead.js?cachebust=69097';
+import { field2idx } from '../data/data.js?cachebust=55249';
+import Line from './graph/line.js?cachebust=55249';
+import Scatter from './graph/scatter.js?cachebust=55249';
+import Person from './person.js?cachebust=55249';
+import * as Examine from './query/examine.js?cachebust=55249';
+import * as Fields from './query/fields.js?cachebust=55249';
+import * as Modifiers from './query/modifiers.js?cachebust=55249';
+import * as Places from './query/places.js?cachebust=55249';
+import * as Special from './query/special.js?cachebust=55249';
+import * as SVG from './svg.js?cachebust=55249';
+import Table from './table.js?cachebust=55249';
+import * as Numbers from './util/numbers.js?cachebust=55249';
+import * as Text from './util/text.js?cachebust=55249';
+import Typeahead from './util/typeahead.js?cachebust=55249';
 
 
 let PlaceData;
@@ -130,7 +130,9 @@ function dlHelper(dp, macro, el) {
     }
   } else if (dp.inputs[macro].modifier) {
     for (let i in Modifiers.Types) {
-      desc.options.push({ text: Modifiers.Types[i].text, value: i });
+      if (!Modifiers.Types[i].hidden) {
+        desc.options.push({ text: Modifiers.Types[i].text, value: i });
+      }
     }
   } else if (dp.inputs[macro].examine) {
     for (let i in Examine.Types) {
@@ -221,17 +223,17 @@ function update(dp, force) {
         }
       }
     }
-    if (force || replaceDirty(dp, r, args.places ? args.places.fips : undefined, args.field.f, args.field2.f, args.field3.f, args.modifier.f, args.examine.f)) {
+    if (force || replaceDirty(dp, r, args.places ? args.places.fips : undefined, args.field.shortText, args.field2.shortText, args.field3.shortText, args.modifier.f, args.examine.f)) {
       dirty = true;
       switch (result.type) {
         case 'text':
           replace[r].value = valueQuery(args.places ? args.places : undefined, args.field, args.modifier);
           break;
         case 'map':
-          replace[r].value = { text: args.field.text, shortText: args.field.shortText, upGood: args.field.upGood, states: result.states, arr: placeDownQuery(args.places.fips, args.field, args.modifier, result.delta, result.states) };
+          replace[r].value = { text: args.field.text, shortText: args.field.shortText, upGood: args.field.upGood, states: result.states, arr: placeDownQuery(args.places.fips, args.field, args.modifier, result.states) };
           break;
         case 'table':
-          replace[r].value = { field: args.field.f, text: args.field.text, shortText: args.field.shortText, upGood: args.field.upGood, arr: placeDownQuery(args.places.fips, args.field, args.modifier, result.delta, result.states), count: result.count, delta: result.delta };
+          replace[r].value = { field: args.field.f, text: args.field.text, shortText: args.field.shortText, upGood: args.field.upGood, arr: placeDownQuery(args.places.fips, args.field, args.modifier, result.states), count: result.count, delta: result.delta };
           break;
         case 'line':
           replace[r].value = { text: args.field.text, shortText: args.field.shortText, stack: result.stack, nolog: result.nolog, lq: lineQuery(args.places.fips, args.field, args.modifier, args.field2, args.field3, args.examine.f, result.hideparent) };
@@ -294,7 +296,31 @@ function peopleQuery(fips, field, field2, field3, modifier) {
   return retval;
 }
 
-function getValue(fips, field, modifier, delta) {
+function getComputedValue(place, daily, field, compMod, modifier, idx) {
+  let value = (compMod && compMod.func) ? compMod.func(daily, field.f, idx) : daily[idx][field.f];
+  if (modifier && modifier.func) {
+    return modifier.func(place, value);
+  } else {
+    return value;
+  }
+}
+
+function getValueDaily(place, daily, field, modifier, delta, idx) {
+  let compMod;
+  if (field.modValue) {
+    compMod = Modifiers.helper(field.modValue);
+  }
+  if (idx === undefined) {
+    idx = Math.max(0, daily.length - 1);
+  }
+  if (delta) {
+    return getComputedValue(place, daily, field, compMod, modifier, idx) - getComputedValue(place, daily, field, compMod, modifier, Math.max(0, idx - 7));
+  } else {
+    return getComputedValue(place, daily, field, compMod, modifier, idx);
+  }
+}
+
+function getValue(fips, field, modifier, delta, idx) {
   let place = PlaceData[fips];
   if (!place.daily) {
     return 0;
@@ -306,34 +332,18 @@ function getValue(fips, field, modifier, delta) {
       return place[field.f];
     }
   }
-  if (delta) {
-    if (modifier && modifier.func && field.per) {
-      return modifier.func(place, field.f, Math.max(0, place.daily.length - 1)) - modifier.func(place, field.f, Math.max(0, place.daily.length - 1 - 7));
-    } else {
-      return place.totals[field.f] - place.daily[Math.max(0, place.daily.length - 1 - 7)][field.f];
-    }
-  } else if (modifier && modifier.func && field.per) {
-    return modifier.func(place, field.f, place.daily.length - 1);
-  } else {
-    return place.totals[field.f];
-  }
+  return getValueDaily(place, place.daily, field, modifier, delta, idx);
 }
 
-function placeDownQuery(fips, field, modifier, delta, statesOnly) {
+function placeDownQuery(fips, field, modifier, statesOnly) {
   let arr = [];
   let sd = {}, usd = {}, place;
   let states = Places.states();
   for (let i = 0; i < states.length; i++) {
     sd[states[i].value] = {};
     sd[states[i].value].value = getValue(states[i].value, field, modifier);
-    if (delta) {
-      sd[states[i].value].delta = getValue(states[i].value, field, modifier, delta);
-    }
   }
   usd.value = getValue('united states', field, modifier);
-  if (delta) {
-    usd.delta = getValue('united states', field, modifier, delta);
-  }
   if (statesOnly) {
     place = PlaceData[fips];
     if (fips === 'united states') {
@@ -374,9 +384,6 @@ function placeDownQuery(fips, field, modifier, delta, statesOnly) {
       continue;
     } let val, d;
     val = getValue(fips, field, modifier);
-    if (delta) {
-      d = getValue(fips, field, modifier, delta);
-    }
     let entry = {
       county: place.county, state: place.state, fips: fips, d: val, delta: d,
       sd: sd[place.state] ? sd[place.state].value : undefined,
@@ -427,12 +434,12 @@ function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
   }
   let date_idx = field2idx('date');
   if (!examine) {
-    let fieldToDo = [{ f: field.f, t: field.shortText, per: field.per }];
+    let fieldToDo = [{ f: field.f, modValue: field.modValue, t: field.shortText, per: field.per }];
     if (field2.f) {
-      fieldToDo.push({ f: field2.f, t: field2.shortText, per: field3.per });
+      fieldToDo.push({ f: field2.f, modValue: field2.modValue, t: field2.shortText, per: field3.per });
     }
     if (field3.f) {
-      fieldToDo.push({ f: field3.f, t: field3.shortText, per: field3.per });
+      fieldToDo.push({ f: field3.f, modValue: field3.modValue, t: field3.shortText, per: field3.per });
     }
     for (let fld = 0; fld < fieldToDo.length; fld++) {
       for (let f = 0; f < toDo.length; f++) {
@@ -441,13 +448,8 @@ function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
         ranges.push({ text: place.state === place.county ? Text.firstCaps(place.state) : Text.firstCaps(place.county + ', ' + place.state) });
         let arr = place.daily;
         for (let i = 0; i < arr.length; i++) {
-          if (modifier && modifier.func && fieldToDo[fld].per) {
-            ret[i] = {};
-            ret[i].x = modifier.func(place, fieldToDo[fld].f, i);
-          } else {
-            ret[i] = {};
-            ret[i].x = arr[i][fieldToDo[fld].f];
-          }
+          ret[i] = {};
+          ret[i].x = getValueDaily(place, arr, fieldToDo[fld], modifier, false, i);
           ret[i].date = arr[i][date_idx];
         }
         retval.push({ fips: toDo[f], arr: ret, shortText: Text.firstCaps(fieldToDo[fld].t) });
@@ -460,13 +462,8 @@ function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
       ranges.push({ text: place.state === place.county ? Text.firstCaps(place.state) : Text.firstCaps(place.county + ', ' + place.state) });
       let arr = place.daily;
       for (let i = 0; i < arr.length; i++) {
-        if (modifier && modifier.func && field.per) {
-          ret[i] = {};
-          ret[i].x = modifier.func(place, field.f, i);
-        } else {
-          ret[i] = {};
-          ret[i].x = arr[i][field.f];
-        }
+        ret[i] = {};
+        ret[i].x = getValueDaily(place, arr, field, modifier, false, i);
         ret[i].date = arr[i][date_idx];
       }
       retval.push({ fips: toDo[f], arr: ret, shortText: Text.firstCaps(field.shortText) });
@@ -509,12 +506,7 @@ function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
           change = getValue(fips, field, modifier, true);
           let lengthOffset = retval[0].arr.length - arr.length;
           for (let i = 0; i < arr.length; i++) {
-            let val;
-            if (modifier && modifier.func && field.per) {
-              val = modifier.func(place, field.f, i);
-            } else {
-              val = arr[i][field.f];
-            }
+            let val = getValueDaily(place, arr, field, modifier, false, i);
             if (change >= 0) {
               retval[0].arr[i + lengthOffset].x += val;
               retval[0].arr[i + lengthOffset].count++;
@@ -550,12 +542,7 @@ function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
           let split = getValue(fips, field2);
           let lengthOffset = retval[0].arr.length - arr.length;
           for (let i = 0; i < arr.length; i++) {
-            let val;
-            if (modifier && modifier.func && field.per) {
-              val = modifier.func(place, field.f, i);
-            } else {
-              val = arr[i][field.f];
-            }
+            let val = getValueDaily(place, arr, field, modifier, false, i);
             if (split >= splitAve) {
               retval[0].arr[i + lengthOffset].x += val;
               retval[0].arr[i + lengthOffset].count++;
@@ -584,12 +571,7 @@ function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
           let arr = place.daily;
           let lengthOffset = retval[0].arr.length - arr.length;
           for (let i = 0; i < arr.length; i++) {
-            let val;
-            if (modifier && modifier.func && field.per) {
-              val = modifier.func(place, field.f, i) - modifier.func(place, field.f, Math.max(0, i - 7));
-            } else {
-              val = arr[i][field.f] - arr[Math.max(0, i - 7)][field.f];
-            }
+            let val = getValueDaily(place, arr, field, modifier, true, i);
             if (val >= 0) {
               retval[0].arr[i + lengthOffset].x++;
             } else {
@@ -607,12 +589,7 @@ function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
           let arr = place.daily;
           let lengthOffset = retval[0].arr.length - arr.length;
           for (let i = 0; i < arr.length; i++) {
-            let val;
-            if (modifier && modifier.func && field.per) {
-              val = modifier.func(place, field.f, i) - modifier.func(place, field.f, Math.max(0, i - 7));
-            } else {
-              val = arr[i][field.f] - arr[Math.max(0, i - 7)][field.f];
-            }
+            let val = getValueDaily(place, arr, field, modifier, true, i);
             if (val >= 0) {
               retval[0].arr[i + lengthOffset].x += getValue(fips, field2);
               retval[0].arr[i + lengthOffset].count++;
@@ -642,9 +619,7 @@ function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
           stepUsed[i] = false;
         }
         for (let f = 0; f < places.length; f++) {
-          let fips = places[f].value;
-          let place = PlaceData[fips];
-          let val = place.totals[field2.f] ? place.totals[field2.f] : place[field2.f];
+          let val = getValue(fips, field2);
           if (val !== undefined) {
             if (max === undefined) {
               max = min = val;

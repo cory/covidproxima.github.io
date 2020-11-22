@@ -1,11 +1,11 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import GovernorData from './governor.js?cachebust=69097';
-import MaskData from './maskdata.js?cachebust=69097';
-import PlaceData from './placedata.js?cachebust=69097';
-import ProcessNYTData from './procnytdata.js?cachebust=69097';
-import ShelterData from './shelter.js?cachebust=69097';
+import GovernorData from './governor.js?cachebust=55249';
+import MaskData from './maskdata.js?cachebust=55249';
+import PlaceData from './placedata.js?cachebust=55249';
+import ProcessNYTData from './procnytdata.js?cachebust=55249';
+import ShelterData from './shelter.js?cachebust=55249';
 
 let DATA_IDX = {
   date: 0,
@@ -16,6 +16,7 @@ let DATA_IDX = {
   probableCases: 0,
   pfr: 0,
   cfr: 0,
+  ccfr: 0,
   cir: 0,
   crr: 0,
   cvr: 0,
@@ -27,54 +28,6 @@ let DATA_IDX = {
   p50m: 0,
   sheltered: 0,
   masked: 0,
-  d_cases: 0,
-  d_deaths: 0,
-  d_recoveries: 0,
-  d_activeCases: 0,
-  d_probableCases: 0,
-  d_pfr: 0,
-  d_cfr: 0,
-  d_cir: 0,
-  d_crr: 0,
-  d_cvr: 0,
-  d_p20: 0,
-  d_p50: 0,
-  d_p10: 0,
-  d_p10m: 0,
-  d_p20m: 0,
-  d_p50m: 0,
-  w_cases: 0,
-  w_deaths: 0,
-  w_recoveries: 0,
-  w_activeCases: 0,
-  w_probableCases: 0,
-  w_pfr: 0,
-  w_cfr: 0,
-  w_cir: 0,
-  w_crr: 0,
-  w_cvr: 0,
-  w_p20: 0,
-  w_p50: 0,
-  w_p10: 0,
-  w_p10m: 0,
-  w_p20m: 0,
-  w_p50m: 0,
-  wow_cases: 0,
-  wow_deaths: 0,
-  wow_recoveries: 0,
-  wow_activeCases: 0,
-  wow_probableCases: 0,
-  wow_pfr: 0,
-  wow_cfr: 0,
-  wow_cir: 0,
-  wow_crr: 0,
-  wow_cvr: 0,
-  wow_p20: 0,
-  wow_p50: 0,
-  wow_p10: 0,
-  wow_p10m: 0,
-  wow_p20m: 0,
-  wow_p50m: 0,
 };
 
 let FIELD_COUNT = 0;
@@ -211,7 +164,7 @@ const COVID_DURATION = 28;
 const COVID_INFECTION_ONSET = 6;
 const COVID_CASE_MULTIPLE = 8;
 
-const FIELDS = { deaths: true, cases: true, recoveries: true, activeCases: true, probableCases: true, pfr: true, cfr: true, cir: true, crr: true, cvr: true, p20: true, p50: true, p10: true, p10m: true, p20m: true, p50m: true };
+const FIELDS = { deaths: true, cases: true, recoveries: true, activeCases: true, probableCases: true, pfr: true, cfr: true, ccfr: true, cir: true, crr: true, cvr: true, p20: true, p50: true, p10: true, p10m: true, p20m: true, p50m: true };
 const SUM_FIELDS = { deaths: true, cases: true, recoveries: true, activeCases: true, probableCases: true };
 
 function calculatedFields(entry, place) {
@@ -226,6 +179,11 @@ function calculatedFields(entry, place) {
   entry[DATA_IDX.p10m] = 1 - Math.pow(1 - entry[DATA_IDX.cir] * (1 - place.maskfreq), 10);
   entry[DATA_IDX.p20m] = 1 - Math.pow(1 - entry[DATA_IDX.cir] * (1 - place.maskfreq), 20);
   entry[DATA_IDX.p50m] = 1 - Math.pow(1 - entry[DATA_IDX.cir] * (1 - place.maskfreq), 50);
+}
+
+function calcIdxFields(arr, idx) {
+  let newcases = arr[Math.max(0, idx - COVID_INFECTION_ONSET)][DATA_IDX.cases] - arr[Math.max(0, idx - COVID_DURATION)][DATA_IDX.cases];
+  arr[idx][DATA_IDX.ccfr] = newcases ? (arr[idx][DATA_IDX.deaths] - arr[Math.max(0, idx - COVID_DURATION)][DATA_IDX.deaths]) / newcases : 0;
 }
 
 function isSheltered(state, date, ShelterData) {
@@ -281,26 +239,7 @@ export function BuildData(data) {
       di[DATA_IDX.activeCases] = d[Math.max(0, i - COVID_INFECTION_ONSET)][DATA_IDX.probableCases] - di[DATA_IDX.recoveries];
       di[DATA_IDX.activeCases] = parseInt(Math.max(di[DATA_IDX.activeCases], 0));
       calculatedFields(di, place);
-      for (let val in FIELDS) {
-        let idx = field2idx(val);
-        let d_idx = field2idx('d_' + val);
-        let w_idx = field2idx('w_' + val);
-        let wow_idx = field2idx('wow_' + val);
-        if (i - 1 >= 0) {
-          let dd = d[i - 1];
-          di[d_idx] = di[idx] - dd[idx];
-        } else {
-          di[d_idx] = di[idx];
-        }
-        if (i - 7 >= 0) {
-          let dw = d[i - 7];
-          di[w_idx] = di[idx] - dw[idx];
-          di[wow_idx] = di[w_idx] - dw[w_idx];
-        } else {
-          di[w_idx] = di[idx];
-          di[wow_idx] = di[w_idx];
-        }
-      }
+      calcIdxFields(d, i);
       let date = di[DATA_IDX.date];
       let state = place.state;
 
@@ -317,25 +256,13 @@ export function BuildData(data) {
           sdt[DATA_IDX.masked] = isMasked(state, date, MaskData);
           for (let val in FIELDS) {
             let idx = field2idx(val);
-            let d_idx = field2idx('d_' + val);
-            let w_idx = field2idx('w_' + val);
-            let wow_idx = field2idx('wow_' + val);
             sdt[idx] = 0;
-            sdt[d_idx] = 0;
-            sdt[w_idx] = 0;
-            sdt[wow_idx] = 0;
           }
         }
         let sdt = stateTotals[state][date];
         for (let val in SUM_FIELDS) {
           let idx = field2idx(val);
-          let d_idx = field2idx('d_' + val);
-          let w_idx = field2idx('w_' + val);
-          let wow_idx = field2idx('wow_' + val);
           sdt[idx] += di[idx];
-          sdt[d_idx] += di[d_idx];
-          sdt[w_idx] += di[w_idx];
-          sdt[wow_idx] += di[wow_idx];
         }
 
         if (!usTotals[date]) {
@@ -344,25 +271,13 @@ export function BuildData(data) {
           ustd[DATA_IDX.date] = date;
           for (let val in FIELDS) {
             let idx = field2idx(val);
-            let d_idx = field2idx('d_' + val);
-            let w_idx = field2idx('w_' + val);
-            let wow_idx = field2idx('wow_' + val);
             ustd[idx] = 0;
-            ustd[d_idx] = 0;
-            ustd[w_idx] = 0;
-            ustd[wow_idx] = 0;
           }
         }
         let ustd = usTotals[date];
         for (let val in SUM_FIELDS) {
           let idx = field2idx(val);
-          let d_idx = field2idx('d_' + val);
-          let w_idx = field2idx('w_' + val);
-          let wow_idx = field2idx('wow_' + val);
           ustd[idx] += di[idx];
-          ustd[d_idx] += di[d_idx];
-          ustd[w_idx] += di[w_idx];
-          ustd[wow_idx] += di[wow_idx];
         }
         if (GovernorData[state]) {
           place.govrepublican = PlaceData.fips[state].govrepublican = GovernorData[state].republican;
@@ -388,6 +303,9 @@ export function BuildData(data) {
     usData[s].daily.sort((a, b) => {
       return a[DATA_IDX.date].localeCompare(b[DATA_IDX.date]);
     });
+    for (let i = 0; i < usData[s].daily.length; i++) {
+      calcIdxFields(usData[s].daily, i);
+    }
     let place = newPlace(usData[s].daily, PlaceData.fips[s]);
     let d = place.daily;
     for (let i in d[d.length - 1]) {
@@ -404,6 +322,9 @@ export function BuildData(data) {
   usData['united states'].daily.sort((a, b) => {
     return a[DATA_IDX.date].localeCompare(b[DATA_IDX.date]);
   });
+  for (let i = 0; i < usData['united states'].daily.length; i++) {
+    calcIdxFields(usData['united states'].daily, i);
+  }
   let place = newPlace(usData['united states'].daily, PlaceData.fips['united states']);
   let d = place.daily;
   for (let i in d[d.length - 1]) {
