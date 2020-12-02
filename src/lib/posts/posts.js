@@ -25,6 +25,7 @@ const POSTS = {
     { file: 'deadlyflorida', title: 'the florida gamble', date: '2020-09-26' },
     { file: 'scarystates', title: 'scary states', date: '2020-10-11' },
     { file: 'electionday', title: 'election day', date: '2020-11-02' },
+    { file: 'fatalityrates', title: 'fatality rates', date: '2020-12-02' },
   ],
   data: [
     { file: 'dashboard', title: 'dashboard', date: '2020-07-03' },

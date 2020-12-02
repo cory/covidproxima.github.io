@@ -1,11 +1,11 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import GovernorData from './governor.js?cachebust=55249';
-import MaskData from './maskdata.js?cachebust=55249';
-import PlaceData from './placedata.js?cachebust=55249';
-import ProcessNYTData from './procnytdata.js?cachebust=55249';
-import ShelterData from './shelter.js?cachebust=55249';
+import GovernorData from './governor.js?cachebust=93304';
+import MaskData from './maskdata.js?cachebust=93304';
+import PlaceData from './placedata.js?cachebust=93304';
+import ProcessNYTData from './procnytdata.js?cachebust=93304';
+import ShelterData from './shelter.js?cachebust=93304';
 
 let DATA_IDX = {
   date: 0,
@@ -163,6 +163,7 @@ export function usDays() {
 const COVID_DURATION = 28;
 const COVID_INFECTION_ONSET = 6;
 const COVID_CASE_MULTIPLE = 8;
+const COVID_INFECTION_TO_DEATH = 21;
 
 const FIELDS = { deaths: true, cases: true, recoveries: true, activeCases: true, probableCases: true, pfr: true, cfr: true, ccfr: true, cir: true, crr: true, cvr: true, p20: true, p50: true, p10: true, p10m: true, p20m: true, p50m: true };
 const SUM_FIELDS = { deaths: true, cases: true, recoveries: true, activeCases: true, probableCases: true };
@@ -182,8 +183,8 @@ function calculatedFields(entry, place) {
 }
 
 function calcIdxFields(arr, idx) {
-  let newcases = arr[Math.max(0, idx - COVID_INFECTION_ONSET)][DATA_IDX.cases] - arr[Math.max(0, idx - COVID_DURATION)][DATA_IDX.cases];
-  arr[idx][DATA_IDX.ccfr] = newcases ? (arr[idx][DATA_IDX.deaths] - arr[Math.max(0, idx - COVID_DURATION)][DATA_IDX.deaths]) / newcases : 0;
+  let newcases = arr[Math.max(0, idx)][DATA_IDX.cases] - arr[Math.max(0, idx - COVID_INFECTION_TO_DEATH)][DATA_IDX.cases];
+  arr[idx][DATA_IDX.ccfr] = newcases ? (arr[Math.max(0, idx)][DATA_IDX.deaths] - arr[Math.max(0, idx - COVID_INFECTION_TO_DEATH)][DATA_IDX.deaths]) / newcases : 0;
 }
 
 function isSheltered(state, date, ShelterData) {

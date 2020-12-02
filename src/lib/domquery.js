@@ -1,20 +1,20 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import { field2idx } from '../data/data.js?cachebust=55249';
-import Line from './graph/line.js?cachebust=55249';
-import Scatter from './graph/scatter.js?cachebust=55249';
-import Person from './person.js?cachebust=55249';
-import * as Examine from './query/examine.js?cachebust=55249';
-import * as Fields from './query/fields.js?cachebust=55249';
-import * as Modifiers from './query/modifiers.js?cachebust=55249';
-import * as Places from './query/places.js?cachebust=55249';
-import * as Special from './query/special.js?cachebust=55249';
-import * as SVG from './svg.js?cachebust=55249';
-import Table from './table.js?cachebust=55249';
-import * as Numbers from './util/numbers.js?cachebust=55249';
-import * as Text from './util/text.js?cachebust=55249';
-import Typeahead from './util/typeahead.js?cachebust=55249';
+import { field2idx } from '../data/data.js?cachebust=93304';
+import Line from './graph/line.js?cachebust=93304';
+import Scatter from './graph/scatter.js?cachebust=93304';
+import Person from './person.js?cachebust=93304';
+import * as Examine from './query/examine.js?cachebust=93304';
+import * as Fields from './query/fields.js?cachebust=93304';
+import * as Modifiers from './query/modifiers.js?cachebust=93304';
+import * as Places from './query/places.js?cachebust=93304';
+import * as Special from './query/special.js?cachebust=93304';
+import * as SVG from './svg.js?cachebust=93304';
+import Table from './table.js?cachebust=93304';
+import * as Numbers from './util/numbers.js?cachebust=93304';
+import * as Text from './util/text.js?cachebust=93304';
+import Typeahead from './util/typeahead.js?cachebust=93304';
 
 
 let PlaceData;
@@ -297,7 +297,7 @@ function peopleQuery(fips, field, field2, field3, modifier) {
 }
 
 function getComputedValue(place, daily, field, compMod, modifier, idx) {
-  let value = (compMod && compMod.func) ? compMod.func(daily, field.f, idx) : daily[idx][field.f];
+  let value = (compMod && compMod.func) ? compMod.func(daily, field.f, idx) : (daily[idx][field.f] ? daily[idx][field.f] : place.totals[field.f]);
   if (modifier && modifier.func) {
     return modifier.func(place, value);
   } else {
@@ -329,7 +329,7 @@ function getValue(fips, field, modifier, delta, idx) {
     if (place[field.f] === undefined) {
       return 0;
     } else {
-      return place[field.f];
+      return +place[field.f];
     }
   }
   return getValueDaily(place, place.daily, field, modifier, delta, idx);
@@ -707,16 +707,8 @@ function scatterQuery(field1, field2, modifier, statesOnly) {
   for (let p = 0; p < places.length; p++) {
     let place = PlaceData[places[p].value];
     let x, y;
-    if (modifier && modifier.func && field1.per && place.totals[field1.f] !== undefined) {
-      x = modifier.func(place, field1.f, place.daily.length - 1);
-    } else {
-      x = place.totals[field1.f] ? place.totals[field1.f] : place[field1.f];
-    }
-    if (modifier && modifier.func && field2.per && place.totals[field2.f] !== undefined) {
-      y = modifier.func(place, field2.f, place.daily.length - 1);
-    } else {
-      y = place.totals[field2.f] ? place.totals[field2.f] : place[field2.f];
-    }
+    x = getValue(places[p].value, field1, modifier);
+    y = getValue(places[p].value, field2, modifier);
 
     if (x != undefined && y !== undefined) {
       retval.push({
