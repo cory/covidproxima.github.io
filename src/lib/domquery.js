@@ -1,20 +1,20 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import { field2idx } from '../data/data.js?cachebust=93304';
-import Line from './graph/line.js?cachebust=93304';
-import Scatter from './graph/scatter.js?cachebust=93304';
-import Person from './person.js?cachebust=93304';
-import * as Examine from './query/examine.js?cachebust=93304';
-import * as Fields from './query/fields.js?cachebust=93304';
-import * as Modifiers from './query/modifiers.js?cachebust=93304';
-import * as Places from './query/places.js?cachebust=93304';
-import * as Special from './query/special.js?cachebust=93304';
-import * as SVG from './svg.js?cachebust=93304';
-import Table from './table.js?cachebust=93304';
-import * as Numbers from './util/numbers.js?cachebust=93304';
-import * as Text from './util/text.js?cachebust=93304';
-import Typeahead from './util/typeahead.js?cachebust=93304';
+import { field2idx } from '../data/data.js?cachebust=40461';
+import Line from './graph/line.js?cachebust=40461';
+import Scatter from './graph/scatter.js?cachebust=40461';
+import Person from './person.js?cachebust=40461';
+import * as Examine from './query/examine.js?cachebust=40461';
+import * as Fields from './query/fields.js?cachebust=40461';
+import * as Modifiers from './query/modifiers.js?cachebust=40461';
+import * as Places from './query/places.js?cachebust=40461';
+import * as Special from './query/special.js?cachebust=40461';
+import * as SVG from './svg.js?cachebust=40461';
+import Table from './table.js?cachebust=40461';
+import * as Numbers from './util/numbers.js?cachebust=40461';
+import * as Text from './util/text.js?cachebust=40461';
+import Typeahead from './util/typeahead.js?cachebust=40461';
 
 
 let PlaceData;
@@ -619,7 +619,7 @@ function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
           stepUsed[i] = false;
         }
         for (let f = 0; f < places.length; f++) {
-          let val = getValue(fips, field2);
+          let val = getValue(places[f].value, field2);
           if (val !== undefined) {
             if (max === undefined) {
               max = min = val;
@@ -671,12 +671,7 @@ function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
           }
           stepUsed[insertLevel] = true;
           for (let i = 0; i < arr.length; i++) {
-            let val;
-            if (modifier && modifier.func && field.per) {
-              val = modifier.func(place, field.f, i);
-            } else {
-              val = arr[i][field.f];
-            }
+            let val = getValueDaily(place, arr, field, modifier, false, i);
             retval[insertLevel].arr[i + lengthOffset].x += val;
             retval[insertLevel].arr[i + lengthOffset].count++;
           }

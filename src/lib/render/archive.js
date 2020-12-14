@@ -1,8 +1,8 @@
 // (c) Cory Ondrejka 2020
 'use strict'
-import * as Posts from '../posts/posts.js?cachebust=93304';
-import * as Dates from '../util/dates.js?cachebust=93304';
-import * as Text from '../util/text.js?cachebust=93304';
+import * as Posts from '../posts/posts.js?cachebust=40461';
+import * as Dates from '../util/dates.js?cachebust=40461';
+import * as Text from '../util/text.js?cachebust=40461';
 
 export default function archive(cname) {
   let posts = Posts.getPosts();

@@ -1,7 +1,7 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import Fetcher from './fetcher.js?cachebust=93304';
+import Fetcher from './fetcher.js?cachebust=40461';
 
 let PATH = '../../../posts/';
 

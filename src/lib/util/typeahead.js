@@ -1,7 +1,7 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Text from '../util/text.js?cachebust=93304';
+import * as Text from '../util/text.js?cachebust=40461';
 
 function bg(body, base) {
   base.className = 'pubg';
