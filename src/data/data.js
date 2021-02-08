@@ -1,11 +1,11 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import GovernorData from './governor.js?cachebust=40461';
-import MaskData from './maskdata.js?cachebust=40461';
-import PlaceData from './placedata.js?cachebust=40461';
-import ProcessNYTData from './procnytdata.js?cachebust=40461';
-import ShelterData from './shelter.js?cachebust=40461';
+import GovernorData from './governor.js?cachebust=23170';
+import MaskData from './maskdata.js?cachebust=23170';
+import PlaceData from './placedata.js?cachebust=23170';
+import ProcessNYTData from './procnytdata.js?cachebust=23170';
+import ShelterData from './shelter.js?cachebust=23170';
 
 let DATA_IDX = {
   date: 0,
@@ -162,7 +162,7 @@ export function usDays() {
 
 const COVID_DURATION = 28;
 const COVID_INFECTION_ONSET = 6;
-const COVID_CASE_MULTIPLE = 8;
+const COVID_CASE_MULTIPLE = 4;
 const COVID_INFECTION_TO_DEATH = 21;
 
 const FIELDS = { deaths: true, cases: true, recoveries: true, activeCases: true, probableCases: true, pfr: true, cfr: true, ccfr: true, cir: true, crr: true, cvr: true, p20: true, p50: true, p10: true, p10m: true, p20m: true, p50m: true };

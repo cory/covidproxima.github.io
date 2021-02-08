@@ -4,7 +4,7 @@
 
 Even aside from the complete and utter bullshit being pushed by Fox News,
 the President, etc, there is a lot of confusion about how dangerous covid
-is. I'm jut pulling US totals from the NY Times dataset, so all of this
+is. I'm just pulling US totals from the NY Times dataset, so all of this
 is about averages, but let's dig in a bit.
 
 First, [text 1] people have died. That's [text 2] people in the United States.
