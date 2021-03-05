@@ -2,7 +2,7 @@
 
 # The Texas Gamble
 
-On Friday, TexasF Governor Mike abott [ended](https://gov.texas.gov/news/post/governor-abbott-lifts-mask-mandate-opens-texas-100-percent)
+On Friday, Texas Governor Mike abott [ended](https://gov.texas.gov/news/post/governor-abbott-lifts-mask-mandate-opens-texas-100-percent)
 state-wide mask and capacity restrictions, saying Texas is open "100%."
 
 So far, Texas has reported [text 1] deaths from COVID-19, although that number is almost certainly low.

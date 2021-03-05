@@ -1,10 +1,10 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Places from './query/places.js?cachebust=32252';
-import * as Colors from './util/colors.js?cachebust=32252';
-import * as Numbers from './util/numbers.js?cachebust=32252';
-import * as Text from './util/text.js?cachebust=32252';
+import * as Places from './query/places.js?cachebust=39644';
+import * as Colors from './util/colors.js?cachebust=39644';
+import * as Numbers from './util/numbers.js?cachebust=39644';
+import * as Text from './util/text.js?cachebust=39644';
 
 let SVGs = {};
 let Count = 0;
