@@ -88,6 +88,7 @@ let MaskData = {
   ],
   texas: [
     { date: '2020-07-03', mask: true },
+    { date: '2021-03-01', mask: false },
   ],
   vermont: [
     { date: '2020-07-24', mask: true },
