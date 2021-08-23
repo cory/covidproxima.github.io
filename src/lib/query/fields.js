@@ -1,7 +1,7 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import { field2idx } from '../../data/data.js?cachebust=39644';
+import { field2idx } from '../../data/data.js?cachebust=41200';
 
 
 let BaseTypes = {
@@ -23,11 +23,6 @@ let BaseTypes = {
   p10m: { f: 'p10m', text: 'chance someone at a 10 person event is infectious and no mask', upGood: false, shortText: 'p10 no mask', average: true, units: '%' },
   p20m: { f: 'p20m', text: 'chance someone at a 20 person event is infectious and no mask', upGood: false, shortText: 'p20 no mask', average: true, units: '%' },
   p50m: { f: 'p50m', text: 'chance someone at a 50 person event is infectious and no mask', upGood: false, shortText: 'p50 no mask', average: true, units: '%' },
-  d_deaths: { f: 'd_deaths', text: 'people have died per day', upGood: false, shortText: 'deaths/day', average: false, units: '', per: true },
-  d_cases: { f: 'd_cases', text: 'people tested positive per day', upGood: false, shortText: 'tested positive/day', average: false, units: '', per: true },
-  d_probableCases: { f: 'd_probableCases', text: 'people likely infected per day', upGood: false, shortText: 'infected/day', average: false, units: '', per: true },
-  d_recoveries: { f: 'd_recoveries', text: 'people have recovered per day', upGood: true, shortText: 'recovered/day', average: false, units: '', per: true },
-  d_activeCases: { f: 'd_activeCases', text: 'people likely became infectious per day', upGood: false, shortText: 'infectious/day', average: false, units: '', per: true },
   w_deaths: { f: 'w_deaths', text: 'people have died in the last week', upGood: false, shortText: 'deaths/week', average: false, units: '', per: true },
   w_cases: { f: 'w_cases', text: 'people tested positive in the last week', upGood: false, shortText: 'tested positive/week', average: false, units: '', per: true },
   w_probableCases: { f: 'w_probableCases', text: 'people likely infected in the last week', upGood: false, shortText: 'infected/week', average: false, units: '', per: true },
@@ -85,11 +80,6 @@ export let Types = {
     p10m: BaseTypes.p10m,
     p20m: BaseTypes.p20m,
     p50m: BaseTypes.p50m,
-    d_deaths: BaseTypes.d_deaths,
-    d_cases: BaseTypes.d_cases,
-    d_probableCases: BaseTypes.d_probableCases,
-    d_recoveries: BaseTypes.d_recoveries,
-    d_activeCases: BaseTypes.d_activeCases,
     w_deaths: BaseTypes.w_deaths,
     w_cases: BaseTypes.w_cases,
     w_probableCases: BaseTypes.w_probableCases,
@@ -122,11 +112,6 @@ export let Types = {
     p10m: BaseTypes.p10m,
     p20m: BaseTypes.p20m,
     p50m: BaseTypes.p50m,
-    d_deaths: BaseTypes.d_deaths,
-    d_cases: BaseTypes.d_cases,
-    d_probableCases: BaseTypes.d_probableCases,
-    d_recoveries: BaseTypes.d_recoveries,
-    d_activeCases: BaseTypes.d_activeCases,
     w_deaths: BaseTypes.w_deaths,
     w_cases: BaseTypes.w_cases,
     w_probableCases: BaseTypes.w_probableCases,

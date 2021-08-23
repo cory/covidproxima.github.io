@@ -1,10 +1,10 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import Animate from './animate.js?cachebust=39644';
-import Sparkline from './graph/sparkline.js?cachebust=39644';
-import * as Numbers from './util/numbers.js?cachebust=39644';
-import * as Text from './util/text.js?cachebust=39644';
+import Animate from './animate.js?cachebust=41200';
+import Sparkline from './graph/sparkline.js?cachebust=41200';
+import * as Numbers from './util/numbers.js?cachebust=41200';
+import * as Text from './util/text.js?cachebust=41200';
 
 const upTriangle = '▴';
 const downTriangle = '▾';
@@ -142,7 +142,7 @@ export default function render(el, arr, shortText, upGood, count, places, field)
       span.className = 'tspark';
       let canvas = document.createElement('canvas');
       canvas.className = 'tcanvas'
-      el.sparkCache.push({ c: canvas, arr: places[arr[i].fips].daily, fips: arr[i].fips });
+      el.sparkCache.push({ c: canvas, arr: places[arr[i].fips].weekly, fips: arr[i].fips });
       span.appendChild(canvas);
       row.appendChild(span);
       scroll.appendChild(row);

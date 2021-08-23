@@ -1,9 +1,9 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Dates from '../util/dates.js?cachebust=39644';
-import * as Numbers from '../util/numbers.js?cachebust=39644';
-import * as Text from '../util/text.js?cachebust=39644';
+import * as Dates from '../util/dates.js?cachebust=41200';
+import * as Numbers from '../util/numbers.js?cachebust=41200';
+import * as Text from '../util/text.js?cachebust=41200';
 
 let specialQueries = {
   today: getDate,
@@ -46,7 +46,7 @@ function getTimeInCovid(total) {
 function getFirstCovid() {
   let start = Places['united states'].firstDate;
   for (let i in Places) {
-    if (Places[i].daily[0] && Places[i].state !== Places[i].county && Places[i].daily[0].date === start) {
+    if (Places[i].weekly[0] && Places[i].state !== Places[i].county && Places[i].weekly[0].date === start) {
       return Text.firstCaps(Places[i].county + ', ' + Places[i].state);
     }
   }

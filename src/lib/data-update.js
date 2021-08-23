@@ -1,8 +1,8 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Dates from './util/dates.js?cachebust=39644';
-import * as Numbers from './util/numbers.js?cachebust=39644';
+import * as Dates from './util/dates.js?cachebust=41200';
+import * as Numbers from './util/numbers.js?cachebust=41200';
 
 let classesToUpdate = {
   today: getDate,
@@ -56,7 +56,7 @@ function getRecoveredTotal(data) {
 }
 
 function getWeekOverWeekDeaths(data) {
-  return Numbers.prettyPrint(data['united states'].totals.deaths - data['united states'].daily[data['united states'].daily.length - 8].deaths);
+  return Numbers.prettyPrint(data['united states'].totals.deaths - data['united states'].weekly[data['united states'].weekly.length - 2].deaths);
 }
 
 function isCounty(data, f) {

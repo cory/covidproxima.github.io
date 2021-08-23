@@ -1,20 +1,20 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import { field2idx } from '../data/data.js?cachebust=39644';
-import Line from './graph/line.js?cachebust=39644';
-import Scatter from './graph/scatter.js?cachebust=39644';
-import Person from './person.js?cachebust=39644';
-import * as Examine from './query/examine.js?cachebust=39644';
-import * as Fields from './query/fields.js?cachebust=39644';
-import * as Modifiers from './query/modifiers.js?cachebust=39644';
-import * as Places from './query/places.js?cachebust=39644';
-import * as Special from './query/special.js?cachebust=39644';
-import * as SVG from './svg.js?cachebust=39644';
-import Table from './table.js?cachebust=39644';
-import * as Numbers from './util/numbers.js?cachebust=39644';
-import * as Text from './util/text.js?cachebust=39644';
-import Typeahead from './util/typeahead.js?cachebust=39644';
+import { field2idx } from '../data/data.js?cachebust=41200';
+import Line from './graph/line.js?cachebust=41200';
+import Scatter from './graph/scatter.js?cachebust=41200';
+import Person from './person.js?cachebust=41200';
+import * as Examine from './query/examine.js?cachebust=41200';
+import * as Fields from './query/fields.js?cachebust=41200';
+import * as Modifiers from './query/modifiers.js?cachebust=41200';
+import * as Places from './query/places.js?cachebust=41200';
+import * as Special from './query/special.js?cachebust=41200';
+import * as SVG from './svg.js?cachebust=41200';
+import Table from './table.js?cachebust=41200';
+import * as Numbers from './util/numbers.js?cachebust=41200';
+import * as Text from './util/text.js?cachebust=41200';
+import Typeahead from './util/typeahead.js?cachebust=41200';
 
 
 let PlaceData;
@@ -296,8 +296,8 @@ function peopleQuery(fips, field, field2, field3, modifier) {
   return retval;
 }
 
-function getComputedValue(place, daily, field, compMod, modifier, idx) {
-  let value = (compMod && compMod.func) ? compMod.func(daily, field.f, idx) : (daily[idx][field.f] ? daily[idx][field.f] : place.totals[field.f]);
+function getComputedValue(place, weekly, field, compMod, modifier, idx) {
+  let value = (compMod && compMod.func) ? compMod.func(weekly, field.f, idx) : (weekly[idx][field.f] !== undefined ? weekly[idx][field.f] : place.totals[field.f]);
   if (modifier && modifier.func) {
     return modifier.func(place, value);
   } else {
@@ -305,24 +305,24 @@ function getComputedValue(place, daily, field, compMod, modifier, idx) {
   }
 }
 
-function getValueDaily(place, daily, field, modifier, delta, idx) {
+function getValueWeekly(place, weekly, field, modifier, delta, idx) {
   let compMod;
   if (field.modValue) {
     compMod = Modifiers.helper(field.modValue);
   }
   if (idx === undefined) {
-    idx = Math.max(0, daily.length - 1);
+    idx = Math.max(0, weekly.length - 1);
   }
   if (delta) {
-    return getComputedValue(place, daily, field, compMod, modifier, idx) - getComputedValue(place, daily, field, compMod, modifier, Math.max(0, idx - 7));
+    return getComputedValue(place, weekly, field, compMod, modifier, idx) - getComputedValue(place, weekly, field, compMod, modifier, Math.max(0, idx - 7));
   } else {
-    return getComputedValue(place, daily, field, compMod, modifier, idx);
+    return getComputedValue(place, weekly, field, compMod, modifier, idx);
   }
 }
 
 function getValue(fips, field, modifier, delta, idx) {
   let place = PlaceData[fips];
-  if (!place.daily) {
+  if (!place.weekly) {
     return 0;
   }
   if (place.totals[field.f] === undefined) {
@@ -332,7 +332,7 @@ function getValue(fips, field, modifier, delta, idx) {
       return +place[field.f];
     }
   }
-  return getValueDaily(place, place.daily, field, modifier, delta, idx);
+  return getValueWeekly(place, place.weekly, field, modifier, delta, idx);
 }
 
 function placeDownQuery(fips, field, modifier, statesOnly) {
@@ -380,7 +380,7 @@ function placeDownQuery(fips, field, modifier, statesOnly) {
   for (let i = 0; i < places.length; i++) {
     let fips = places[i].value;
     place = PlaceData[fips];
-    if (!place.daily.length) {
+    if (!place.weekly.length) {
       continue;
     } let val, d;
     val = getValue(fips, field, modifier);
@@ -446,10 +446,10 @@ function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
         let ret = [];
         place = PlaceData[toDo[f]];
         ranges.push({ text: place.state === place.county ? Text.firstCaps(place.state) : Text.firstCaps(place.county + ', ' + place.state) });
-        let arr = place.daily;
+        let arr = place.weekly;
         for (let i = 0; i < arr.length; i++) {
           ret[i] = {};
-          ret[i].x = getValueDaily(place, arr, fieldToDo[fld], modifier, false, i);
+          ret[i].x = getValueWeekly(place, arr, fieldToDo[fld], modifier, false, i);
           ret[i].date = arr[i][date_idx];
         }
         retval.push({ fips: toDo[f], arr: ret, shortText: Text.firstCaps(fieldToDo[fld].t) });
@@ -460,10 +460,10 @@ function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
       let ret = [];
       place = PlaceData[toDo[f]];
       ranges.push({ text: place.state === place.county ? Text.firstCaps(place.state) : Text.firstCaps(place.county + ', ' + place.state) });
-      let arr = place.daily;
+      let arr = place.weekly;
       for (let i = 0; i < arr.length; i++) {
         ret[i] = {};
-        ret[i].x = getValueDaily(place, arr, field, modifier, false, i);
+        ret[i].x = getValueWeekly(place, arr, field, modifier, false, i);
         ret[i].date = arr[i][date_idx];
       }
       retval.push({ fips: toDo[f], arr: ret, shortText: Text.firstCaps(field.shortText) });
@@ -484,7 +484,7 @@ function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
     for (let f = 0; f < (examine === 'histo' ? 6 : 2); f++) {
       let ret = [];
       let place = PlaceData[toDo[pIdx]];
-      let arr = place.daily;
+      let arr = place.weekly;
       for (let i = 0; i < arr.length; i++) {
         ret[i] = {};
         ret[i].x = 0;
@@ -501,12 +501,12 @@ function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
         for (let f = 0; f < places.length; f++) {
           let fips = places[f].value;
           let place = PlaceData[fips];
-          let arr = place.daily;
+          let arr = place.weekly;
           let change;
           change = getValue(fips, field, modifier, true);
           let lengthOffset = retval[0].arr.length - arr.length;
           for (let i = 0; i < arr.length; i++) {
-            let val = getValueDaily(place, arr, field, modifier, false, i);
+            let val = getValueWeekly(place, arr, field, modifier, false, i);
             if (change >= 0) {
               retval[0].arr[i + lengthOffset].x += val;
               retval[0].arr[i + lengthOffset].count++;
@@ -538,11 +538,11 @@ function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
         for (let f = 0; f < places.length; f++) {
           let fips = places[f].value;
           let place = PlaceData[fips];
-          let arr = place.daily;
+          let arr = place.weekly;
           let split = getValue(fips, field2);
           let lengthOffset = retval[0].arr.length - arr.length;
           for (let i = 0; i < arr.length; i++) {
-            let val = getValueDaily(place, arr, field, modifier, false, i);
+            let val = getValueWeekly(place, arr, field, modifier, false, i);
             if (split >= splitAve) {
               retval[0].arr[i + lengthOffset].x += val;
               retval[0].arr[i + lengthOffset].count++;
@@ -568,10 +568,10 @@ function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
         for (let f = 0; f < places.length; f++) {
           let fips = places[f].value;
           let place = PlaceData[fips];
-          let arr = place.daily;
+          let arr = place.weekly;
           let lengthOffset = retval[0].arr.length - arr.length;
           for (let i = 0; i < arr.length; i++) {
-            let val = getValueDaily(place, arr, field, modifier, true, i);
+            let val = getValueWeekly(place, arr, field, modifier, true, i);
             if (val >= 0) {
               retval[0].arr[i + lengthOffset].x++;
             } else {
@@ -586,10 +586,10 @@ function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
         for (let f = 0; f < places.length; f++) {
           let fips = places[f].value;
           let place = PlaceData[fips];
-          let arr = place.daily;
+          let arr = place.weekly;
           let lengthOffset = retval[0].arr.length - arr.length;
           for (let i = 0; i < arr.length; i++) {
-            let val = getValueDaily(place, arr, field, modifier, true, i);
+            let val = getValueWeekly(place, arr, field, modifier, true, i);
             if (val >= 0) {
               retval[0].arr[i + lengthOffset].x += getValue(fips, field2);
               retval[0].arr[i + lengthOffset].count++;
@@ -653,7 +653,7 @@ function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
         for (let f = 0; f < places.length; f++) {
           let fips = places[f].value;
           let place = PlaceData[fips];
-          let arr = place.daily;
+          let arr = place.weekly;
           let lengthOffset = retval[0].arr.length - arr.length;
           let compare = place.totals[field2.f] ? place.totals[field2.f] : place[field2.f];
           if (compare === undefined) {
@@ -671,7 +671,7 @@ function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
           }
           stepUsed[insertLevel] = true;
           for (let i = 0; i < arr.length; i++) {
-            let val = getValueDaily(place, arr, field, modifier, false, i);
+            let val = getValueWeekly(place, arr, field, modifier, false, i);
             retval[insertLevel].arr[i + lengthOffset].x += val;
             retval[insertLevel].arr[i + lengthOffset].count++;
           }

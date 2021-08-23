@@ -1,11 +1,11 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import GovernorData from './governor.js?cachebust=39644';
-import MaskData from './maskdata.js?cachebust=39644';
-import PlaceData from './placedata.js?cachebust=39644';
-import ProcessNYTData from './procnytdata.js?cachebust=39644';
-import ShelterData from './shelter.js?cachebust=39644';
+import GovernorData from './governor.js?cachebust=41200';
+import MaskData from './maskdata.js?cachebust=41200';
+import PlaceData from './placedata.js?cachebust=41200';
+import ProcessNYTData from './procnytdata.js?cachebust=41200';
+import ShelterData from './shelter.js?cachebust=41200';
 
 let DATA_IDX = {
   date: 0,
@@ -29,11 +29,14 @@ let DATA_IDX = {
   sheltered: 0,
   masked: 0,
 };
-
+let ALL_ZEROES = [];
 let FIELD_COUNT = 0;
 for (let i in DATA_IDX) {
   DATA_IDX[i] = FIELD_COUNT++;
+  ALL_ZEROES.push(0);
 }
+
+let CALC_FIELDS = FIELD_COUNT - 2;
 
 export function field2idx(field) {
   if (DATA_IDX[field] !== undefined) {
@@ -43,12 +46,12 @@ export function field2idx(field) {
   }
 }
 
-function newPlace(daily, demo) {
-  let dateIdx = field2idx('date');
+function newPlace(weekly, demo) {
+  let dateIdx = DATA_IDX['date'];
   let place = {
-    daily: daily ? daily : Float32Array(FIELD_COUNT),
-    firstDate: daily ? daily[0][dateIdx] : '',
-    lastDate: daily ? daily[daily.length - 1][dateIdx] : '',
+    weekly: weekly ? weekly : Float32Array(FIELD_COUNT),
+    firstDate: weekly ? weekly[0][dateIdx] : '',
+    lastDate: weekly ? weekly[weekly.length - 1][dateIdx] : '',
     totals: {},
   };
   for (let i in demo) {
@@ -125,12 +128,12 @@ export function getLockdownRange(fips) {
   let place = Places[Places[fips].state];
   let retval = [];
   let shelter = false;
-  let shelterIdx = field2idx('sheltered');
+  let shelterIdx = DATA_IDX['sheltered'];
   if (place) {
-    for (let i = 0; i < place.daily.length; i++) {
-      if (place.daily[i][shelterIdx] !== undefined && place.daily[i][shelterIdx] !== shelter) {
-        retval.push(i - place.daily.length);
-        shelter = place.daily[i][shelterIdx];
+    for (let i = 0; i < place.weekly.length; i++) {
+      if (place.weekly[i][shelterIdx] !== undefined && place.weekly[i][shelterIdx] !== shelter) {
+        retval.push(i - place.weekly.length);
+        shelter = place.weekly[i][shelterIdx];
       }
     }
   }
@@ -144,12 +147,12 @@ export function getMaskRange(fips) {
   let place = Places[Places[fips].state];
   let retval = [];
   let mask = false;
-  let maskIdx = field2idx('masked');
+  let maskIdx = DATA_IDX['masked'];
   if (place) {
-    for (let i = 0; i < place.daily.length; i++) {
-      if (place.daily[i][maskIdx] !== undefined && place.daily[i][maskIdx] !== mask) {
-        retval.push(i - place.daily.length);
-        mask = place.daily[i][maskIdx];
+    for (let i = 0; i < place.weekly.length; i++) {
+      if (place.weekly[i][maskIdx] !== undefined && place.weekly[i][maskIdx] !== mask) {
+        retval.push(i - place.weekly.length);
+        mask = place.weekly[i][maskIdx];
       }
     }
   }
@@ -157,7 +160,7 @@ export function getMaskRange(fips) {
 }
 
 export function usDays() {
-  return Places['united states'].daily.length;
+  return Places['united states'].weekly.length;
 }
 
 const COVID_DURATION = 28;
@@ -165,14 +168,14 @@ const COVID_INFECTION_ONSET = 6;
 const COVID_CASE_MULTIPLE = 4;
 const COVID_INFECTION_TO_DEATH = 21;
 
-const FIELDS = { deaths: true, cases: true, recoveries: true, activeCases: true, probableCases: true, pfr: true, cfr: true, ccfr: true, cir: true, crr: true, cvr: true, p20: true, p50: true, p10: true, p10m: true, p20m: true, p50m: true };
 const SUM_FIELDS = { deaths: true, cases: true, recoveries: true, activeCases: true, probableCases: true };
 
 function calculatedFields(entry, place) {
+  let oopop = 1.0 / place.population;
   entry[DATA_IDX.cfr] = entry[DATA_IDX.cases] ? entry[DATA_IDX.deaths] / entry[DATA_IDX.cases] : 0;
-  entry[DATA_IDX.pfr] = entry[DATA_IDX.deaths] / place.population;
-  entry[DATA_IDX.cir] = entry[DATA_IDX.activeCases] / place.population;
-  entry[DATA_IDX.crr] = entry[DATA_IDX.recoveries] / place.population;
+  entry[DATA_IDX.pfr] = entry[DATA_IDX.deaths] * oopop;
+  entry[DATA_IDX.cir] = entry[DATA_IDX.activeCases] * oopop;
+  entry[DATA_IDX.crr] = entry[DATA_IDX.recoveries] * oopop;
   entry[DATA_IDX.cvr] = 1 - entry[DATA_IDX.cir] - entry[DATA_IDX.crr];
   entry[DATA_IDX.p10] = 1 - Math.pow(1 - entry[DATA_IDX.cir], 10);
   entry[DATA_IDX.p20] = 1 - Math.pow(1 - entry[DATA_IDX.cir], 20);
@@ -230,8 +233,8 @@ export function BuildData(data) {
     if (!usData[f]) {
       continue;
     }
-    let place = newPlace(usData[f].daily, PlaceData.fips[f]);
-    let d = place.daily;
+    let place = newPlace(usData[f].weekly, PlaceData.fips[f]);
+    let d = place.weekly;
     for (let i = 0; i < d.length; i++) {
       let di = d[i];
       di[DATA_IDX.probableCases] = parseInt(di[DATA_IDX.cases] * COVID_CASE_MULTIPLE);
@@ -255,14 +258,13 @@ export function BuildData(data) {
           sdt[DATA_IDX.date] = date;
           sdt[DATA_IDX.sheltered] = isSheltered(state, date, ShelterData);
           sdt[DATA_IDX.masked] = isMasked(state, date, MaskData);
-          for (let val in FIELDS) {
-            let idx = field2idx(val);
-            sdt[idx] = 0;
+          for (let val = 1; val < CALC_FIELDS; val++) {
+            sdt[val] = 0;
           }
         }
         let sdt = stateTotals[state][date];
         for (let val in SUM_FIELDS) {
-          let idx = field2idx(val);
+          let idx = DATA_IDX[val];
           sdt[idx] += di[idx];
         }
 
@@ -270,14 +272,13 @@ export function BuildData(data) {
           usTotals[date] = [];
           let ustd = usTotals[date];
           ustd[DATA_IDX.date] = date;
-          for (let val in FIELDS) {
-            let idx = field2idx(val);
-            ustd[idx] = 0;
+          for (let val = 1; val < CALC_FIELDS; val++) {
+            ustd[val] = 0;
           }
         }
         let ustd = usTotals[date];
         for (let val in SUM_FIELDS) {
-          let idx = field2idx(val);
+          let idx = DATA_IDX[val];
           ustd[idx] += di[idx];
         }
         if (GovernorData[state]) {
@@ -295,39 +296,39 @@ export function BuildData(data) {
   }
 
   for (let s in stateTotals) {
-    usData[s] = { daily: [] };
+    usData[s] = { weekly: [] };
     for (let d in stateTotals[s]) {
       let di = stateTotals[s][d];
       calculatedFields(di, PlaceData.fips[s]);
-      usData[s].daily.push(di);
+      usData[s].weekly.push(di);
     }
-    usData[s].daily.sort((a, b) => {
+    usData[s].weekly.sort((a, b) => {
       return a[DATA_IDX.date].localeCompare(b[DATA_IDX.date]);
     });
-    for (let i = 0; i < usData[s].daily.length; i++) {
-      calcIdxFields(usData[s].daily, i);
+    for (let i = 0; i < usData[s].weekly.length; i++) {
+      calcIdxFields(usData[s].weekly, i);
     }
-    let place = newPlace(usData[s].daily, PlaceData.fips[s]);
-    let d = place.daily;
+    let place = newPlace(usData[s].weekly, PlaceData.fips[s]);
+    let d = place.weekly;
     for (let i in d[d.length - 1]) {
       place.totals[i] = d[d.length - 1][i];
     }
     Places[s] = place;
   }
-  usData['united states'] = { daily: [] };
+  usData['united states'] = { weekly: [] };
   for (let d in usTotals) {
     let di = usTotals[d];
     calculatedFields(di, PlaceData.fips['united states']);
-    usData['united states'].daily.push(di);
+    usData['united states'].weekly.push(di);
   }
-  usData['united states'].daily.sort((a, b) => {
+  usData['united states'].weekly.sort((a, b) => {
     return a[DATA_IDX.date].localeCompare(b[DATA_IDX.date]);
   });
-  for (let i = 0; i < usData['united states'].daily.length; i++) {
-    calcIdxFields(usData['united states'].daily, i);
+  for (let i = 0; i < usData['united states'].weekly.length; i++) {
+    calcIdxFields(usData['united states'].weekly, i);
   }
-  let place = newPlace(usData['united states'].daily, PlaceData.fips['united states']);
-  let d = place.daily;
+  let place = newPlace(usData['united states'].weekly, PlaceData.fips['united states']);
+  let d = place.weekly;
   for (let i in d[d.length - 1]) {
     place.totals[i] = d[d.length - 1][i];
   }
