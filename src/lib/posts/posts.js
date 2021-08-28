@@ -29,6 +29,7 @@ const POSTS = {
     { file: 'texasgamble', title: 'the texas gamble', date: '2021-03-05' },
     { file: 'ohflorida', title: 'florida has lost its mind', date: '2021-08-04' },
     { file: 'allaboutheweeks', title: 'and now just weekly data', date: '2021-08-23' },
+    { file: 'statelevel', title: 'state level', date: '2021-08-26' },
   ],
   data: [
     { file: 'dashboard', title: 'dashboard', date: '2020-07-03' },

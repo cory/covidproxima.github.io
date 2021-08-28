@@ -2,13 +2,11 @@
 'use strict'
 
 let usData = {};
-export default function ProcessNYTData(placeData, d) {
+export function ProcessNYTData(placeData, d) {
   // skip header row
-  let dates = {};
   for (let r = 1; r < d.length; r++) {
     let row = d[r].split(',');
     let date = row[0];
-    dates[date] = 1;
     let county = row[1].toLowerCase();
     let state = row[2].toLowerCase();
     let fips = row[3];
@@ -24,6 +22,27 @@ export default function ProcessNYTData(placeData, d) {
           usData[fips] = { weekly: [], daily: [], place: place };
         }
         usData[fips].daily.push([date, cases, deaths]);
+      }
+    }
+  }
+}
+
+export function ProcessNYTStateData(placeData, d) {
+  // skip header row
+  let dates = {};
+  for (let r = 1; r < d.length; r++) {
+    let row = d[r].split(',');
+    let date = row[0];
+    dates[date] = 1;
+    let state = row[1].toLowerCase();
+    let cases = parseInt(row[3]);
+    let deaths = parseInt(row[4]);
+    if (state) {
+      if (placeData[state]) {
+        if (!usData[state]) {
+          usData[state] = { weekly: [], daily: [], place: state };
+        }
+        usData[state].daily.push([date, cases, deaths]);
       }
     }
   }

@@ -1,11 +1,11 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import GovernorData from './governor.js?cachebust=45013';
-import MaskData from './maskdata.js?cachebust=45013';
-import PlaceData from './placedata.js?cachebust=45013';
-import ProcessNYTData from './procnytdata.js?cachebust=45013';
-import ShelterData from './shelter.js?cachebust=45013';
+import GovernorData from './governor.js?cachebust=43294';
+import MaskData from './maskdata.js?cachebust=43294';
+import PlaceData from './placedata.js?cachebust=43294';
+import { ProcessNYTData, ProcessNYTStateData } from './procnytdata.js?cachebust=43294';
+import ShelterData from './shelter.js?cachebust=43294';
 
 let DATA_IDX = {
   date: 0,
@@ -224,8 +224,9 @@ export function fips2county(fips) {
   return Places[fips] ? Places[fips].county : '';
 }
 
-export function BuildData(data) {
-  let usData = ProcessNYTData(PlaceData.fips, data.split(/\r?\n/));
+export function BuildData(data, stateData) {
+  ProcessNYTData(PlaceData.fips, data.split(/\r?\n/));
+  let usData = ProcessNYTStateData(PlaceData.fips, stateData.split(/\r?\n/));
   let stateTotals = {};
   let usTotals = {};
 
@@ -242,12 +243,12 @@ export function BuildData(data) {
       di[DATA_IDX.recoveries] = parseInt(Math.max(di[DATA_IDX.recoveries], 0));
       di[DATA_IDX.activeCases] = d[Math.max(0, i - COVID_INFECTION_ONSET)][DATA_IDX.probableCases] - di[DATA_IDX.recoveries];
       di[DATA_IDX.activeCases] = parseInt(Math.max(di[DATA_IDX.activeCases], 0));
-      calculatedFields(di, place);
-      calcIdxFields(d, i);
       let date = di[DATA_IDX.date];
       let state = place.state;
-
-      if (PlaceData.fips[state]) {
+      if (f !== state) {
+        calculatedFields(di, place);
+        calcIdxFields(d, i);
+      } else {
         if (!stateTotals[state]) {
           stateTotals[state] = {};
         }
@@ -299,7 +300,6 @@ export function BuildData(data) {
     usData[s] = { weekly: [] };
     for (let d in stateTotals[s]) {
       let di = stateTotals[s][d];
-      calculatedFields(di, PlaceData.fips[s]);
       usData[s].weekly.push(di);
     }
     usData[s].weekly.sort((a, b) => {
