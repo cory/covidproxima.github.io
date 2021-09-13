@@ -1,8 +1,8 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Colors from '../util/colors.js?cachebust=43294';
-import * as Graph from './graph.js?cachebust=43294';
+import * as Colors from '../util/colors.js?cachebust=07819';
+import * as Graph from './graph.js?cachebust=07819';
 
 export default function draw(el, arr, fips, field) {
   let colors = Colors.LineColors;

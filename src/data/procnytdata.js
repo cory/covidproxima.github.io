@@ -48,7 +48,8 @@ export function ProcessNYTStateData(placeData, d) {
   }
   let orderedDates = Object.keys(dates).sort((a, b) => { return a.localeCompare(a); });
   let weeklyKeys = {};
-  for (let i = 0; i < orderedDates.length; i += 7) {
+  let firstDay = (orderedDates.length - 1) % 7;
+  for (let i = firstDay; i < orderedDates.length; i += 7) {
     weeklyKeys[orderedDates[i]] = 1;
   }
   for (let f in usData) {

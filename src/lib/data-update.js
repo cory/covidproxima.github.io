@@ -1,8 +1,8 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Dates from './util/dates.js?cachebust=43294';
-import * as Numbers from './util/numbers.js?cachebust=43294';
+import * as Dates from './util/dates.js?cachebust=07819';
+import * as Numbers from './util/numbers.js?cachebust=07819';
 
 let classesToUpdate = {
   today: getDate,
