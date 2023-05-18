@@ -1,10 +1,10 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as PlaceData from '../../data/data.js?cachebust=07819';
-import * as Dates from '../util/dates.js?cachebust=07819';
-import * as Numbers from '../util/numbers.js?cachebust=07819';
-import * as Text from '../util/text.js?cachebust=07819';
+import * as PlaceData from '../../data/data.js?cachebust=16021';
+import * as Dates from '../util/dates.js?cachebust=16021';
+import * as Numbers from '../util/numbers.js?cachebust=16021';
+import * as Text from '../util/text.js?cachebust=16021';
 
 const baseOffset = 16;
 const twiceBaseOffset = 2 * baseOffset;
@@ -142,12 +142,14 @@ export function drawLines(parent, set, colors, txa, tya, tyloga, w, h, min, max,
 
   let length = 0;
   let thisOne;
-  for (let s = 0; s < set.length; s++) {
-    let shelter = PlaceData.getLockdownRange(set[s].fips);
-    let masks = PlaceData.getMaskRange(set[s].fips);
-    if (shelter.length + masks.length > length) {
-      thisOne = s;
-      length = shelter.length + masks.length;
+  if (set.length === 1) {
+    for (let s = 0; s < set.length; s++) {
+      let shelter = PlaceData.getLockdownRange(set[s].fips);
+      let masks = PlaceData.getMaskRange(set[s].fips);
+      if (shelter.length + masks.length > length) {
+        thisOne = s;
+        length = shelter.length + masks.length;
+      }
     }
   }
   if (thisOne !== undefined) {
@@ -171,7 +173,7 @@ export function drawLines(parent, set, colors, txa, tya, tyloga, w, h, min, max,
     for (let i = 0; i < mask.length; i++) {
       if (isMasked) {
         color = colors.masked;
-        svg.push('<rect y="' + top + '" opacity="50%" x="' + (tx(start)) + '" width="' + (tx(length + shelter[i]) - tx(start)) + '" height="' + (bottom - top) + '" fill="' + color + '" />');
+        svg.push('<rect y="' + top + '" opacity="50%" x="' + (tx(start)) + '" width="' + (tx(length + mask[i]) - tx(start)) + '" height="' + (bottom - top) + '" fill="' + color + '" />');
       }
       isMasked = !isMasked;
       start = mask[i] + length;

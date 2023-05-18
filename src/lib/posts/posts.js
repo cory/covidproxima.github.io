@@ -30,6 +30,7 @@ const POSTS = {
     { file: 'ohflorida', title: 'florida has lost its mind', date: '2021-08-04' },
     { file: 'allaboutheweeks', title: 'and now just weekly data', date: '2021-08-23' },
     { file: 'statelevel', title: 'state level', date: '2021-08-26' },
+    { file: 'fixing', title: 'fixing things', date: '2023-05-16' },
   ],
   data: [
     { file: 'dashboard', title: 'dashboard', date: '2020-07-03' },

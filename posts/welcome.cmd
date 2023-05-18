@@ -1,4 +1,7 @@
-// (c) Cory Ondrejka 2020
+// (c) Cory Ondrejka 2020-2023
+
+UPDATE: The New York Times has stopped updating their data as of March 24, 2023.
+This is a now a memory of covid and a way to dig into the data.
 
 COVID PROXIMA is an exploration of COVID-19's impact on the United States.
 You can check whether [groups](#posts.groups) are likely to include infectious people or

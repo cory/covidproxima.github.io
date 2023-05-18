@@ -1,20 +1,20 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import { field2idx } from '../data/data.js?cachebust=07819';
-import Line from './graph/line.js?cachebust=07819';
-import Scatter from './graph/scatter.js?cachebust=07819';
-import Person from './person.js?cachebust=07819';
-import * as Examine from './query/examine.js?cachebust=07819';
-import * as Fields from './query/fields.js?cachebust=07819';
-import * as Modifiers from './query/modifiers.js?cachebust=07819';
-import * as Places from './query/places.js?cachebust=07819';
-import * as Special from './query/special.js?cachebust=07819';
-import * as SVG from './svg.js?cachebust=07819';
-import Table from './table.js?cachebust=07819';
-import * as Numbers from './util/numbers.js?cachebust=07819';
-import * as Text from './util/text.js?cachebust=07819';
-import Typeahead from './util/typeahead.js?cachebust=07819';
+import { field2idx } from '../data/data.js?cachebust=16021';
+import Line from './graph/line.js?cachebust=16021';
+import Scatter from './graph/scatter.js?cachebust=16021';
+import Person from './person.js?cachebust=16021';
+import * as Examine from './query/examine.js?cachebust=16021';
+import * as Fields from './query/fields.js?cachebust=16021';
+import * as Modifiers from './query/modifiers.js?cachebust=16021';
+import * as Places from './query/places.js?cachebust=16021';
+import * as Special from './query/special.js?cachebust=16021';
+import * as SVG from './svg.js?cachebust=16021';
+import Table from './table.js?cachebust=16021';
+import * as Numbers from './util/numbers.js?cachebust=16021';
+import * as Text from './util/text.js?cachebust=16021';
+import Typeahead from './util/typeahead.js?cachebust=16021';
 
 
 let PlaceData;
@@ -329,7 +329,7 @@ function getValue(fips, field, modifier, delta, idx) {
     if (place[field.f] === undefined) {
       return 0;
     } else {
-      return +place[field.f];
+      return place[field.f];
     }
   }
   return getValueWeekly(place, place.weekly, field, modifier, delta, idx);
@@ -493,7 +493,7 @@ function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
       }
       retval.push({ fips: f === 0 ? 'increasing' : 'decreasing', arr: ret, shortText: Text.firstCaps(field.shortText) });
     }
-    let places = Places.allPlacesWithin(toDo[pIdx]);
+    let places = (toDo.length === 1 && toDo[0] === 'united states') ? Places.states() : Places.allPlacesWithin(toDo[pIdx]);
     switch (examine) {
       case 'field':
         ranges[0] = { text: 'Increasing' };
@@ -527,6 +527,7 @@ function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
         }
         break;
       case 'split':
+        let percapita = modifier.f === 'pc';
         ranges[0] = { text: 'More ' + Text.firstCaps(field2.shortText) };
         ranges[1] = { text: 'Less ' + Text.firstCaps(field2.shortText) };
         let splitAve = 0;
@@ -543,16 +544,21 @@ function lineQuery(fips, field, modifier, field2, field3, examine, hideParent) {
           let lengthOffset = retval[0].arr.length - arr.length;
           for (let i = 0; i < arr.length; i++) {
             let val = getValueWeekly(place, arr, field, modifier, false, i);
+            let inc = 1;
+            if (percapita) {
+              inc = place.population;
+              val *= inc;
+            }
             if (split >= splitAve) {
               retval[0].arr[i + lengthOffset].x += val;
-              retval[0].arr[i + lengthOffset].count++;
+              retval[0].arr[i + lengthOffset].count += inc;
             } else {
               retval[1].arr[i + lengthOffset].x += val;
-              retval[1].arr[i + lengthOffset].count++;
+              retval[1].arr[i + lengthOffset].count += inc;
             }
           }
         }
-        if (field.average) {
+        if (field.average || percapita) {
           for (let r = 0; r < retval.length; r++) {
             for (let i = 0; i < retval[r].arr.length; i++) {
               if (retval[r].arr[i].count) {

@@ -1,9 +1,9 @@
 // (c) Cory Ondrejka 2020
 'use strict'
-import * as PlaceData from '../../data/data.js?cachebust=07819';
-import * as Dates from '../util/dates.js?cachebust=07819';
-import * as Numbers from '../util/numbers.js?cachebust=07819';
-import * as Text from '../util/text.js?cachebust=07819';
+import * as PlaceData from '../../data/data.js?cachebust=16021';
+import * as Dates from '../util/dates.js?cachebust=16021';
+import * as Numbers from '../util/numbers.js?cachebust=16021';
+import * as Text from '../util/text.js?cachebust=16021';
 
 const offset = 4;
 const twiceOffset = 2 * offset;
@@ -288,21 +288,6 @@ export function drawBackground(ctx, w, h, colors, showShelter, fips, length, tx)
   } else {
     ctx.fillStyle = colors.background;
     ctx.fillRect(0, 0, w, h);
-  }
-}
-
-export function drawBackgroundMulti(ctx, w, h, colors, showShelter, set, tx) {
-  let length = 0;
-  let thisOne;
-  for (let s = 0; s < set.length; s++) {
-    let shelter = PlaceData.getLockdownRange(set[s].fips);
-    if (shelter.length > length) {
-      thisOne = s;
-      length = shelter.length;
-    }
-  }
-  if (thisOne) {
-    drawBackground(ctx, w, h, colors, showShelter, set[thisOne].fips, set[thisOne].arr.length, tx[thisOne]);
   }
 }
 

@@ -1,11 +1,11 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import GovernorData from './governor.js?cachebust=07819';
-import MaskData from './maskdata.js?cachebust=07819';
-import PlaceData from './placedata.js?cachebust=07819';
-import { ProcessNYTData, ProcessNYTStateData } from './procnytdata.js?cachebust=07819';
-import ShelterData from './shelter.js?cachebust=07819';
+import GovernorData from './governor.js?cachebust=16021';
+import MaskData from './maskdata.js?cachebust=16021';
+import PlaceData from './placedata.js?cachebust=16021';
+import { ProcessNYTData, ProcessNYTStateData } from './procnytdata.js?cachebust=16021';
+import ShelterData from './shelter.js?cachebust=16021';
 
 let DATA_IDX = {
   date: 0,
@@ -62,6 +62,10 @@ function newPlace(weekly, demo) {
 }
 
 let Places = {};
+
+export function setPlaces(placeData) {
+  Places = placeData;
+}
 
 export function zip2fips(zip) {
   let ret = [];
@@ -176,13 +180,14 @@ function calculatedFields(entry, place) {
   entry[DATA_IDX.pfr] = entry[DATA_IDX.deaths] * oopop;
   entry[DATA_IDX.cir] = entry[DATA_IDX.activeCases] * oopop;
   entry[DATA_IDX.crr] = entry[DATA_IDX.recoveries] * oopop;
-  entry[DATA_IDX.cvr] = 1 - entry[DATA_IDX.cir] - entry[DATA_IDX.crr];
-  entry[DATA_IDX.p10] = 1 - Math.pow(1 - entry[DATA_IDX.cir], 10);
-  entry[DATA_IDX.p20] = 1 - Math.pow(1 - entry[DATA_IDX.cir], 20);
-  entry[DATA_IDX.p50] = 1 - Math.pow(1 - entry[DATA_IDX.cir], 50);
-  entry[DATA_IDX.p10m] = 1 - Math.pow(1 - entry[DATA_IDX.cir] * (1 - place.maskfreq), 10);
-  entry[DATA_IDX.p20m] = 1 - Math.pow(1 - entry[DATA_IDX.cir] * (1 - place.maskfreq), 20);
-  entry[DATA_IDX.p50m] = 1 - Math.pow(1 - entry[DATA_IDX.cir] * (1 - place.maskfreq), 50);
+  let oneMinusEntry = 1 - entry[DATA_IDX.cir];
+  entry[DATA_IDX.cvr] = oneMinusEntry - entry[DATA_IDX.crr];
+  entry[DATA_IDX.p10] = 1 - Math.pow(oneMinusEntry, 10);
+  entry[DATA_IDX.p20] = 1 - Math.pow(oneMinusEntry, 20);
+  entry[DATA_IDX.p50] = 1 - Math.pow(oneMinusEntry, 50);
+  entry[DATA_IDX.p10m] = 1 - Math.pow(oneMinusEntry * (1 - place.maskfreq), 10);
+  entry[DATA_IDX.p20m] = 1 - Math.pow(oneMinusEntry * (1 - place.maskfreq), 20);
+  entry[DATA_IDX.p50m] = 1 - Math.pow(oneMinusEntry * (1 - place.maskfreq), 50);
 }
 
 function calcIdxFields(arr, idx) {
@@ -190,34 +195,28 @@ function calcIdxFields(arr, idx) {
   arr[idx][DATA_IDX.ccfr] = newcases ? (arr[Math.max(0, idx)][DATA_IDX.deaths] - arr[Math.max(0, idx - COVID_INFECTION_TO_DEATH)][DATA_IDX.deaths]) / newcases : 0;
 }
 
-function isSheltered(state, date, ShelterData) {
-  if (!ShelterData[state]) {
+function isVal(state, date, ValData) {
+  if (!ValData[state]) {
     return false;
   }
-  let shelter = false;
-  for (let i = 0; i < ShelterData[state].length; i++) {
-    let d = ShelterData[state][i].date;
+  let val = false;
+  for (let i = 0; i < ValData[state].length; i++) {
+    let d = ValData[state][i].date;
     if (date < d) {
-      return shelter;
+      return val;
     }
-    shelter = ShelterData[state][i].shelter;
+    val = ValData[state][i].val;
   }
-  return shelter;
+  return val;
+}
+
+
+function isSheltered(state, date, ShelterData) {
+  return isVal(state, date, ShelterData);
 }
 
 function isMasked(state, date, MaskData) {
-  if (!MaskData[state]) {
-    return false;
-  }
-  let masked = false;
-  for (let i = 0; i < MaskData[state].length; i++) {
-    let d = MaskData[state][i].date;
-    if (date < d) {
-      return masked;
-    }
-    masked = MaskData[state][i].mask;
-  }
-  return masked;
+  return isVal(state, date, MaskData);
 }
 
 export function fips2county(fips) {
@@ -227,7 +226,6 @@ export function fips2county(fips) {
 export function BuildData(data, stateData) {
   ProcessNYTData(PlaceData.fips, data.split(/\r?\n/));
   let usData = ProcessNYTStateData(PlaceData.fips, stateData.split(/\r?\n/));
-  let stateTotals = {};
   let usTotals = {};
 
   for (let f in PlaceData.fips) {
@@ -245,29 +243,15 @@ export function BuildData(data, stateData) {
       di[DATA_IDX.activeCases] = parseInt(Math.max(di[DATA_IDX.activeCases], 0));
       let date = di[DATA_IDX.date];
       let state = place.state;
-      if (f !== state) {
-        calculatedFields(di, place);
-        calcIdxFields(d, i);
-      } else {
-        if (!stateTotals[state]) {
-          stateTotals[state] = {};
-        }
-
-        if (!stateTotals[state][date]) {
-          stateTotals[state][date] = [];
-          let sdt = stateTotals[state][date];
-          sdt[DATA_IDX.date] = date;
-          sdt[DATA_IDX.sheltered] = isSheltered(state, date, ShelterData);
-          sdt[DATA_IDX.masked] = isMasked(state, date, MaskData);
-          for (let val = 1; val < CALC_FIELDS; val++) {
-            sdt[val] = 0;
-          }
-        }
-        let sdt = stateTotals[state][date];
-        for (let val in SUM_FIELDS) {
-          let idx = DATA_IDX[val];
-          sdt[idx] += di[idx];
-        }
+      calculatedFields(di, place);
+      calcIdxFields(d, i);
+      if (GovernorData[state]) {
+        place.govrepublican = PlaceData.fips[state].govrepublican = GovernorData[state].republican;
+        place.govmale = PlaceData.fips[state].govmale = GovernorData[state].male;
+      }
+      if (f === state) {
+        di[DATA_IDX.sheltered] = isSheltered(state, date, ShelterData);
+        di[DATA_IDX.masked] = isMasked(state, date, MaskData);
 
         if (!usTotals[date]) {
           usTotals[date] = [];
@@ -282,10 +266,6 @@ export function BuildData(data, stateData) {
           let idx = DATA_IDX[val];
           ustd[idx] += di[idx];
         }
-        if (GovernorData[state]) {
-          place.govrepublican = PlaceData.fips[state].govrepublican = GovernorData[state].republican;
-          place.govmale = PlaceData.fips[state].govmale = GovernorData[state].male;
-        }
       }
     }
 
@@ -294,26 +274,6 @@ export function BuildData(data, stateData) {
     }
 
     Places[f] = place;
-  }
-
-  for (let s in stateTotals) {
-    usData[s] = { weekly: [] };
-    for (let d in stateTotals[s]) {
-      let di = stateTotals[s][d];
-      usData[s].weekly.push(di);
-    }
-    usData[s].weekly.sort((a, b) => {
-      return a[DATA_IDX.date].localeCompare(b[DATA_IDX.date]);
-    });
-    for (let i = 0; i < usData[s].weekly.length; i++) {
-      calcIdxFields(usData[s].weekly, i);
-    }
-    let place = newPlace(usData[s].weekly, PlaceData.fips[s]);
-    let d = place.weekly;
-    for (let i in d[d.length - 1]) {
-      place.totals[i] = d[d.length - 1][i];
-    }
-    Places[s] = place;
   }
   usData['united states'] = { weekly: [] };
   for (let d in usTotals) {
