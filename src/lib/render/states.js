@@ -1,9 +1,9 @@
 // (c) Cory Ondrejka 2020
 'use strict'
 
-import * as Places from '../../data/data.js?cachebust=75763';
-import Cmdown from '../render/cmdown.js?cachebust=75763';
-import * as Text from '../util/text.js?cachebust=75763';
+import * as Places from '../../data/data.js?cachebust=11042';
+import Cmdown from '../render/cmdown.js?cachebust=11042';
+import * as Text from '../util/text.js?cachebust=11042';
 
 export default function states(path) {
   if (path[1] || path[2]) {

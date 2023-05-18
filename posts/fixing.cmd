@@ -2,11 +2,12 @@
 
 # Fixing some bugs, looking at Florida
 
-A few years later and was checking and the site is still mostly working, yay!
+A few years later and the site is still mostly working, yay!
 However, I missed some bugs I introduced in the last big change.
 
-With the NY Times no longer updating their data, so some of the county and per state results are a little
-broken. Need to ponder how to fix that.
+Also, the NY Times no longer updating their data and covid is no long a pandemic. Plus, states
+were sort of random in when they stopped updating their data, so some of the graphs are a little
+wonky. Need to ponder how to fix that.
 
 It's also a chance to check in on the ultimate Florida Man
 Governor Ron DeSantis. DeSantis wants to be President really, really bad.
